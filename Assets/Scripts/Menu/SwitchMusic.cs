@@ -30,7 +30,7 @@ public class SwitchMusic : MonoBehaviour
         // Пока громкость больше нуля
         while (audioSource.volume > 0)
         {
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.03f);
             // Уменьшаем громкость
             audioSource.volume -= 0.01f;
         }
@@ -42,9 +42,9 @@ public class SwitchMusic : MonoBehaviour
     // Восстановление музыки
     public IEnumerator RestoreMusic()
     {
-        while (audioSource.volume < 0.35f)
+        while (audioSource.volume < 0.65f)
         {
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.03f);
             // Увеличиваем громкость
             audioSource.volume += 0.01f;
         }

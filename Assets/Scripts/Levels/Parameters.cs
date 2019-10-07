@@ -152,7 +152,7 @@ public class Parameters : MonoBehaviour
     private IEnumerator IncreaseVolume()
     {
         // Пока громкость ниже указанного значения
-        while (audioSource.volume < 0.35f)
+        while (audioSource.volume < 0.3f)
         {
             yield return new WaitForSeconds(0.05f);
             // Увеличиваем громкость

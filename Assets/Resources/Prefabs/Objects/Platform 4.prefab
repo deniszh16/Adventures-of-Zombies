@@ -156,6 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c102fb76a738c904faeab29d677fbabc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyArrow: 1
 --- !u!1 &1490468242059496
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,7 +168,7 @@ GameObject:
   - component: {fileID: 4096008178964928}
   - component: {fileID: 95662435923191620}
   m_Layer: 0
-  m_Name: LeavingSpikes
+  m_Name: Platform 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -598,7 +599,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 5960e463ae09e9840bd190d85c05d6c9, type: 3}
+  m_Sprite: {fileID: -871907234539676369, guid: 3f5aa9e5784d6924ba6f55b8155f2df5,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

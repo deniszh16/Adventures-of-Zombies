@@ -13,6 +13,7 @@ public class BackgroundMusic : MonoBehaviour
         PlayMenuMusic();
     }
 
+    // Запуск фоновой музыки
     public void PlayMenuMusic()
     {
         if (Options.sound)

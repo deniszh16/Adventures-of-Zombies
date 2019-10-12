@@ -68,12 +68,12 @@ public class Bull : Boss
                 // Уменьшаем жизнь
                 healthBoss--;
                 // Создаем небольшой отскок от стены
-                rigbody.AddForce(direction * -2.5f, ForceMode2D.Impulse);
+                rigbody.AddForce(direction * -3.5f, ForceMode2D.Impulse);
 
                 // Отображаем эффект звезд
                 effect.SetActive(true);
                 // Перемещаем звезды к голове быка
-                effect.transform.localPosition = new Vector2(1.5f * direction.x, effect.transform.localPosition.y);
+                effect.transform.localPosition = new Vector2(3.2f * direction.x, effect.transform.localPosition.y);
 
                 // Сбрасываем анимацию
                 State = BullAnimation.Idle;

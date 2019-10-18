@@ -91,6 +91,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1336281797647560519}
   - component: {fileID: 7523461014749127331}
+  - component: {fileID: 4787639371026938912}
   - component: {fileID: 1336281797647560512}
   - component: {fileID: 1336281797647560513}
   m_Layer: 0
@@ -126,7 +127,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 9daa49fe58ac2a6408b5c9f585b3267d, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.7
   m_Pitch: 1
   Loop: 1
@@ -211,6 +212,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4787639371026938912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1336281797647560518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6474a398c7d83ac4da62728c0af611ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &1336281797647560512
 Animator:
   serializedVersion: 3
@@ -222,7 +235,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 406f4645a9a006745a49cd47725dda34, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 2
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0

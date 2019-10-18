@@ -9,12 +9,16 @@ public class StarsPerLevel : MonoBehaviour
     [Header("Спрайты звезд")]
     [SerializeField] private Sprite[] sprites = new Sprite[3];
 
-    // Объект для работы json по звездам
+    // Объект для работы с json по звездам
     private StarsJson Stars { get; set; } = new StarsJson();
 
+    // Ссылка на графический компонент
     private Image image;
 
-    private void Awake() { image = GetComponent<Image>(); }
+    private void Awake()
+    {
+        image = GetComponent<Image>();
+    }
 
     private void Start()
     {

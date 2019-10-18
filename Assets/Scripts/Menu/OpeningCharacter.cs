@@ -30,7 +30,7 @@ public class OpeningCharacter : MonoBehaviour
     // Текст кнопки выбора персонажа
     private TextTranslation textSelect;
 
-    // Объект для работы с Json по персонажам
+    // Объект для работы со статистикой по персонажам
     private CharactersJson characters { get; set; } = new CharactersJson();
 
     private void Awake()
@@ -38,13 +38,18 @@ public class OpeningCharacter : MonoBehaviour
         // Преобразовываем json строку в объект
         characters = JsonUtility.FromJson<CharactersJson>(PlayerPrefs.GetString("character-" + number));
 
+        // Получение компонента
         textSelect = select.GetComponentInChildren<TextTranslation>();
     }
 
     private void Start()
     {
-        // Если персонажа нужно открывать, выполняем его проверку
-        if (progress > 0) CheckCharacter();
+        // Если персонажа нужно открывать
+        if (progress > 0)
+        {
+            // Выполняем его проверку
+            CheckCharacter();
+        }  
         else
         {
             // Иначе выводим его статистику
@@ -54,7 +59,7 @@ public class OpeningCharacter : MonoBehaviour
         }
     }
 
-    // Проверка персонажа
+    /// <summary>Проверка персонажа на доступность к выбору</summary>
     private void CheckCharacter()
     {
         // Если прогресс достаточный для открытия
@@ -63,22 +68,25 @@ public class OpeningCharacter : MonoBehaviour
             // Открываем персонажа
             ChoiceCharacter.characters[number - 1] = true;
 
-            // Скрываем фрагменты
+            // Скрываем информационные фрагменты
             parts.SetActive(false);
-            // Отображаем персонажа
+            // Отображаем полного персонажа
             zombie.SetActive(true);
 
-            // Отображаем статистику
+            // Отображаем статистику по персонажу
             ShowStatisticsCharacter();
 
             // Проверяем кнопку выбора
             CheckSelectButton();
         }
-        // Обновляем перевод на закрытой кнопке
-        else textSelect.TranslateText();
+        else
+        {
+            // Обновляем перевод на закрытой кнопке
+            textSelect.TranslateText();
+        }
     }
 
-    // Отображение статистики
+    /// <summary>Отображение статистики по персонажу</summary>
     private void ShowStatisticsCharacter()
     {
         // Отображаем и выводим игры
@@ -97,7 +105,7 @@ public class OpeningCharacter : MonoBehaviour
         loss.text = ParseTranslation.languages.Element("languages").Element(Options.language).Element("statistics-losses").Value + " " + characters.loss;
     }
 
-    // Проверка кнопки выбора
+    /// <summary>Проверка кнопки выбора персонажа</summary>
     public void CheckSelectButton()
     {
         // Если персонаж не выбран
@@ -112,7 +120,7 @@ public class OpeningCharacter : MonoBehaviour
         {
             // Отключаем кнопку выбора
             select.interactable = false;
-            // Иначе меняем текст (персонаж выбран)
+            // Меняем текст (персонаж выбран)
             textSelect.ChangeKey("button-selected");
         }
     }

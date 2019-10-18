@@ -59,7 +59,7 @@ public class Leaderboard : MonoBehaviour
         }
     }
 
-    // Загрузка результатов из таблицы лидеров
+    /// <summary>Загрузка результатов из таблицы лидеров</summary>
     public void LoadScoresLeaderboard()
     {
         // Отображаем текст загрузки
@@ -86,10 +86,11 @@ public class Leaderboard : MonoBehaviour
 
                 // Загружаем информацию по остальным игрокам
                 LoadUsersLeaderboard(data.Scores);
-            });
+            }
+        );
     }
 
-    // Загрузка и отображение информации по игрокам
+    /// <summary>Загрузка и отображение информации по игрокам</summary>
     private void LoadUsersLeaderboard(IScore[] scores)
     {
         // Создаем список из id пользователей
@@ -121,7 +122,7 @@ public class Leaderboard : MonoBehaviour
         });
     }
 
-    // Поиск игрока в массиве по id
+    /// <summary>Поиск игрока в массиве по id</summary>
     private IUserProfile FindUser(IUserProfile[] users, string userid)
     {
         // Переборка игроков в массиве

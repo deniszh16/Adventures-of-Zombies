@@ -5,6 +5,7 @@ public class UsefulItems : MonoBehaviour
     [Header("Тип объекта")]
     [SerializeField] private string type;
 
+    // Ссылки на компоненты
     private AudioSource audioSource;
     private SpriteRenderer sprite;
     private CircleCollider2D circleCollider;
@@ -22,36 +23,30 @@ public class UsefulItems : MonoBehaviour
         var character = collision.GetComponent<Character>();
 
         // Если персонаж живой
-        if (character && character.Life)
+        if (character.Life)
         {
             switch (type)
             {
-                // Если это монета
+                // Монета
                 case "coin":
                     // Увеличиваем количество монет
                     character.Parameters.Coins++;
                     break;
-                // Если это мозг
+                // Мозги
                 case "brain":
                     // Уменьшаем количество мозгов
                     character.Parameters.Brains--;
-                    // Обновляем статистику на экране
+                    // Обновляем статистику
                     character.Parameters.RefreshQuantityBrains();
-                    break;
-                // Если это таймер
-                case "seconds":
-                    // Увеличиваем количество секунд
-                    character.Parameters.seconds += 5;
-                    // Обновляем цвет таймера
-                    character.Parameters.ChangeTextColor();
                     break;
             }
 
             // Если звуки не отключены, проигрываем
             if (Options.sound) audioSource.Play();
 
-            // Отключаем коллайдер и изображение
+            // Отключаем коллайдер объекта
             circleCollider.enabled = false;
+            // Скрываем изображение
             sprite.enabled = false;
         }
     }

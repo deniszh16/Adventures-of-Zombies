@@ -3,7 +3,7 @@ using UnityEngine;
 
 public abstract class Boss : MonoBehaviour
 {
-    // Тип активности
+    // Режим активности
     protected string mode;
 
     // Количество атакующих забегов
@@ -30,14 +30,16 @@ public abstract class Boss : MonoBehaviour
     [Header("Финишные объекты")]
     [SerializeField] protected GameObject[] objects;
 
-    // Ссылки на компоненты
+    // Ссылки на компоненты босса
     protected Animator animator;
     protected SpriteRenderer sprite;
     protected CapsuleCollider2D capsule;
     protected Rigidbody2D rigbody;
 
+    // Ссылки на дополнительные компоненты
     protected Character character;
     protected CameraShaking cameraShaking;
+    protected CountdownToStart countdown;
 
     protected void Awake()
     {
@@ -48,6 +50,7 @@ public abstract class Boss : MonoBehaviour
 
         character = GameObject.FindGameObjectWithTag("Character").GetComponent<Character>();
         cameraShaking = Camera.main.GetComponent<CameraShaking>();
+        countdown = FindObjectOfType<CountdownToStart>();
     }
 
     protected virtual void FixedUpdate()
@@ -60,35 +63,31 @@ public abstract class Boss : MonoBehaviour
         {
             // Сбрасываем режим
             mode = "none";
-            // Останавливаем все переключения
+            // Останавливаем переключение режима
             StopAllCoroutines();
         }
     }
 
-    // Случайное количество забегов
+    /// <summary>Определение случайного количества забегов</summary>
     protected void SetQuantityRun()
     {
-        // Определяем количество забегов
         quantityRun = Random.Range(2, 4);
     }
 
-    // Активация босса на уровне
-    public abstract void ActivateBoss();
-
-    // Переключение режимов босса
+    /// <summary>Переключение режимов босса (время до переключения, режим активности босса)</summary>
     protected abstract IEnumerator SwitchMode(float seconds, string mode);
 
-    // Определение следующего режима босса
+    /// <summary>Определение следующего режима активности босса</summary>
     protected abstract void DefineNextMode();
 
-    // Бег босса
+    /// <summary>Бег босса к персонажу</summary>
     protected void Run()
     {
         // Перемещаем босса в указанном направлении с указанной скоростью
         transform.Translate(direction * speed * Time.deltaTime);
     }
 
-    // Установка направления босса
+    /// <summary>Определение направления движения (горизонтальное отображение спрайта)</summary>
     protected void SetDirection(bool invert = false)
     {
         // Сравниваем позиции босса с персонажем и устанавливаем направление движения
@@ -102,33 +101,30 @@ public abstract class Boss : MonoBehaviour
             sprite.flipX = (direction == Vector3.left) ? false : true;
     }
 
-    // Столкновения на уровне
-    protected abstract void OnCollisionEnter2D(Collision2D collision);
-
-    // Падение множества камней
+    /// <summary>Падение множества камней</summary>
     protected void Rockfall()
     {
-        // Если активен режим атаки
         if (mode == "attack")
         {
             // Вызываем встряхивание камеры
             cameraShaking.ShakeCamera();
 
-            // Активируем все камни
+            // Активируем набор камней
             for (int i = 0; i < stones.Length; i++) stones[i].SetActive(true);
         }
     }
 
-    // Отображение дополнительных препятствий
+    /// <summary>Отображение дополнительных препятствий</summary>
     protected abstract void ShowObstacles(int health);
 
-    // Отображение финишных объектов
+    /// <summary>Отображение финишных объектов</summary>
     protected void ShowFinish()
     {
         for (int i = 0; i < objects.Length; i++)
+            // Активируем объекты
             objects[i].SetActive(true);
 
-        // Активируем перемещение камеры
-        Camera.main.transform.GetComponentInParent<SmoothCamera>().limit = false;
+        // Отключаем фиксацию камеры
+        Camera.main.transform.GetComponentInParent<SmoothCamera>().Limit = false;
     }
 }

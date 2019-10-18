@@ -6,62 +6,71 @@ public class Character : MonoBehaviour
     public bool Life { get; set; } = true;
 
     // Скорость движения персонажа
-    public float Speed { get; set; } = 7.5f;
+    public float Speed { get; set; } = speed;
+
+    // Стандартная скорость движения
+    private const float speed = 7.5f;
 
     // Высота прыжка персонажа
     private float JumpForce { get; } = 12f;
 
     // Проверка на прыжок персонажа
-    public bool IsJumping { get; set; } = false;
+    private bool IsJumping { get; set; } = false;
 
     // Проверка нахождения на земле
     private bool IsGrounded { get; set; } = false;
 
-    // Позиция и размер коллайдера персонажа
-    private Vector2 Point { get; set; } = Vector2.zero;
+    // Позиция коллайдера персонажа
+    private Vector2 Point { get; set; }
+
+    // Смещение коллайдера персонажа
+    private Vector3 Offset { get; } = new Vector2(0.1f, 1.0f);
+
+    // Размер коллайдера персонажа
     private Vector2 Size { get; } = new Vector2(0.5f, 0.75f);
 
-    // Проверка на вис и зацеп за крюк
+    // Проверка на вис на крюке
     public bool IsHook { get; set; } = false;
-    public bool CatchHook { get; set; } = false;
 
     // Перечисление анимаций персонажа
     private enum CharacterAnimations { Idle, Run, Jump, Dead, Hook }
 
     // Переключение анимаций персонажа
-    private CharacterAnimations State
-    {
-        // Установка параметра в аниматоре
-        set { animator.SetInteger("State", (int)value); }
-    }
+    private CharacterAnimations State { set { animator.SetInteger("State", (int)value); } }
+
+    // Стандартный слой персонажа на сцене
+    private const int layer = 5;
 
     // Позиция респауна персонажа
     public Vector3 RespawnPosition { get; set; }
 
-    [Header("Эффект урона")] public ParticleSystem blood;
+    [Header("Эффект урона")]
+    [SerializeField] private ParticleSystem blood;
 
-    // Ссылки на используемые компоненты
-    public SpriteRenderer Sprite { get; set; }
-    public Rigidbody2D Rigbody { get; set; }
-    public AudioSource AudioSource { get; set; }
+    // Ссылка на эффект урона
+    public ParticleSystem Blood { get { return blood; } }
+
+    // Ссылки на компоненты персонажа
+    public SpriteRenderer Sprite { get; private set; }
+    public Rigidbody2D Rigbody { get; private set; }
     private PolygonCollider2D polCollider;
     private Animator animator;
-    
 
-    // Ссылки на управление и параметры
-    public CharacterControl Control { get; set; }
-    public Parameters Parameters { get; set; }
+    // Ссылки на управление персонажем, параметры и звук
+    public CharacterControl Control { get; private set; }
+    public Parameters Parameters { get; private set; }
+    public AudioSource AudioSource { get; private set; }
 
     private void Awake()
     {
         Sprite = GetComponentInChildren<SpriteRenderer>();
-        polCollider = GetComponent<PolygonCollider2D>();
         Rigbody = GetComponent<Rigidbody2D>();
+        polCollider = GetComponent<PolygonCollider2D>();
         animator = GetComponent<Animator>();
-        AudioSource = GetComponent<AudioSource>();
 
         Control = GameObject.FindGameObjectWithTag("Controls").GetComponent<CharacterControl>();
         Parameters = Camera.main.GetComponent<Parameters>();
+        AudioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -77,7 +86,7 @@ public class Character : MonoBehaviour
             // Если управление не используется, анимация сбрасывается
             if (Control.Vector.x == 0) State = CharacterAnimations.Idle;
 
-            // Если персонаж висит на крюке
+            // Если персонаж висит
             if (IsHook)
             {
                 // Переключаемся на анимацию виса
@@ -86,15 +95,14 @@ public class Character : MonoBehaviour
                 if (!IsJumping) Speed = 0;
             }
 
-            // Если нажата кнопка влево, выполняется бег влево
+            // При нажатии на стрелки, выполняем бег
             if (Control.Vector.x < 0) Run(true);
-            // Если нажата кнопка вправо, выполняется бег вправо
             if (Control.Vector.x > 0) Run(false);
 
-            // Если персонаж прыгает, проигрывается анимация прыжка
+            // Если выполнен прыжок, проигрываем соответствующую анимацию
             if (!IsGrounded && IsJumping) State = CharacterAnimations.Jump;
 
-            // Проверяем персонажа на касание с поверхностью
+            // Проверяем на касание с поверхностью
             CheckCharacterGround();
 
             // Если персонаж улетел за экран, уничтожаем его
@@ -102,55 +110,54 @@ public class Character : MonoBehaviour
         }
     }
 
-    // Проверка нахождения персонажа на поверхности
+    /// <summary>Проверка нахождения персонажа на поверхности</summary>
     private void CheckCharacterGround()
     {
         // Определяем позицию коллайдера персонажа
-        Point = transform.position - new Vector3(0.1f, 1.0f, 0);
+        Point = transform.position - Offset;
 
         // Создаем массив коллайдеров, касающихся с персонажем
         Collider2D[] colliders = Physics2D.OverlapBoxAll(Point, Size, 0);
 
-        // Если коллайдеров больше одного
+        // Если есть коллайдеры кроме собственного
         if (colliders.Length > 1)
         {
-            // Выполняем переборку коллайдеров для нахождения поверхности
+            // Выполняем переборку для нахождения поверхности
             foreach (Collider2D collider in colliders)
             {
-                // Если поверхность найдена
                 if (collider.gameObject.CompareTag("Surface"))
                 {
-                    // Сбрасываем скорость
-                    Speed = 7.5f;
-                    // Активируем переменную поверхности
+                    // Восстанавливаем скорость
+                    Speed = speed;
+                    // Активируем нахождение на поверхности
                     IsGrounded = true;
-                    // Сбрасываем переменную прыжка
+                    // Сбрасываем прыжок
                     IsJumping = false;
                 }
             }
         }
         else
         {
-            // Сбрасываем переменную поверхности
+            // Иначе сбрасываем нахождение на поверхности
             IsGrounded = false;
             // Если персонаж висит на крюке, сбрасываем прыжок
             IsJumping = (IsHook) ? false : true;
         }
     }
 
-    // Бег персонажа
+    /// <summary>Бег персонажа (горизонтальное отображение спрайта)</summary>
     public void Run(bool flip)
     {
         // Перемещаем персонажа по вектору с указанной скоростью
         Rigbody.position = Rigbody.position + Control.Vector * Speed * Time.fixedDeltaTime;
-        // Указываем напрвление спрайта
+        // Устанавливаем направление спрайта
         Sprite.flipX = flip;
 
         // Если персонаж на поверхности, переключаемся на анимацию бега
         if (IsGrounded) State = CharacterAnimations.Run;
     }
 
-    // Прыжок персонажа
+    /// <summary>Прыжок персонажа</summary>
     public void Jump()
     {
         // Если персонаж на поверхности или висит на крюке
@@ -158,27 +165,28 @@ public class Character : MonoBehaviour
         {
             // Создаем импульсный прыжок с указанной силой
             Rigbody.AddForce(transform.up * JumpForce, ForceMode2D.Impulse);
-            // Сбрасываем переменную виса
-            IsHook = false;
 
-            // Если скорость нулевая, восстанавливаем стандартную
-            if (Speed <= 0) Speed = 7.5f;
+            // Если персонаж висел
+            if (IsHook)
+            {
+                // Сбрасываем вис
+                IsHook = false;
+                // Восстанавливаем скорость
+                Speed = speed;
+            }
         }
     }
 
-    // Вис персонажа на крюке
+    /// <summary>Вис персонажа на крюке</summary>
     public void ClingToHook()
     {
         // Отключаем гравитацию персонажа
         Rigbody.gravityScale = 0;
         // Сбрасываем физическую скорость
         Rigbody.velocity *= 0;
-
-        // Сбрасываем переменную зацепа
-        CatchHook = false;
     }
 
-    // Воскрешение персонажа после проигрыша
+    /// <summary>Воскрешение персонажа после проигрыша</summary>
     public void CharacterRespawn()
     {
         // Сбрасываем физическую скорость
@@ -186,29 +194,27 @@ public class Character : MonoBehaviour
         // Возвращаем персонажа к последнему респауну
         transform.position = RespawnPosition;
 
-        // Активируем жизнь
+        // Восстанавливаем жизнь
         Life = true;
         // Восстанавливаем стандартную анимацию
         State = CharacterAnimations.Idle;
-
         // Восстанавливаем стандартный коллайдер
         polCollider.isTrigger = false;
 
-        // Восстанавливаем слой персонажа
-        Sprite.sortingOrder = 5;
+        // Восстанавливаем слой персонажа на сцене
+        Sprite.sortingOrder = layer;
     }
 
-    // Нанесение урона персонажу
+    /// <summary>Нанесение урона персонажу (отскок персонажа, анимация смерти, задержка до итогов уровня)</summary>
     public void RecieveDamageCharacter(bool rebound, bool animation, float time)
     {
         // Сбрасываем жизнь
         Life = false;
 
-        // Скрываем кнопку паузы
-        Parameters.interfaceElements[(int)Parameters.InterfaceElements.PauseButton].SetActive(false);
-
-        // Если активен отскок, отбрасываем персонажа по случайному вектору
-        if (rebound) Rigbody.AddForce(new Vector2(Random.Range(-135.0f, 135.0f), Random.Range(160.0f, 190.0f)));
+        // Если активен отскок
+        if (rebound)
+            // Отбрасываем персонажа по случайному вектору
+            Rigbody.AddForce(new Vector2(Random.Range(-135.0f, 135.0f), Random.Range(160.0f, 190.0f)));
 
         // Если активна анимация смерти
         if (animation)
@@ -219,6 +225,8 @@ public class Character : MonoBehaviour
             polCollider.isTrigger = true;
         }
 
+        // Отключаем кнопку паузы
+        Parameters[(int)Parameters.InterfaceElements.PauseButton].SetActive(false);
         // Меняем режим игры на проигрыш
         Parameters.Mode = "lose";
         // Отображаем результат игры

@@ -19,7 +19,7 @@ public class SettingsLanguage : Settings
         if (Options.language == "en") button.sprite = sprites[1];
     }
 
-    // Переключение языка
+    /// <summary>Переключение языка интерфейса</summary>
     public void SwitchLanguage()
     {
         // Если активен русский язык, выполняем переключение на английский
@@ -27,7 +27,7 @@ public class SettingsLanguage : Settings
         // Иначе переключаемся на русский
         else ConfigureParameter(0, "language", "ru");
 
-        // Обновляем перевод
+        // Обновляем перевод заголовка
         title.TranslateText();
     }
 }

@@ -6,59 +6,58 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] private GameObject action;
 
     // Вектор движения персонажа
-    public Vector2 Vector { get; set; }
+    public Vector2 Vector { get; private set; }
 
-    // Ссылка на параметры
+    // Ссылка на игровые параметры
     private Parameters parameters;
 
     private void Start()
     {
-        // Получаем компонент параметров
         parameters = Camera.main.GetComponent<Parameters>();
     }
 
-    // Нажатие на стрелку движения
+    /// <summary>Нажатие на кнопку движения (значение вектора)</summary>
     public void ButtonArrowDown(float value)
     {
-        // Если активен игровой режим, устанавливаем вектор движения
-        if (parameters.Mode == "play") Vector = Vector2.right * value;
+        // Если активен игровой режим
+        if (parameters.Mode == "play")
+            // Устанавливаем вектор движения
+            Vector = Vector2.right * value;
     }
 
-    // Отжатие стрелки движения
+    /// <summary>Отжатие кнопки движения</summary>
     public void ButtonArrowUp()
     {
         // Сбрасываем вектор движения
         Vector = Vector2.zero;
     }
 
-    // Нажатие на кнопку прыжка
+    /// <summary>Нажатие на кнопку прыжка</summary>
     public void ButtonJump()
     {
-        // Если активен игровой режим, запускаем прыжок персонажа
-        if (parameters.Mode == "play") parameters.Character.Jump();
+        // Если активен игровой режим
+        if (parameters.Mode == "play")
+            // Выполняем прыжок персонажа
+            parameters.Character.Jump();
     }
 
-    // Отображение/скрытие кнопки действия
+    /// <summary>Отображение/скрытие кнопки действия (состояние кнопки)</summary>
     public void ButtonAction(bool state)
     {
-        // Устанавливаем состояние кнопки
         action.SetActive(state);
     }
 
-    //Управление на клавиатуре
+    //Управление на клавиатуре (для тетирования)
     #if UNITY_EDITOR || UNITY_STANDALONE
     private void Update()
     {
-        // Если персонаж жив
         if (parameters.Character.Life)
         {
-            // При нажатии на стрелку влево, устанавливаем соответствующий вектор
+            // При нажатии на клавишу направления, устанавливаем вектор
             if (Input.GetKey("left")) Vector = Vector2.left;
-
-            // При нажатии на стрелку вправо, устанавливаем соответствующий вектор
             if (Input.GetKey("right")) Vector = Vector2.right;
 
-            // При нажатии на клавишу прыжка, выполняется прыжок
+            // При нажатии на клавишу прыжка, выполняем прыжок
             if (Input.GetKey("space")) parameters.Character.Jump();
         }
 

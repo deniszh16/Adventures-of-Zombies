@@ -9,6 +9,9 @@ public class Arrow : MonoBehaviour
     // Скорость полета стрелы
     private float speed = 15f;
 
+    // Стандартный слой объекта
+    private const int layer = 3;
+
     [Header("Пул для хранения")]
     [SerializeField] private GameObject poolObjects;
 
@@ -20,6 +23,7 @@ public class Arrow : MonoBehaviour
     private Rigidbody2D rigbody;
     private SpriteRenderer sprite;
     private FixedJoint2D joint;
+    private DamageObjects damage;
 
     private void Awake()
     {
@@ -27,6 +31,7 @@ public class Arrow : MonoBehaviour
         rigbody = GetComponent<Rigidbody2D>();
         sprite = GetComponentInChildren<SpriteRenderer>();
         joint = GetComponent<FixedJoint2D>();
+        damage = GetComponent<DamageObjects>();
     }
 
     private void OnEnable()
@@ -39,9 +44,11 @@ public class Arrow : MonoBehaviour
 
         // Активируем стандартный коллайдер
         boxcollider.enabled = true;
+        // Активируем компонент урона
+        damage.enabled = true;
 
         // Устанавливаем слой объекта
-        sprite.sortingOrder = 3;
+        sprite.sortingOrder = layer;
 
         // Сбрасываем скорость
         speed = 15f;
@@ -86,6 +93,9 @@ public class Arrow : MonoBehaviour
         {
             // Уменьшаем скорость полета
             speed = 8.5f;
+
+            // Отключаем урон под водой
+            damage.enabled = false;
         }
         else
         {
@@ -93,13 +103,13 @@ public class Arrow : MonoBehaviour
             var damage = collision.gameObject.GetComponent<DamageObjects>();
 
             // Если активно уничтожение стрел
-            if (damage && damage.destroyArrow)
+            if (damage && damage.DestroyArrow)
                 // Отключаем объект
                 gameObject.SetActive(false);
         }
     }
 
-    // Остановка полета стрелы
+    /// <summary>Остановка полета стрелы (закрепление стрелы на объекте, время до остановки)</summary>
     private IEnumerator FlightStop(bool fixation, float seconds)
     {
         yield return new WaitForSeconds(seconds);
@@ -107,17 +117,17 @@ public class Arrow : MonoBehaviour
         // Отключаем полет
         flight = false;
 
-        // Если активна фиксация, закрепляем объект
+        // Если активна фиксация, закрепляем стрелу на объекте
         if (fixation) joint.enabled = true;
 
-        // Отключаем стрелу через несколько секунды
+        // Отключаем стрелу через указанное время
         Invoke("TurnOffObject", 1.6f);
     }
 
-    // Отключение объекта после исползования
+    /// <summary>Отключение объекта после исползования</summary>
     private void TurnOffObject()
     {
-        // Возвращаем объект в общий пул
+        // Возвращаем стрелу в пул объектов
         gameObject.transform.SetParent(poolObjects.transform);
 
         // Сбрасываем угол стрелы

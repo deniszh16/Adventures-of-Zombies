@@ -14,7 +14,7 @@ public class Finish : MonoBehaviour
             {
                 // Отображаем финишный текст
                 character.Parameters.TextFinish.color = Color.white;
-                // Отображаем кнопку действия
+                // Отображаем кнопку завершения уровня
                 character.Control.ButtonAction(true);
             }
         }
@@ -22,13 +22,12 @@ public class Finish : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        // Получаем компонент персонажа у конувшегося объекта
         var character = collision.GetComponent<Character>();
 
         if (character)
         {
             // Скрываем финишный текст
-            character.Parameters.TextFinish.color = new Color(1,1,1,0);
+            character.Parameters.TextFinish.color = new Color(1, 1, 1, 0);
             // Скрываем кнопку действия
             character.Control.ButtonAction(false);
         }

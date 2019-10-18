@@ -3,7 +3,7 @@
 public class SpeedChange : MonoBehaviour
 {
     [Header("Новая скорость")]
-    public float updateSpeed;
+    [SerializeField] private float updateSpeed;
 
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -11,7 +11,7 @@ public class SpeedChange : MonoBehaviour
         var character = collision.GetComponent<Character>();
 
         // Если персонаж живой
-        if (character && character.Life)
+        if (character.Life)
             // Если персонаж двигается, устанавливается новая скорость
             if (character.Control.Vector.x != 0) character.Speed = updateSpeed;
     }

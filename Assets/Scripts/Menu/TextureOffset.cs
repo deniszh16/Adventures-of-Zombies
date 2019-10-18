@@ -12,7 +12,10 @@ public class TextureOffset : MonoBehaviour
     // Ссылка на графический компонент
     private RawImage image;
 
-    private void Awake() { image = GetComponent<RawImage>(); }
+    private void Awake()
+    {
+        image = GetComponent<RawImage>();
+    }
 
     private void Update()
     {

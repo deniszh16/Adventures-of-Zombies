@@ -8,12 +8,10 @@ public class Hook : MonoBehaviour
         var character = collision.GetComponent<Character>();
 
         // Если персонаж живой
-        if (character && character.Life)
+        if (character.Life)
         {
             // Активируем переменную виса
             character.IsHook = true;
-            // Активируем переменную зацепа
-            character.CatchHook = true;
 
             // Назначаем крюк родительским объектом для персонажа
             character.transform.parent = transform;
@@ -22,26 +20,24 @@ public class Hook : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        // Получаем компонент персонажа у касающегося объекта
         var character = collision.GetComponent<Character>();
 
-        if (character && character.Life)
-            // Если персонаж находится в указанном диапазоне и переменная зацепа активна
-            if (character.transform.localPosition.x < 0.5f && character.transform.localPosition.y < -1f && character.CatchHook)
+        if (character.Life)
+            // Если персонаж находится в указанном диапазоне
+            if (character.transform.localPosition.x < 0.5f && character.transform.localPosition.y < -1f)
                 // Фиксируем персонажа на крюке
                 character.ClingToHook();
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        // Получаем компонент персонажа у касающегося объекта
         var character = collision.GetComponent<Character>();
 
         if (character)
         {
             // Сбрасываем родительский объект для персонажа
             character.transform.parent = null;
-            // Восстанавливаем стандартную гравитацию
+            // Восстанавливаем стандартную гравитацию персонажа
             character.Rigbody.gravityScale = 1.5f;
         }
     }

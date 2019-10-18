@@ -5,9 +5,9 @@ public class FallObject : MonoBehaviour
     [Header("Время до падения")]
     [SerializeField] private float time = 1.2f;
 
-    // Начальный слой
+    // Начальный слой объекта
     private int order;
-    // Начальная позиция
+    // Начальная позиция объекта
     private Vector3 position;
 
     // Ссылки на компоненты
@@ -32,17 +32,17 @@ public class FallObject : MonoBehaviour
         // Получаем компонент персонажа у конувшегося объекта
         var character = collision.gameObject.GetComponent<Character>();
 
-        // Если персонаж живой
         if (character)
         {
             // Вызываем падение объекта через указанное время
             Invoke("FallPlatform", time);
+
             // Проигрываем звук падения
             if (Options.sound) audioSource.Play();
         }
     }
 
-    // Падение объекта
+    /// <summary>Падение объекта</summary>
     private void FallPlatform()
     {
         // Активируем динамическую физику объекта
@@ -51,12 +51,14 @@ public class FallObject : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Пробуем получить водный компонент у каснувшегося объекта
+        // Пробуем получить водный компонент у коснувшегося объекта
         var water = collision.GetComponent<Water>();
 
         if (water)
-            // Переносим объект вниз слоя
+        {
+            // Переносим объект на нулевой слой
             sprite.sortingOrder = 0;
+        }
         else
         {
             // Иначе пробуем получить компонент урона
@@ -66,7 +68,8 @@ public class FallObject : MonoBehaviour
             {
                 // Скрываем спрайт
                 sprite.enabled = false;
-                // Через несколько секунд восстанавливаем
+
+                // Через несколько секунд восстанавливаем объект
                 Invoke("RestoreObject", 2.5f);
             }
         }
@@ -77,11 +80,12 @@ public class FallObject : MonoBehaviour
         // Пробуем получить водный компонент
         var water = collision.GetComponent<Water>();
 
-        // Если объект покинул воду, восстанавливаем его
-        if (water) Invoke("RestoreObject", 1.5f);
+        if (water)
+            // Восстанавливаем объект
+            Invoke("RestoreObject", 1.5f);
     }
 
-    // Восстановление объекта
+    /// <summary>Восстановление объекта</summary>
     private void RestoreObject()
     {
         // Отображаем спрайт

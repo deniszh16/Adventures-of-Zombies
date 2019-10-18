@@ -11,6 +11,7 @@ public class Barrel : MonoBehaviour
     // Ссылка на звуковой компонент эффекта
     private AudioSource audioSource;
 
+    // Ссылки на компоненты бочки
     private Animator animator;
     private CameraShaking cameraShaking;
 
@@ -23,21 +24,25 @@ public class Barrel : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Получаем компонент персонажа у конувшегося объекта
-        var character = collision.gameObject.GetComponent<Character>();
-
         // Если бочка активна
-        if (character && activeBarrel)
+        if (activeBarrel)
         {
-            // Отключаем бочку от повторных касаний
-            activeBarrel = false;
-            // Запускаем анимацию уничтожения
-            animator.enabled = true;
-            animator.Rebind();
+            // Получаем компонент персонажа у конувшегося объекта
+            var character = collision.gameObject.GetComponent<Character>();
+
+            if (character)
+            {
+                // Отключаем бочку от повторных касаний
+                activeBarrel = false;
+
+                // Запускаем анимацию уничтожения
+                animator.enabled = true;
+                animator.Rebind();
+            }
         }
     }
 
-    // Уничтожение бочки
+    /// <summary>Уничтожение бочки</summary>
     private void DestroyBarrel()
     {
         // Если звуки не отключены, проигрываем

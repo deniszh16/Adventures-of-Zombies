@@ -10,7 +10,7 @@ public class DontDestroy : MonoBehaviour
         // Если их больше одного, уничтожаем лишние
         if (objs.Length > 1) Destroy(gameObject);
 
-        // Отключаем уничтожение объекта
+        // Отключаем уничтожение оставшегося объекта
         DontDestroyOnLoad(gameObject);
     }
 }

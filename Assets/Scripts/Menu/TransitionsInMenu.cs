@@ -18,24 +18,24 @@ public class TransitionsInMenu : MonoBehaviour
         if (buttonBack && Input.GetKeyDown(KeyCode.Escape) ) SceneManager.LoadScene(scene);
     }
 
-    // Переход на указанную сцену (по номеру)
+    /// <summary>Переход на указанную сцену (номер сцены)</summary>
     public void GoToScene(int number) { SceneManager.LoadScene(number); }
 
-    // Переход на указанную сцену (по названию)
+    /// <summary>Переход на указанную сцену (текстовое название сцены)</summary>
     public void GoToScene(string name) { SceneManager.LoadScene(name); }
 
-    // Перезапуск уровня
+    /// <summary>Перезапуск текущей сцены</summary>
     public void RestartLevel() { SceneManager.LoadScene(SceneManager.GetActiveScene().name); }
 
-    // Переход на страницу приложения
+    /// <summary>Переход на страницу приложения</summary>
     public void LeaveFeedback() { Application.OpenURL(url); }
 
-    // Просмотр достижений Google Play
+    /// <summary>Просмотр достижений Google Play</summary>
     public void ViewAchievements() { PlayServices.ShowAchievements(); }
 
-    // Просмотр таблицы лидеров Google Play
+    /// <summary>Просмотр таблицы лидеров Google Play</summary>
     public void ViewLeaderboard() { PlayServices.ShowLeaderboard(); }
 
-    // Выход из игры
+    /// <summary>Выход из игры</summary>
     public void ExitGame() { Application.Quit(); }
 }

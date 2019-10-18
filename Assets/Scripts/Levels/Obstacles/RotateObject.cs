@@ -17,9 +17,9 @@ public class RotateObject : MonoBehaviour
         InvokeRepeating("ChangeAngle", 1.0f, pause);
     }
 
+    /// <summary>Увеличение целевого угла на 90 градусов</summary>
     private void ChangeAngle()
     {
-        // Увеличиваем угол
         angle += 90;
     }
 

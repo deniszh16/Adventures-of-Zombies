@@ -5,15 +5,20 @@ using UnityEngine.Networking;
 
 public class GameLocalization : MonoBehaviour
 {
-    private void Awake() { ParseTranslation.ParseXml(); }
+    private void Awake()
+    {
+        // Обрабатываем файл с переводом
+        ParseTranslation.ParseXml();
+    }
 }
 
 // Локализация игры
 public static class ParseTranslation {
 
-    // Ссылка на документ
+    // Ссылка на xml документ
     public static XDocument languages;
 
+    /// <summary>Парсинг xml документа</summary>
     public static void ParseXml()
     {
         // Получаем путь до xml файла

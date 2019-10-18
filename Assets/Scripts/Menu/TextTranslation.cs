@@ -9,23 +9,33 @@ public class TextTranslation : MonoBehaviour
     [Header("Ключ перевода")]
     [SerializeField] private string key;
 
+    // Ссылка на текстовый компонент
     private Text textComponent;
 
-    private void Awake() { textComponent = GetComponent<Text>(); }
+    private void Awake()
+    {
+        textComponent = GetComponent<Text>();
+    }
 
     private void Start()
     {
-        // Автоматический перевод
-        if (auto) TranslateText();
+        // Если установлен автоперевод
+        if (auto)
+            // Переводим текст
+            TranslateText();
     }
 
-    // Обновление перевода
+    /// <summary>Обновление перевода</summary>
     public void TranslateText()
     {
-        // Установка текста с указанным ключом из xml файла
+        // Устанавливаем текст с указанным ключом из xml файла
         textComponent.text = ParseTranslation.languages.Element("languages").Element(Options.language).Element(key).Value;
     }
 
-    // Изменение ключа и обновление перевода
-    public void ChangeKey(string value) { key = value; TranslateText(); }
+    /// <summary>Изменение ключа и обновление перевода (новый ключ перевода)</summary>
+    public void ChangeKey(string value)
+    {
+        key = value;
+        TranslateText();
+    }
 }

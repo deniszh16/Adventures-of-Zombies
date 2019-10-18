@@ -606,7 +606,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1339730724}
-        m_MethodName: StopMusic
+        m_MethodName: StopBackgroundMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1757,7 +1757,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1339730724}
-        m_MethodName: StopMusic
+        m_MethodName: StopBackgroundMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1990,7 +1990,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1339730724}
-        m_MethodName: StopMusic
+        m_MethodName: StopBackgroundMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2462,7 +2462,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1339730724}
-        m_MethodName: StopMusic
+        m_MethodName: StopBackgroundMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2769,7 +2769,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1339730724}
-        m_MethodName: StopMusic
+        m_MethodName: StopBackgroundMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3573,7 +3573,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1339730724}
-        m_MethodName: StopMusic
+        m_MethodName: StopBackgroundMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4597,7 +4597,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1339730724}
-        m_MethodName: StopMusic
+        m_MethodName: StopBackgroundMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5071,7 +5071,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1339730724}
-        m_MethodName: StopMusic
+        m_MethodName: StopBackgroundMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5230,7 +5230,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1339730724}
-        m_MethodName: StopMusic
+        m_MethodName: StopBackgroundMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5389,7 +5389,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1339730724}
-        m_MethodName: StopMusic
+        m_MethodName: StopBackgroundMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6152,7 +6152,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1339730724}
-        m_MethodName: StopMusic
+        m_MethodName: StopBackgroundMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6742,7 +6742,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1339730724}
-        m_MethodName: StopMusic
+        m_MethodName: StopBackgroundMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6886,8 +6886,8 @@ GameObject:
   - component: {fileID: 1339730719}
   - component: {fileID: 1339730718}
   - component: {fileID: 1339730722}
-  - component: {fileID: 1339730724}
   - component: {fileID: 1339730723}
+  - component: {fileID: 1339730724}
   - component: {fileID: 1339730721}
   m_Layer: 0
   m_Name: Main Camera
@@ -7011,7 +7011,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1339730717}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e08171a2218b38d4fb0d86d8fdff3553, type: 3}
+  m_Script: {fileID: 11500000, guid: 0d5a09e817a55d6418a0dadd75a4422d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1360456250
@@ -7115,7 +7115,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1339730724}
-        m_MethodName: StopMusic
+        m_MethodName: StopBackgroundMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7365,7 +7365,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1339730724}
-        m_MethodName: StopMusic
+        m_MethodName: StopBackgroundMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7857,7 +7857,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1339730724}
-        m_MethodName: StopMusic
+        m_MethodName: StopBackgroundMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8174,7 +8174,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1339730724}
-        m_MethodName: StopMusic
+        m_MethodName: StopBackgroundMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10436,7 +10436,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1339730724}
-        m_MethodName: StopMusic
+        m_MethodName: StopBackgroundMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10746,7 +10746,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1339730724}
-        m_MethodName: StopMusic
+        m_MethodName: StopBackgroundMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10978,7 +10978,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1339730724}
-        m_MethodName: StopMusic
+        m_MethodName: StopBackgroundMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11579,7 +11579,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1339730724}
-        m_MethodName: StopMusic
+        m_MethodName: StopBackgroundMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

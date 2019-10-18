@@ -9,14 +9,13 @@ public class PlayServices : MonoBehaviour
         if (Application.internetReachability != NetworkReachability.NotReachable) SignGooglePlay();
     }
 
-    // Подключение к сервисам Google Play
+    /// <summary>Подключение к сервисам Google Play</summary>
     private static void SignGooglePlay()
     {
-        // Подключаемся к сервисам Google Play
         Social.localUser.Authenticate((bool success) => {});
     }
 
-    // Просмотр игровых достижений
+    /// <summary>Просмотр игровых достижений</summary>
     public static void ShowAchievements()
     {
         // Если пользователь вошел в аккаунт, отображаем список достижений
@@ -25,14 +24,14 @@ public class PlayServices : MonoBehaviour
         else SignGooglePlay();
     }
 
-    // Разблокировка достижения
+    /// <summary>Разблокировка нового достижения (идентификатор достижения)</summary>
     public static void UnlockingAchievement(string identifier)
     {
-        // Если пользователь вошел в аккаунт, открываем достижение с указанным идентификатором
-        if (Social.localUser.authenticated) Social.ReportProgress(identifier, 100.0f, (bool success) => {});
+        if (Social.localUser.authenticated)
+            Social.ReportProgress(identifier, 100.0f, (bool success) => {});
     }
 
-    // Просмотр таблицы лидеров
+    /// <summary>Просмотр таблицы лидеров</summary>
     public static void ShowLeaderboard()
     {
         //Если пользователь вошел в аккаунт, отображаем таблицу игроков
@@ -41,10 +40,10 @@ public class PlayServices : MonoBehaviour
         else SignGooglePlay();
     }
 
-    // Отправка результата в таблицу лидеров
+    /// <summary>Отправка результата в таблицу лидеров</summary>
     public static void PostingScoreLeaderboard(int score)
     {
-        // Если пользователь вошел в аккаунт, отправляем указанный результат в общую таблицу
-        if (Social.localUser.authenticated) Social.ReportScore(score, GPGSIds.leaderboard, (bool success) => { });
+        if (Social.localUser.authenticated)
+            Social.ReportScore(score, GPGSIds.leaderboard, (bool success) => {});
     }
 }

@@ -8,15 +8,19 @@ public class TextureMove : MonoBehaviour
     // Вектор смещения текстуры
     private Vector2 offset;
 
+    // Ссылка на компонент рендера
     private Renderer render;
 
-    private void Awake() { render = GetComponent<Renderer>(); }
+    private void Awake()
+    {
+        render = GetComponent<Renderer>();
+    }
 
     private void Update()
     {
-        // Обновление вектора
+        // Обновляем вектор
         offset.x -= speed * Time.deltaTime;
-        // Смешение текстуры по вектору
+        // Смещаем текстуру по вектору
         render.material.mainTextureOffset = offset;
     }
 }

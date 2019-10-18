@@ -3,7 +3,9 @@
 public class DamageObjects : MonoBehaviour
 {
     [Header("Уничтожение стрел")]
-    public bool destroyArrow = true;
+    [SerializeField] private bool destroyArrow = true;
+
+    public bool DestroyArrow { get { return destroyArrow; } }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -13,12 +15,12 @@ public class DamageObjects : MonoBehaviour
         // Если персонаж живой
         if (character && character.Life)
         {
-            // Если звуки не отключены и персонаж жив, проигрываем звук
+            // Если звуки не отключены, проигрываем звук
             if (Options.sound) character.AudioSource.Play();
 
             // Перемещаем эффект урона к персонажу и воспроизводим
-            character.blood.transform.position = character.transform.position;
-            character.blood.Play();
+            character.Blood.transform.position = character.transform.position;
+            character.Blood.Play();
 
             // Наносим урон персонажу с отскоком и анимацией смерти
             character.RecieveDamageCharacter(true, true, 1.5f);

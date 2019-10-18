@@ -3,17 +3,26 @@
 public class InWater : MonoBehaviour
 {
     [Header("Масса в воде")]
-    public float mass;
+    [SerializeField] private float mass;
+
+    // Свойство для получения массы объекта в воде
+    public float Mass { get { return mass; } }
 
     [Header("Отображение эффекта")]
-    public bool spray = false;
+    [SerializeField] private bool spray = false;
+
+    // Свойство для получения информации по эффекту брызг
+    public bool Spray { get { return spray; } }
 
     [Header("Проигрывание звука")]
-    public bool playingSound = true;
+    [SerializeField] private bool playingSound = true;
 
-    // Ссылки на компоненты
-    public SpriteRenderer Sprite { get; set; }
-    public Rigidbody2D Rigbody { get; set; }
+    // Свойство для получения информации по звуковому эффекту
+    public bool PlayingSound { get { return playingSound; } }
+
+    // Ссылки на используемые компоненты
+    public SpriteRenderer Sprite { get; private set; }
+    public Rigidbody2D Rigbody { get; private set; }
 
     private void Awake()
     {

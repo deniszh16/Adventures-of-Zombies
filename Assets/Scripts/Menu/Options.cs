@@ -8,14 +8,16 @@ public class Options : MonoBehaviour
     // Язык интерфейса игры
     public static string language;
 
-    private void Start() { ChangeSettingsVariable(); }
+    private void Start()
+    {
+        ChangeSettingsVariable();
+    }
 
-    // Установка статических переменных
+    /// <summary>Установка игровых параметров</summary>
     public static void ChangeSettingsVariable()
     {
         // Устанавливаем значения в зависимости от сохраненных параметров
         sound = (PlayerPrefs.GetString("sounds") == "true") ? true : false;
-
         language = (PlayerPrefs.GetString("language") == "ru") ? "ru" : "en";
     }
 }

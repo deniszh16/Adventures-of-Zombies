@@ -28,8 +28,8 @@ public class LevelSelection : MonoBehaviour
 		if (number <= PlayerPrefs.GetInt("progress")) image.sprite = openLevel;
 	}
 
-	// Переход на уровень
-	public virtual void OpenLevel()
+    /// <summary>Переход на уровень</summary>
+    public virtual void OpenLevel()
 	{
         // Если номер уровня меньше прогресса
         if (number <= PlayerPrefs.GetInt("progress"))
@@ -41,7 +41,7 @@ public class LevelSelection : MonoBehaviour
         }
 	}
 
-    // Загрузка выбранного уровня
+    /// <summary>Загрузка выбранного уровня</summary>
     protected virtual void LoadScene()
     {
         transitions.GoToScene(number.ToString());

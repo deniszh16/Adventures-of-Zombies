@@ -13,17 +13,28 @@ public class Yeti : Boss
     private CapsuleCollider2D triggerYeti;
 
     // Перечисление анимаций йети
-    protected enum YetiAnimation { Idle, Run, Punch, Smash, Throw, Die }
+    private enum YetiAnimation { Idle, Run, Punch, Smash, Throw, Die }
 
     // Установка параметра в аниматоре
-    protected YetiAnimation State { set { animator.SetInteger("State", (int)value); } }
+    private YetiAnimation State { set { animator.SetInteger("State", (int)value); } }
 
     private void Start()
     {
+        // Добавляем в событие завершения отсчета метод пробуждения йети
+        countdown.AfterCountdown.AddListener(AwakenBoss);
+
+        // Получаем компонент дочернего коллайдера
         triggerYeti = gameObject.transform.GetChild(0).GetComponent<CapsuleCollider2D>();
 
-        // Определяем количество забегов
+        // Определяем количество атакующих забегов
         SetQuantityRun();
+    }
+
+    /// <summary>Пробуждение йети</summary>
+    private void AwakenBoss()
+    {
+        // Запускаем стартовое переключение режима
+        StartCoroutine(SwitchMode(0.2f, "throw"));
     }
 
     protected override void FixedUpdate()
@@ -36,13 +47,7 @@ public class Yeti : Boss
             State = YetiAnimation.Idle;
     }
 
-    public override void ActivateBoss()
-    {
-        // Запускаем стартовое переключение режима
-        StartCoroutine(SwitchMode(0.2f, "throw"));
-    }
-
-    // Переключение активности йети
+    /// <summary>Определение следующего режима активности йети</summary>
     protected override IEnumerator SwitchMode(float seconds, string mode)
     {
         yield return new WaitForSeconds(seconds);
@@ -50,7 +55,7 @@ public class Yeti : Boss
         // Устанавливаем режим йети
         this.mode = mode;
 
-        // Если отображаются звезды, скрываем их
+        // Если отображаются оглушающие звезды, скрываем их
         if (effect.activeSelf) effect.SetActive(false);
 
         switch (mode)
@@ -58,47 +63,40 @@ public class Yeti : Boss
             case "run":
                 // Устанавливаем случайную скорость
                 speed = Random.Range(14, 16);
-                // Определяем направление
-                SetDirection(true);
-                // Настраиваем коллайдер
-                ColliderOffset();
 
                 // Уменьшаем количество забегов
                 quantityRun--;
+
                 // Устанавливаем анимацию бега
                 State = YetiAnimation.Run;
-                break;
+                goto default;
+
             case "throw":
-                // Определяем направление
-                SetDirection(true);
-                // Настраиваем коллайдер
-                ColliderOffset();
                 // Устанавливаем анимацию броска
                 State = YetiAnimation.Throw;
 
                 // Определяем следующий режим
                 DefineNextMode();
-                break;
+                goto default;
+
             case "hit":
-                // Определяем направление
-                SetDirection(true);
-                // Настраиваем коллайдер
-                ColliderOffset();
                 // Устанавливаем анимацию удара
                 State = YetiAnimation.Punch;
 
                 // Определяем следующий режим
                 DefineNextMode();
-                break;
+                goto default;
+
             case "stupor":
                 // Уменьшаем жизнь
                 healthBoss--;
+
                 // Создаем небольшой отскок от стены
                 rigbody.AddForce(direction * -2.5f, ForceMode2D.Impulse);
 
                 // Отображаем эффект звезд
                 effect.SetActive(true);
-                // Перемещаем звезды к голове быка
+                // Перемещаем звезды к голове йети
                 effect.transform.localPosition = new Vector2(2.25f * direction.x, effect.transform.localPosition.y);
 
                 // Сбрасываем анимацию
@@ -107,20 +105,18 @@ public class Yeti : Boss
                 // Определяем следующий режим
                 DefineNextMode();
                 break;
-            case "attack":
-                // Определяем направление
-                SetDirection(true);
-                // Настраиваем коллайдер
-                ColliderOffset();
 
+            case "attack":
                 // Устанавливаем анимацию удара по земле
                 State = YetiAnimation.Smash;
 
                 // Определяем количество забегов
                 SetQuantityRun();
+
                 // Определяем следующий режим
                 DefineNextMode();
-                break;
+                goto default;
+
             case "die":
                 // Переключаемся на анимацию смерти
                 State = YetiAnimation.Die;
@@ -134,15 +130,24 @@ public class Yeti : Boss
                 // Отображаем финишные объекты
                 ShowFinish();
                 break;
-        }
 
-        // Отображаем дополнительные препятствия
-        if (mode != "attack") ShowObstacles(healthBoss);
+            default:
+                // Определяем направление
+                SetDirection(true);
+                // Смещаем коллайдер касания в направлении движения
+                ColliderOffset();
+                break;
+        }
+        
+        if (mode == "run")
+            // Отображаем дополнительные препятствия
+            ShowObstacles(healthBoss);
     }
 
-    // Определение следующего режима
+    /// <summary>Определение следующего режима активности</summary>
     protected override void DefineNextMode()
     {
+        // Если здоровье йети больше нуля
         if (healthBoss > 0)
         {
             // Определяем паузу перед сменой режима
@@ -157,12 +162,12 @@ public class Yeti : Boss
         }
         else
         {
-            // Переключаемся на режим смерти
+            // Иначе переключаемся на режим смерти
             StartCoroutine(SwitchMode(0, "die"));
         }
     }
 
-    // Бросок камня в персонажа
+    /// <summary>Бросок камня в персонажа</summary>
     public void ThrowStone()
     {
         // Активируем камень
@@ -171,6 +176,7 @@ public class Yeti : Boss
         stone.transform.localPosition = new Vector2(3.4f * direction.x, 0.4f);
 
         if (!stonePhysics)
+            // Получаем физический компонент у камня
             stonePhysics = stone.GetComponent<Rigidbody2D>();
 
         // Создаем импульс для броска камня
@@ -180,7 +186,14 @@ public class Yeti : Boss
         Invoke("DisableStone", 3.5f);
     }
 
-    // Отключение камня
+    /// <summary>Смещение коллайдера в сторону движения йети</summary>
+    private void ColliderOffset()
+    {
+        // Перемещаем коллайдер в зависимости от направления
+        triggerYeti.offset = new Vector2((direction.x < 0) ? -2.7f : 2.7f, -0.2f);
+    }
+
+    /// <summary>Отключение камня после броска</summary>
     private void DisableStone()
     {
         // Сбрасываем скорость полета
@@ -190,7 +203,7 @@ public class Yeti : Boss
         stone.SetActive(false);
     }
 
-    // Отображение дополнительных препятствий
+    /// <summary>Отображение дополнительных препятствий (здоровье йети, при котором отображается препятствие)</summary>
     protected override void ShowObstacles(int health)
     {
         switch (health)
@@ -206,22 +219,16 @@ public class Yeti : Boss
         }
     }
 
-    protected override void OnCollisionEnter2D(Collision2D collision)
+    protected void OnCollisionEnter2D(Collision2D collision)
     {
+        // Если йети врезался в стену
         if (collision.gameObject.CompareTag("Wall"))
         {
             // Вызываем встряхивание камеры
             cameraShaking.ShakeCamera();
-            // Переключаем режим на оглушение
+            // Переключаем режим на оглушения
             StartCoroutine(SwitchMode(0, "stupor"));
         }
-    }
-
-    // Смещение коллайдера
-    private void ColliderOffset()
-    {
-        // Перемещаем коллайдер в зависимости от направления
-        triggerYeti.offset = new Vector2((direction.x < 0) ? -2.7f : 2.7f, -0.2f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -231,54 +238,24 @@ public class Yeti : Boss
         {
             // Если йети не оглушен
             if (mode != "stupor")
-                // Переключаем режим на удар
+                // Переключаем режим активности на удар
                 StartCoroutine(SwitchMode(0, "hit"));
         }
     }
 
+    /// <summary>Удар йети по персонажу</summary>
     public void HitCharacter()
     {
-        // Если персонаж находится в указанном 
+        // Если персонаж находится в указанном диапазоне
         if (Mathf.Abs(transform.position.x - character.transform.position.x) < 6
             && Mathf.Abs(transform.position.y - character.transform.position.y) < 2.8f)
         {
             // Наносим урон персонажу
             character.RecieveDamageCharacter(true, true, 1.6f);
+
             // Перемещаем эффект урона к персонажу и воспроизводим
-            character.blood.transform.position = character.transform.position;
-            character.blood.Play();
+            character.Blood.transform.position = character.transform.position;
+            character.Blood.Play();
         } 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-    //protected override void Update()
-    //{
-    //    // Если расстояние между йети и персонажем находится в указанном диапазоне
-    //    if ((Mathf.Abs(transform.position.x - character.transform.position.x) < 4.0f && Mathf.Abs(transform.position.y - character.transform.position.y) < 2.8f) && mode != "stupor")
-    //        // Переключаемся на атаку кулаком
-    //        StartCoroutine(SwitchMode("punch", YetiAnimation.Punch, 0));
-    //}
-
-
-
-
-    //protected override void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    base.OnCollisionEnter2D(collision);
-
-    //    // Касание босса со стеной
-    //    if (collision.gameObject.tag == "Wall")
-    //        // Переключение на оглушение йети
-    //        StartCoroutine(SwitchMode("stupor", YetiAnimation.Idle, 0));
-    //}
 }

@@ -14,7 +14,7 @@ public class Rat : MonoBehaviour
     // Направление движения крысы
     private Vector2 direction = Vector2.left;
 
-    // Цель для атак
+    // Цель для крысиных атак
     private GameObject target;
 
     // Перечисление анимаций крысы
@@ -35,7 +35,7 @@ public class Rat : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Если отсутствует цель
+        // Если цель отсутствует
         if (!target)
         {
             // Сбрасываем анимацию
@@ -56,8 +56,9 @@ public class Rat : MonoBehaviour
                 // Пытаемся у него получить компонент персонажа
                 var character = hit.collider.gameObject.GetComponent<Character>();
 
-                // Устанавливаем цель для крысы
-                if (character) target = character.gameObject;
+                if (character)
+                    // Записываем персонажа в цель
+                    target = character.gameObject;
             }
         }
         else
@@ -73,8 +74,7 @@ public class Rat : MonoBehaviour
 
                 // Если крыса не заходит за ограничители, выполняем движение
                 if (distance.x > 0 && transform.localPosition.x > limiters[0].localPosition.x ||
-                    distance.x < 0 && transform.localPosition.x < limiters[1].localPosition.x)
-                    Run();
+                    distance.x < 0 && transform.localPosition.x < limiters[1].localPosition.x) Run();
                 // Иначе сбрасываем анимацию
                 else State = RatAnimations.Idle;
             }
@@ -83,11 +83,12 @@ public class Rat : MonoBehaviour
         }
     }
 
-    // Бег крысы
+    /// <summary>Бег крысы</summary>
     private void Run()
     {
         // Меняем анимацию на бег
         State = RatAnimations.Run;
+
         // Выполняем движение крысы к цели
         transform.position = Vector2.MoveTowards(transform.position, new Vector2(target.transform.position.x, transform.position.y), speed * Time.deltaTime);
     }
@@ -98,14 +99,14 @@ public class Rat : MonoBehaviour
         var character = collision.gameObject.GetComponent<Character>();
 
         // Если персонаж живой
-        if (character && character.Life)
+        if (character.Life)
         {
             // Устанавливаем атакующую анимацию
             State = RatAnimations.Attack;
 
             // Перемещаем эффект урона к персонажу и воспроизводим
-            character.blood.transform.position = character.transform.position;
-            character.blood.Play();
+            character.Blood.transform.position = character.transform.position;
+            character.Blood.Play();
 
             // Наносим урон персонажу без отскока и с анимацией смерти
             character.RecieveDamageCharacter(false, true, 1.5f);

@@ -7,7 +7,10 @@ public class ButtonsLevel : MonoBehaviour, IRewardedVideoAdListener
     // Ссылка на параметры игры
     private Parameters parameters;
 
-    private void Awake() { parameters = Camera.main.GetComponent<Parameters>(); }
+    private void Awake()
+    {
+        parameters = Camera.main.GetComponent<Parameters>();
+    }
 
     private void Start()
     {
@@ -15,32 +18,31 @@ public class ButtonsLevel : MonoBehaviour, IRewardedVideoAdListener
         Appodeal.setRewardedVideoCallbacks(this);
     }
 
-    // Переключение паузы
+    /// <summary>Переключение игровой паузы (течение времени от 0 до 1)</summary>
     public void TogglePause(int time)
     {
-        // Устанавливаем течение времени
         Time.timeScale = time;
 
         // Устанавливаем режим игры в зависимости от времени
         parameters.Mode = (time == 0) ? "pause" : "play";
     }
 
-    // Определение варианта оживления
+    /// <summary>Определение типа воскрешения персонажа</summary>
     public void IdentifyTypeRespawn()
     {
-        // Если достаточно монет
+        // Если монет достаточно
         if (PlayerPrefs.GetInt("coins") >= 50)
         {
-            // Вычитаем стоимость оживления
+            // Вычитаем стоимость воскрешения
             PlayerPrefs.SetInt("coins", PlayerPrefs.GetInt("coins") - 50);
-            // Запускаем оживления персонажа
-            RunCharacterRespawn();
+            // Возобновляем уровень
+            ResumeLevel();
         }
         else
         {
             // Иначе проверяем предзагрузку видеорекламы
             Appodeal.isLoaded(Appodeal.REWARDED_VIDEO);
-            // Отображаем рекламу
+            // Затем отображаем рекламу
             Appodeal.show(Appodeal.REWARDED_VIDEO);
         }
 
@@ -50,17 +52,17 @@ public class ButtonsLevel : MonoBehaviour, IRewardedVideoAdListener
             PlayServices.UnlockingAchievement(GPGSIds.achievement_10);
     }
 
-    // Запуск оживления персонажа
-    private void RunCharacterRespawn()
+    /// <summary>Возобновление уровня после проигрыша</summary>
+    private void ResumeLevel()
     {
         // Скрываем панель затемнения, панель подсказок, рамку для кнопок, панель поражения и панель монет
-        parameters.interfaceElements[(int)Parameters.InterfaceElements.Blackout].SetActive(false);
-        parameters.interfaceElements[(int)Parameters.InterfaceElements.HintPanel].SetActive(false);
-        parameters.interfaceElements[(int)Parameters.InterfaceElements.Frame].SetActive(false);
-        parameters.interfaceElements[(int)Parameters.InterfaceElements.LosePanel].SetActive(false);
-        parameters.interfaceElements[(int)Parameters.InterfaceElements.CoinsPanel].SetActive(false);
+        parameters[(int)Parameters.InterfaceElements.Blackout].SetActive(false);
+        parameters[(int)Parameters.InterfaceElements.HintPanel].SetActive(false);
+        parameters[(int)Parameters.InterfaceElements.Frame].SetActive(false);
+        parameters[(int)Parameters.InterfaceElements.LosePanel].SetActive(false);
+        parameters[(int)Parameters.InterfaceElements.CoinsPanel].SetActive(false);
         // Отображаем кнопку паузы
-        parameters.interfaceElements[(int)Parameters.InterfaceElements.PauseButton].SetActive(true);
+        parameters[(int)Parameters.InterfaceElements.PauseButton].SetActive(true);
 
         // Активируем игровой режим
         parameters.Mode = "play";
@@ -70,7 +72,7 @@ public class ButtonsLevel : MonoBehaviour, IRewardedVideoAdListener
         // Продолжаем отсчет времени прохождения
         parameters.StartCoroutine("CountTime");
 
-        // Восстанавливаем приостановленные методы
+        // Возобновляем приостановленные методы
         parameters.StartLevel.Invoke();
     }
 
@@ -80,20 +82,23 @@ public class ButtonsLevel : MonoBehaviour, IRewardedVideoAdListener
     public void onRewardedVideoFailedToLoad() { }
     public void onRewardedVideoShown() { }
     public void onRewardedVideoClosed(bool finished) { }
-    // Если реклама полностью просмотрена, активируем оживление персонажа
-    public void onRewardedVideoFinished(double amount, string name) { RunCharacterRespawn(); }
+    // Если реклама полностью просмотрена, возобновляем уровень
+    public void onRewardedVideoFinished(double amount, string name) { ResumeLevel(); }
     public void onRewardedVideoClicked() { }
     public void onRewardedVideoExpired() { }
     #endregion
 
-    // Завершение уровня
+
+    /// <summary>Успешное завершение уровня</summary>
     public void CompleteLevel()
     {
-        // Скрываем кнопку паузы
-        parameters.interfaceElements[(int)Parameters.InterfaceElements.PauseButton].SetActive(false);
         // Переключаем режим игры на победу
         parameters.Mode = "victory";
+
+        // Скрываем кнопку паузы
+        parameters[(int)Parameters.InterfaceElements.PauseButton].SetActive(false);
+
         // Отображаем результат уровня
-        parameters.Invoke("ShowResults", 0.3f);
+        parameters.Invoke("ShowResults", 0);
     }
 }

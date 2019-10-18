@@ -19,19 +19,21 @@ public class Stones : MonoBehaviour
 
     private void OnEnable()
     {
-        // Запускаем восстановление объекта
+        // Восстанавливаем объект при активации
         StartCoroutine(RestoreObject());
     }
 
-    // Восстановление объекта на сцене
+    /// <summary>Восстановление объекта с изменением позиции</summary>
     private IEnumerator RestoreObject()
     {
         yield return new WaitForSeconds(5f);
 
         // Сбрасываем скорость
         rigbody.velocity *= 0;
+
         // Перемещаем объект к начальной позиции с небольшим смещением
         transform.position = new Vector2(position.x + Random.Range(-3, 3), position.y + Random.Range(-2, 2));
+
         // Отключаем объект до следующего использования
         gameObject.SetActive(false);
     }

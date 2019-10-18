@@ -20,17 +20,17 @@ public class Training : MonoBehaviour
         parameters = Camera.main.GetComponent<Parameters>();
 
         // Отображаем панель затемнения и панель подсказок
-        parameters.interfaceElements[(int)Parameters.InterfaceElements.Blackout].SetActive(true);
-        parameters.interfaceElements[(int)Parameters.InterfaceElements.HintPanel].SetActive(true);
+        parameters[(int)Parameters.InterfaceElements.Blackout].SetActive(true);
+        parameters[(int)Parameters.InterfaceElements.HintPanel].SetActive(true);
 
         // Активируем обработку нажатий на экран
-        parameters.interfaceElements[(int)Parameters.InterfaceElements.HintPanel].GetComponent<Image>().raycastTarget = true;
+        parameters[(int)Parameters.InterfaceElements.HintPanel].GetComponent<Image>().raycastTarget = true;
 
         // Запускаем обучение игрока
         ShowTraining(tips[0]);
     }
 
-    // Обучение игрока
+    /// <summary>Обучение игрока (ключ подсказки)</summary>
     private void ShowTraining(string key)
     {
         // Обновляем текст подсказки
@@ -39,18 +39,23 @@ public class Training : MonoBehaviour
         stage++;
     }
 
-    // Смена этапа обучения
+    /// <summary>Обновление этапа обучения</summary>
     public void NextStage()
     {
         // Если активен обучающий режим
         if (parameters.Mode == "training")
         {
-            // Если текущий этап меньше общего количества подсказок, обновляем текст
-            if (stage < tips.Length) ShowTraining(tips[stage]);
+            // Если текущий этап меньше общего количества подсказок
+            if (stage < tips.Length)
+            {
+                // Выводим следующую подсказку
+                ShowTraining(tips[stage]);
+            }
             else
             {
-                // Отключаем повторный показ обучения
+                // Отключаем повторный показ (при рестарте)
                 display = false;
+
                 // Запускаем уровень
                 parameters.RunLevel();
             }

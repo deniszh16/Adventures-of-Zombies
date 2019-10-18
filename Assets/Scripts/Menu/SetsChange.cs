@@ -14,6 +14,9 @@ public class SetsChange : MonoBehaviour
         Training.display = true;
     }
 
-    // Сохранение выбранного набора уровней
-    public void SaveSelectedSet(int number) { PlayerPrefs.SetInt("sets", number); }
+    /// <summary>Сохранение выбранного набора уровней (номер набора)</summary>
+    public void SaveSelectedSet(int number)
+    {
+        PlayerPrefs.SetInt("sets", number);
+    }
 }

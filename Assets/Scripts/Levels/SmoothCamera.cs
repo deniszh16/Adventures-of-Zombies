@@ -3,13 +3,17 @@
 public class SmoothCamera : MonoBehaviour
 {
     [Header("Ограничение камеры")]
-    public bool limit = false;
+    [SerializeField] private bool limit = false;
+
+    // Свойство для настройки ограничения камеры
+    public bool Limit { get { return limit; } set { limit = value; } }
 
     // Скорость движения камеры
     private float speed = 3.5f;
 
     // Ссылка на персонажа
     private Character character;
+
     // Позиция персонажа
     private Vector3 position;
 

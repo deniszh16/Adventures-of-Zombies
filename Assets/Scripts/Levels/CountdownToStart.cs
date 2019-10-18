@@ -1,10 +1,14 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class CountdownToStart : MonoBehaviour
 {
-    [Header("Секунды до начала")]
+    // Событие по завершению отсчета
+    public UnityEvent AfterCountdown { get; } = new UnityEvent();
+
+    [Header("Количество секунд")]
     [SerializeField] private int countdown = 3;
 
     // Ссылки на компоненты
@@ -16,17 +20,17 @@ public class CountdownToStart : MonoBehaviour
         textComponent = GetComponent<Text>();
         parameters = Camera.main.GetComponent<Parameters>();
 
-        // Добавляем метод в событие по запуску уровня
+        // Подписываем запуск отсчета в событие по запуску уровня
         parameters.StartLevel.AddListener(StartCountdown);
     }
 
+    /// <summary>Запуск отсчета</summary>
     private void StartCountdown()
     {
-        // Запускаем отсчет до начала
         StartCoroutine(Countdown());
     }
 
-    // Отсчет времени до старта
+    /// <summary>Отсчет времени до начала уровня</summary>
     private IEnumerator Countdown()
     {
         while (countdown > 0)
@@ -34,14 +38,13 @@ public class CountdownToStart : MonoBehaviour
             // Обновляем текст отсчета
             textComponent.text = countdown.ToString();
 
-            // Отсчитываем секунду
             yield return new WaitForSeconds(1.0f);
-            // Уменьшаем количество секунд
+            // Уменьшаем секунды
             countdown--;
         }
 
-        // Активируем босса на уровне
-        FindObjectOfType<Boss>().ActivateBoss();
+        // Вызываем зарегистрированные методы
+        AfterCountdown.Invoke();
 
         // Скрываем текст таймера
         gameObject.SetActive(false);

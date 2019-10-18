@@ -17,7 +17,7 @@ public class Portal : MonoBehaviour
         InvokeRepeating("TeleportPlatform", pause, pause);
     }
 
-    // Телепортация платформы
+    /// <summary>Телепортация платформы</summary>
     private void TeleportPlatform()
     {
         // Увеличиваем номер точки

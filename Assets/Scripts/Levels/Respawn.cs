@@ -7,12 +7,9 @@ public class Respawn : MonoBehaviour
         // Получаем компонент персонажа у конувшегося объекта
         var character = collision.GetComponent<Character>();
 
-        if (character)
-        {
-            // Если персонаж жив
-            if (character.Life)
-                // Записываем в респаун текущую позицию персонажа
-                character.RespawnPosition = transform.position + Vector3.up;
-        }
+        // Если персонаж жив
+        if (character && character.Life)
+            // Записываем в респаун текущую позицию персонажа
+            character.RespawnPosition = transform.position + Vector3.up;
     }
 }

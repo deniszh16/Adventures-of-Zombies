@@ -5,17 +5,21 @@ public class Blade : MonoBehaviour
     // Частота ускорения объекта
     private float time = 3.0f;
 
+    // Ссылка на компонент физики
     private Rigidbody2D rigbody;
 
-    private void Awake() { rigbody = GetComponent<Rigidbody2D>(); }
+    private void Awake()
+    {
+        rigbody = GetComponent<Rigidbody2D>();
+    }
 
     private void Start()
     {
-        // Ускорение объекта каждые три секунды
+        // Ускоряем объект каждые три секунды
         InvokeRepeating("AccelerationBlade", time, time);
     }
 
-    // Увеличение объекта
+    /// <summary>Увеличение скорости объекта</summary>
     private void AccelerationBlade()
     {
         // Увеличиваем физическую скорость

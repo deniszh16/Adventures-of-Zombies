@@ -11,6 +11,7 @@ public class AnimationSpeed : MonoBehaviour
     [Header("Ограничения скорости")]
     [SerializeField] private float[] intervalSpeed;
 
+    // Ссылка на аниматор
     private Animator animator;
 
     private void Awake()

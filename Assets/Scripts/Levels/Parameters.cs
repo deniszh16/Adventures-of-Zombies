@@ -7,21 +7,21 @@ using UnityEngine.Events;
 public class Parameters : MonoBehaviour
 {
     // Событие по запуску уровня
-    public UnityEvent StartLevel { get; set; } = new UnityEvent();
+    public UnityEvent StartLevel { get; } = new UnityEvent();
 
     // Текущий игровой режим
     public string Mode { get; set; } = "none";
 
     // Номер текущего уровня
-    private int levelNumber;
+    private int LevelNumber { get; set; }
 
     [Header("Время на уровень")]
-    public int seconds;
+    [SerializeField] private int seconds;
 
-    [Header("Секунды для звезд")]
+    [Header("Секунды для итоговых звезд")]
     [SerializeField] private int[] finalSeconds;
 
-    // Количество собранных мозгов
+    // Количество мозгов на уровне
     public int Brains { get; set; } = 3;
 
     // Количество собранных монет
@@ -31,53 +31,56 @@ public class Parameters : MonoBehaviour
     [SerializeField] private GameObject[] characters;
 
     // Ссылка на компонент персонажа
-    public Character Character { get; set; }
+    public Character Character { get; private set; }
 
     [Header("Стартовая позиция персонажа")]
     [SerializeField] private Vector3 position;
 
-    // Объект для работы с json по персонажам
-    private CharactersJson charactersJson = new CharactersJson();
+    // Объект для работы со статистикой по персонажам
+    private CharactersJson CharactersJson { get; set; } = new CharactersJson();
 
     [Header("Элементы интерфейса")]
-    public GameObject[] interfaceElements;
+    [SerializeField] private GameObject[] interfaceElements;
+
+    // Индексатор для получения доступа к элементам интерфейса
+    public GameObject this[int index] { get { return interfaceElements[index]; } }
 
     // Перечисление элементов интерфейса
     public enum InterfaceElements
     {
-        PauseButton,
-        BrainIcon,
-        StarsIcon,
-        Blackout,
-        HintPanel,
-        Frame,
-        PausePanel,
-        LosePanel,
-        VictoryPanel,
-        StartLevel,
-        FinishText,
-        CoinsPanel
+        PauseButton, BrainIcon, StarsIcon, Blackout, HintPanel, Frame,
+        PausePanel, LosePanel, VictoryPanel, StartLevel, FinishText, CoinsPanel
     }
 
-    // Варианты победных текстов
+    // Варианты победных текстов для количества полученных звезд
     private string[] winningText = { "result-threestars", "result-twostars", "result-onestars" };
 
     [Header("Звезды за прохождение")]
     [SerializeField] private Sprite[] iconStars;
 
-    // Объект для работы с json по звездам
-    private StarsJson starsJson = new StarsJson();
+    // Количество звезд за уровень
+    private int Stars { get; set; }
+
+    // Объект для работы со списком полученных звезд за уровни
+    private StarsJson StarsJson { get; set; } = new StarsJson();
 
     [Header("Обучение на уровне")]
     [SerializeField] private bool hint = false;
 
-    public TextTranslation TextHint { get; set; }
+    // Ссылка на компонент перевода
+    public TextTranslation TextHint { get; private set; }
+
+    // Тексты статистики уровня
     private Text textBrains;
     private Text textSeconds;
+    // Ссылка на компонент обводки текста
     private Outline textSecondsOutline;
-    public Text TextFinish { get; set; }
+
+    // Текст о завершении уровня
+    public Text TextFinish { get; private set; }
+
+    // Ссылка на компонент фоновой музыки
     private MusicBackground music;
-    private AudioSource audioSource;
 
     private void Awake()
     {
@@ -90,48 +93,55 @@ public class Parameters : MonoBehaviour
         Character = characters[PlayerPrefs.GetInt("character") - 1].GetComponent<Character>();
 
         // Преобразуем сохраненную json строку по персонажам в объект
-        charactersJson = JsonUtility.FromJson<CharactersJson>(PlayerPrefs.GetString("character-" + PlayerPrefs.GetInt("character")));
+        CharactersJson = JsonUtility.FromJson<CharactersJson>(PlayerPrefs.GetString("character-" + PlayerPrefs.GetInt("character")));
         // Преобразуем сохраненную json строку по звездам в объект
-        starsJson = JsonUtility.FromJson<StarsJson>(PlayerPrefs.GetString("stars-level"));
+        StarsJson = JsonUtility.FromJson<StarsJson>(PlayerPrefs.GetString("stars-level"));
 
         // Получение компонентов
+        TextHint = interfaceElements[(int)InterfaceElements.HintPanel].transform.GetChild(2).GetComponent<TextTranslation>();
         textBrains = interfaceElements[(int)InterfaceElements.BrainIcon].GetComponentInChildren<Text>();
         textSeconds = interfaceElements[(int)InterfaceElements.StarsIcon].transform.GetChild(3).GetComponent<Text>();
         textSecondsOutline = textSeconds.gameObject.GetComponent<Outline>();
         TextFinish = interfaceElements[(int)InterfaceElements.FinishText].GetComponent<Text>();
         music = Camera.main.GetComponent<MusicBackground>();
-        audioSource = Camera.main.GetComponent<AudioSource>();
-        TextHint = interfaceElements[(int)InterfaceElements.HintPanel].transform.GetChild(2).GetComponent<TextTranslation>();
 
         // Получаем номер текущего уровня
-        levelNumber = int.Parse(SceneManager.GetActiveScene().name);
+        LevelNumber = int.Parse(SceneManager.GetActiveScene().name);
     }
 
     private void Start()
     {
-        // Если обучение доступно, активируем компонент обучения
-        if (hint && Training.display) Invoke("PlayerTraining", 1.5f);
-        // Иначе запускаем уровень
-        else RunLevel();
+        // Если активно обучение на уровне
+        if (hint && Training.display)
+        {
+            // Активируем отображение обучающей панели
+            Invoke("PlayerTraining", 1.5f);
+        }
+        else
+        {
+            // Запускаем уровень
+            RunLevel();
+        } 
     }
 
-    // Запуск обучения игрока
+    /// <summary>Отображение обучающей панели на уровне</summary>
     private void PlayerTraining()
     {
-        // Переключаем режим на обучение
+        // Переключаем режим
         Mode = "training";
+
         // Активируем компонент обучения
         Camera.main.GetComponent<Training>().enabled = true;
     }
 
-    // Запуск уровня
+    /// <summary>Старт игрового уровня</summary>
     public void RunLevel()
     {
         // Скрываем панель затемнения и панель подсказок
         interfaceElements[(int)InterfaceElements.Blackout].SetActive(false);
         interfaceElements[(int)InterfaceElements.HintPanel].SetActive(false);
 
-        // Показываем кнопку паузы
+        // Отображаем кнопку паузы
         interfaceElements[(int)InterfaceElements.PauseButton].SetActive(true);
 
         // Активируем игровой режим
@@ -140,88 +150,69 @@ public class Parameters : MonoBehaviour
         // Запускаем подсчет времени
         StartCoroutine(CountTime());
 
-        // Вызываем зарегистрированные методы
+        // Вызываем методы, запускаемые после старта
         StartLevel.Invoke();
 
-        // Если звуки не отключены, запускаем фоновую музыку
+        // Если звуки не отключены, запускаем музыку
         if (Options.sound) music.SwitchMusic(true);
-        // Постепенно увеличиваем громкость
-        StartCoroutine(IncreaseVolume());
     }
 
-    private IEnumerator IncreaseVolume()
+    /// <summary>Подсчет времени прохождения</summary>
+    private IEnumerator CountTime()
     {
-        // Пока громкость ниже указанного значения
-        while (audioSource.volume < 0.3f)
-        {
-            yield return new WaitForSeconds(0.05f);
-            // Увеличиваем громкость
-            audioSource.volume += 0.01f;
-        }
-    }
-
-    // Таймер на уровне
-    public IEnumerator CountTime()
-    {
-        // Проверка секунд
-        var secondsCheck = 0;
-
-        // Пока активен игровой режим
         while (Mode == "play")
         {
-            // Если есть секунды
             if (seconds > 0)
             {
-                // Отсчитываем секунды прохождения
                 yield return new WaitForSeconds(1);
+                // Уменьшаем секунды
                 seconds--;
-                // Обновляем счетчик на экране
+                // Обновляем текстовый счетчик
                 textSeconds.text = seconds.ToString();
 
-                // Если секунд меньше указанного количества
-                if (seconds < finalSeconds[secondsCheck])
+                // Если секунд меньше, чем нужно для получения указанного количества звезд
+                if (seconds < finalSeconds[Stars])
                 {
                     // Убираем звезду с экрана
-                    interfaceElements[(int)InterfaceElements.StarsIcon].transform.GetChild(secondsCheck).gameObject.SetActive(false);
-                    // Увеличиваем номер проверки
-                    secondsCheck++;
+                    interfaceElements[(int)InterfaceElements.StarsIcon].transform.GetChild(Stars).gameObject.SetActive(false);
+                    // Увеличиваем количество потерянных звезд
+                    Stars++;
 
-                    // Проверяем цвета таймера
-                    ChangeTextColor();
+                    // Если недоступно две звезды
+                    if (Stars == 2)
+                        // Перекрашиваем таймер в красный цвет
+                        textSecondsOutline.effectColor = new Color32(255, 0, 0, 128);
                 }
             }
             else
             {
                 // Если секунды закончились, уничтожаем персонажа
                 Character.RecieveDamageCharacter(false, true, 1.5f);
-                // Отключаем кнопку воскрешения
+                // Отключаем кнопку воскрешения на уровне
                 interfaceElements[(int)InterfaceElements.LosePanel].transform.GetChild(0).GetComponent<Button>().interactable = false;
             }
         }
     }
 
-    // Изменение цвета таймера
-    public void ChangeTextColor()
-    {
-        // Если секунды кончаются, перекрашиваем таймер в красный цвет, иначе оставляем стандартный черный
-        textSecondsOutline.effectColor = (seconds <= finalSeconds[1]) ? new Color32(255, 0, 0, 128) : new Color32(0, 0, 0, 128);
-    }
-
-    // Обновление количества мозгов
+    /// <summary>Обновление количества мозгов</summary>
     public void RefreshQuantityBrains()
     {
-        // Если мозгов больше нуля, выводим количество
-        if (Brains > 0) textBrains.text = "x" + Brains.ToString();
+        // Если есть не собранные мозги
+        if (Brains > 0)
+        {
+            // Выводим их количество
+            textBrains.text = "x" + Brains.ToString();
+        }
         else
         {
-            // Выводим сообщение о полном сборе мозгов
+            // Выводим сообщение о полном сборе
             textBrains.text = "ok";
             // Перекрашиваем текст в зеленый цвет
             textBrains.color = new Color32(127, 255, 0, 255);
         }
     }
 
-    // Вывод результатов
+    /// <summary>Вывод результатов уровня</summary>
     public void ShowResults()
     {
         // Останавливаем подсчет времени
@@ -233,9 +224,9 @@ public class Parameters : MonoBehaviour
         interfaceElements[(int)InterfaceElements.Frame].SetActive(true);
 
         // Увеличиваем количество игр для персонажа
-        charactersJson.played++;
+        CharactersJson.played++;
 
-        // Обновляем количество собранных монет
+        // Обновляем текущее количество монет
         PlayerPrefs.SetInt("coins", PlayerPrefs.GetInt("coins") + Coins);
         // Обновляем собранное количество монет за всё время
         PlayerPrefs.SetInt("piggybank", PlayerPrefs.GetInt("piggybank") + Coins);
@@ -244,7 +235,7 @@ public class Parameters : MonoBehaviour
         if (Mode == "victory")
         {
             // Если сохраненный прогресс меньше номера текущего уровня, увеличиваем прогресс
-            if (PlayerPrefs.GetInt("progress") <= levelNumber) PlayerPrefs.SetInt("progress", ++levelNumber);
+            if (PlayerPrefs.GetInt("progress") <= LevelNumber) PlayerPrefs.SetInt("progress", ++LevelNumber);
 
             // Отображаем панель победы
             interfaceElements[(int)InterfaceElements.VictoryPanel].SetActive(true);
@@ -259,36 +250,25 @@ public class Parameters : MonoBehaviour
             // Обновляем общее количество собранных мозгов
             PlayerPrefs.SetInt("brains", PlayerPrefs.GetInt("brains") + Brains);
 
-            // Количество звезд
-            var stars = 0;
-
-            for (int i = 0; i < finalSeconds.Length; i++)
-            {
-                // Если оставшиеся секунды больше указанного значения
-                if (seconds >= finalSeconds[i])
-                {
-                    // Записываем количество звезд за уровень
-                    stars = 4 - (i + 1);
-
-                    // Выводим соответствующий текст
-                    TextHint.ChangeKey(winningText[i]);
-                    // Отображаем полученные звезды за уровень
-                    interfaceElements[(int)InterfaceElements.VictoryPanel].transform.GetChild(0).GetComponent<Image>().sprite = iconStars[i];
-                    break;
-                }
-            }
+            // Выводим победный текст
+            TextHint.ChangeKey(winningText[Stars]);
+            // Отображаем полученные звезды за уровень
+            interfaceElements[(int)InterfaceElements.VictoryPanel].transform.GetChild(0).GetComponent<Image>().sprite = iconStars[Stars];
+            // Пересчитываем потерянные звезды в полученные
+            Stars = 3 - Stars;
 
             // Если доступен интернет
             if (Application.internetReachability != NetworkReachability.NotReachable)
             {
-                // Если уровень пройден на три звезды
-                if (stars == 3 && levelNumber > 1)
+                // Если любой (кроме первого) уровень пройден на три звезды
+                if (Stars == 3 && LevelNumber > 1)
                     // Разблокируем достижение (как много звёзд)
                     PlayServices.UnlockingAchievement(GPGSIds.achievement_2);
             }
 
-            // Записываем результат по звездам
-            GettingStars(stars);
+            // Записываем звездный результат
+            GettingStars(Stars);
+
         }
         else if (Mode == "lose")
         {
@@ -300,7 +280,7 @@ public class Parameters : MonoBehaviour
             {
                 // Если недоступен интернет
                 if (Application.internetReachability == NetworkReachability.NotReachable)
-                    // Находим кнопку воскрешения и отключаем ее
+                    // Отключаем кнопку воскрешения персонажа
                     interfaceElements[(int)InterfaceElements.LosePanel].transform.GetChild(0).GetComponent<Button>().interactable = false;
             }
 
@@ -309,34 +289,34 @@ public class Parameters : MonoBehaviour
             // Обновляем общее количество монет
             interfaceElements[(int)InterfaceElements.CoinsPanel].transform.GetChild(1).GetComponent<Text>().text = PlayerPrefs.GetInt("coins").ToString();
 
-            // Выводим текст проигрыша
+            // Выводим проигрышный текст
             TextHint.ChangeKey("result-lose");
 
             // Увеличиваем количество проигрышей для персонажа
-            charactersJson.loss++;
+            CharactersJson.loss++;
         }
 
         // Сохраняем статистику по активному персонажу
-        PlayerPrefs.SetString("character-" + PlayerPrefs.GetInt("character"), JsonUtility.ToJson(charactersJson));
+        PlayerPrefs.SetString("character-" + PlayerPrefs.GetInt("character"), JsonUtility.ToJson(CharactersJson));
     }
 
-    // Запись результата по звездам
+    /// <summary>Запись результата по звездам (количество звезд)</summary>
     private void GettingStars(int quantity)
     {
         // Если в списке меньше значений, чем номер уровня
-        if (starsJson.stars.Count < levelNumber)
+        if (StarsJson.stars.Count < LevelNumber)
         {
             // Создаем новый элемент с количеством полученных звезд
-            starsJson.stars.Add(quantity);
+            StarsJson.stars.Add(quantity);
             // Сохраняем значение
-            PlayerPrefs.SetString("stars-level", JsonUtility.ToJson(starsJson));
+            PlayerPrefs.SetString("stars-level", JsonUtility.ToJson(StarsJson));
         }
         // Иначе проверяем, меньше ли старое значение нового
-        else if (starsJson.stars[levelNumber - 1] < quantity)
+        else if (StarsJson.stars[LevelNumber - 1] < quantity)
         {
             // Записываем новое значение и сохраняем
-            starsJson.stars[levelNumber - 1] = quantity;
-            PlayerPrefs.SetString("stars-level", JsonUtility.ToJson(starsJson));
+            StarsJson.stars[LevelNumber - 1] = quantity;
+            PlayerPrefs.SetString("stars-level", JsonUtility.ToJson(StarsJson));
         }
     }
 }

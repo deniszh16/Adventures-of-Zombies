@@ -2,7 +2,7 @@
 
 public class MoveToPoints : MonoBehaviour
 {
-    [Header("Поворот спрайта")]
+    [Header("Отображение спрайта")]
     [SerializeField] private bool flipSprite = false;
 
     [Header("Скорость движения")]
@@ -17,7 +17,10 @@ public class MoveToPoints : MonoBehaviour
     // Ссылка на графический компонент
     private SpriteRenderer sprite;
 
-    private void Awake() { sprite = GetComponentInChildren<SpriteRenderer>(); }
+    private void Awake()
+    {
+        sprite = GetComponentInChildren<SpriteRenderer>();
+    }
 
     private void Update()
     {
@@ -47,7 +50,6 @@ public class MoveToPoints : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        // Получаем компонент персонажа у конувшегося объекта
         var character = collision.gameObject.GetComponent<Character>();
 
         if (character)

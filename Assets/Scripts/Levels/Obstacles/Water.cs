@@ -8,7 +8,10 @@ public class Water : MonoBehaviour
     // Ссылка на звуковой компонент
     private AudioSource audioSource;
 
-    private void Awake() { audioSource = GetComponent<AudioSource>(); }
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -19,19 +22,21 @@ public class Water : MonoBehaviour
         {
             // Переносим персонажа вниз слоя
             character.Sprite.sortingOrder = 0;
-            // Перемещаем эффект к персонажу и воспроизводим
+            // Перемещаем эффект брызг к персонажу и воспроизводим
             spray.transform.position = character.transform.position + Vector3.down / 2;
             spray.Play();
 
-            // Если персонаж живой, наносим ему урон
-            if (character.Life) character.RecieveDamageCharacter(false, false, 2.5f);
+            // Если персонаж живой
+            if (character.Life)
+                // Уничтожаем его
+                character.RecieveDamageCharacter(false, false, 2.5f);
 
             // Если звуки не отключены, проигрываем
             if (Options.sound) audioSource.Play();
         }
         else
         {
-            // Иначе пробуем получить компонент
+            // Иначе пробуем получить водный компонент
             var thing = collision.gameObject.GetComponent<InWater>();
 
             if (thing)
@@ -39,9 +44,9 @@ public class Water : MonoBehaviour
                 // Переносим объект вниз слоя
                 thing.Sprite.sortingOrder = 0;
                 // Обновляем массу объекта
-                thing.Rigbody.mass = thing.mass;
+                thing.Rigbody.mass = thing.Mass;
 
-                if (thing.spray)
+                if (thing.Spray)
                 {
                     // Перемещаем эффект брызг к объекту и воспроизводим его
                     spray.transform.position = new Vector2(thing.transform.position.x, thing.transform.position.y - 0.5f);
@@ -49,14 +54,13 @@ public class Water : MonoBehaviour
                 }
 
                 // Если звуки не отключены, воспроизводим
-                if (Options.sound && thing.playingSound) audioSource.Play();
+                if (Options.sound && thing.PlayingSound) audioSource.Play();
             }
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        // Получаем компонент у касающегося объекта
         var thing = collision.gameObject.GetComponent<InWater>();
 
         if (thing)

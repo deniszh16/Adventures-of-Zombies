@@ -2,15 +2,17 @@
 
 public class CameraShaking : MonoBehaviour
 {
-    // Ссылка на аниматор
     private Animator animator;
 
-    private void Awake() { animator = GetComponent<Animator>(); }
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
 
-    // Тряска камеры
+    /// <summary>Тряска камеры</summary>
     public void ShakeCamera()
     {
-        // Активируем компонент анимации
+        // Активируем анимацию
         animator.enabled = true;
         // Перезапускаем анимацию
         animator.Rebind();

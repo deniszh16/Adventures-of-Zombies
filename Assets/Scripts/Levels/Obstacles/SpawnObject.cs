@@ -10,7 +10,7 @@ public class SpawnObject : MonoBehaviour
     [SerializeField] private GameObject[] poolObjects;
 
     // Номер доступного объекта в пуле
-    private byte objectNumber = 0;
+    private int objectNumber = 0;
 
     // Ссылка на компоненты
     private Parameters parameters;
@@ -21,17 +21,17 @@ public class SpawnObject : MonoBehaviour
         parameters = Camera.main.GetComponent<Parameters>();
         audioSource = GetComponent<AudioSource>();
 
-        // Добавляем метод в событие
+        // Добавляем запуск создания объектов в событие по старту уровня
         parameters.StartLevel.AddListener(RunCoroutine);
     }
 
+    /// <summary>Запуск создания объектов</summary>
     private void RunCoroutine()
     {
-        // Запускаем корутину по созданию объектов
         StartCoroutine(CreateObject());
     }
 
-    // Создание объектов
+    /// <summary>Создание объектов</summary>
     private IEnumerator CreateObject()
     {
         // Пока активен игровой режим
@@ -48,7 +48,7 @@ public class SpawnObject : MonoBehaviour
             // Увеличиваем номер доступного объекта
             objectNumber++;
 
-            // Если номер выходит за пределы массива, сбрасываем номер
+            // Если номер выходит за пределы массива, сбрасываем его
             if (objectNumber >= poolObjects.Length) objectNumber = 0;
 
             // Если звук не отключен и установлен звуковой файл, проигрываем его

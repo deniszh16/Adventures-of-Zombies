@@ -60,6 +60,6 @@ public class LaunchGame : MonoBehaviour
         Invoke("GoToMenu", 2.0f);
     }
 
-    // Переход в главное меню
+    /// <summary>Переход в главное меню</summary>
     private void GoToMenu() { SceneManager.LoadScene(1); }
 }

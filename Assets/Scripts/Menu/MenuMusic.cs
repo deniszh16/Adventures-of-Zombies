@@ -42,7 +42,7 @@ public class MenuMusic : MonoBehaviour
             audioSource.Play();
 
             // Пока громкость ниже указанного значения
-            while (audioSource.volume < 1f)
+            while (audioSource.volume < 0.6f)
             {
                 yield return new WaitForSeconds(0.02f);
                 // Постепенно увеличиваем громкость

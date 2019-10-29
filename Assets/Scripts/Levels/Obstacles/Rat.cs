@@ -104,10 +104,8 @@ public class Rat : MonoBehaviour
             // Устанавливаем атакующую анимацию
             State = RatAnimations.Attack;
 
-            // Перемещаем эффект урона к персонажу и воспроизводим
-            character.Blood.transform.position = character.transform.position;
-            character.Blood.Play();
-
+            // Отображаем эффект урона
+            character.ShowDamageEffect();
             // Наносим урон персонажу без отскока и с анимацией смерти
             character.RecieveDamageCharacter(false, true, 1.5f);
         }

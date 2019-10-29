@@ -168,11 +168,10 @@ public class Bull : Boss
             // Переключаем режим активности на удар
             StartCoroutine(SwitchMode(0, "hit"));
 
+            // Отображаем эффект урона
+            character.ShowDamageEffect();
             // Наносим урон персонажу
             character.RecieveDamageCharacter(true, true, 1.6f);
-            // Перемещаем эффект урона к персонажу и воспроизводим
-            character.Blood.transform.position = character.transform.position;
-            character.Blood.Play();
         }
         // Если бык врезался в стену
         else if (collision.gameObject.CompareTag("Wall"))

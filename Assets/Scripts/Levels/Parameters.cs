@@ -216,7 +216,7 @@ public class Parameters : MonoBehaviour
     public void ShowResults()
     {
         // Останавливаем подсчет времени
-        StopCoroutine("CountTime");
+        StopAllCoroutines();
 
         // Отображаем панель затемнения, панель подсказок и рамку для кнопок
         interfaceElements[(int)InterfaceElements.Blackout].SetActive(true);

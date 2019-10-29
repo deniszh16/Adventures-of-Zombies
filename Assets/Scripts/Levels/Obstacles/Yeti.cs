@@ -250,12 +250,10 @@ public class Yeti : Boss
         if (Mathf.Abs(transform.position.x - character.transform.position.x) < 6
             && Mathf.Abs(transform.position.y - character.transform.position.y) < 2.8f)
         {
+            // Отображаем эффект урона
+            character.ShowDamageEffect();
             // Наносим урон персонажу
             character.RecieveDamageCharacter(true, true, 1.6f);
-
-            // Перемещаем эффект урона к персонажу и воспроизводим
-            character.Blood.transform.position = character.transform.position;
-            character.Blood.Play();
         } 
     }
 }

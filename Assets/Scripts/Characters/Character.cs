@@ -47,12 +47,10 @@ public class Character : MonoBehaviour
     [Header("Эффект урона")]
     [SerializeField] private ParticleSystem blood;
 
-    // Ссылка на эффект урона
-    public ParticleSystem Blood { get { return blood; } }
-
     // Ссылки на компоненты персонажа
     public SpriteRenderer Sprite { get; private set; }
     public Rigidbody2D Rigbody { get; private set; }
+
     private PolygonCollider2D polCollider;
     private Animator animator;
 
@@ -91,7 +89,7 @@ public class Character : MonoBehaviour
             {
                 // Переключаемся на анимацию виса
                 State = CharacterAnimations.Hook;
-                // Если персонаж не прыгает, сбрасываем скорость
+                // Если персонаж не прыгает, обнуляем скорость
                 if (!IsJumping) Speed = 0;
             }
 
@@ -141,7 +139,7 @@ public class Character : MonoBehaviour
             // Иначе сбрасываем нахождение на поверхности
             IsGrounded = false;
             // Если персонаж висит на крюке, сбрасываем прыжок
-            IsJumping = (IsHook) ? false : true;
+            IsJumping = IsHook ? false : true;
         }
     }
 
@@ -231,5 +229,14 @@ public class Character : MonoBehaviour
         Parameters.Mode = "lose";
         // Отображаем результат игры
         Parameters.Invoke("ShowResults", time);
+    }
+
+    /// <summary>Отображение эффекта урона</summary>
+    public void ShowDamageEffect()
+    {
+        // Перемещаем эффект урона к персонажу
+        blood.transform.position = transform.position;
+        // Воспроизводим эффект
+        blood.Play();
     }
 }

@@ -9,7 +9,7 @@ public class SmoothCamera : MonoBehaviour
     public bool Limit { get { return limit; } set { limit = value; } }
 
     // Скорость движения камеры
-    private float speed = 3.5f;
+    private float speed = 3f;
 
     // Ссылка на персонажа
     private Character character;

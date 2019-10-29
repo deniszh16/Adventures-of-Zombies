@@ -18,10 +18,8 @@ public class DamageObjects : MonoBehaviour
             // Если звуки не отключены, проигрываем звук
             if (Options.sound) character.AudioSource.Play();
 
-            // Перемещаем эффект урона к персонажу и воспроизводим
-            character.Blood.transform.position = character.transform.position;
-            character.Blood.Play();
-
+            // Отображаем эффект урона
+            character.ShowDamageEffect();
             // Наносим урон персонажу с отскоком и анимацией смерти
             character.RecieveDamageCharacter(true, true, 1.5f);
         }

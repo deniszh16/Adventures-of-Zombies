@@ -41,24 +41,24 @@ public class CharacterControl : MonoBehaviour
             parameters.Character.Jump();
     }
 
-    /// <summary>Отображение/скрытие кнопки действия (состояние кнопки)</summary>
+    /// <summary>Видимость кнопки действия (состояние кнопки)</summary>
     public void ButtonAction(bool state)
     {
         action.SetActive(state);
     }
 
-    //Управление на клавиатуре (для тетирования)
+    //Управление на клавиатуре (для тестирования)
     #if UNITY_EDITOR || UNITY_STANDALONE
     private void Update()
     {
-        if (parameters.Character.Life)
+        if (parameters.Character.Life && parameters.Mode == "play")
         {
             // При нажатии на клавишу направления, устанавливаем вектор
             if (Input.GetKey("left")) Vector = Vector2.left;
             if (Input.GetKey("right")) Vector = Vector2.right;
 
             // При нажатии на клавишу прыжка, выполняем прыжок
-            if (Input.GetKey("space")) parameters.Character.Jump();
+            if (Input.GetKeyDown("space")) parameters.Character.Jump();
         }
 
         // Сбрасываем вектор, если кнопки движения не используются

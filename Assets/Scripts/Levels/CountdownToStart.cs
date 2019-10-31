@@ -44,7 +44,7 @@ public class CountdownToStart : MonoBehaviour
         }
 
         // Вызываем зарегистрированные методы
-        AfterCountdown.Invoke();
+        AfterCountdown?.Invoke();
 
         // Скрываем текст таймера
         gameObject.SetActive(false);

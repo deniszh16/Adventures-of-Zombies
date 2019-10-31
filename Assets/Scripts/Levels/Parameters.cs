@@ -151,7 +151,7 @@ public class Parameters : MonoBehaviour
         StartCoroutine(CountTime());
 
         // Вызываем методы, запускаемые после старта
-        StartLevel.Invoke();
+        StartLevel?.Invoke();
 
         // Если звуки не отключены, запускаем музыку
         if (Options.sound) music.SwitchMusic(true);

@@ -19,10 +19,10 @@ public class TransitionsInMenu : MonoBehaviour
     }
 
     /// <summary>Переход на указанную сцену (номер сцены)</summary>
-    public void GoToScene(int number) { SceneManager.LoadScene(number); }
+    public void GoToScene(int number) { SceneManager.LoadSceneAsync(number); }
 
     /// <summary>Переход на указанную сцену (текстовое название сцены)</summary>
-    public void GoToScene(string name) { SceneManager.LoadScene(name); }
+    public void GoToScene(string name) { SceneManager.LoadSceneAsync(name); }
 
     /// <summary>Перезапуск текущей сцены</summary>
     public void RestartLevel() { SceneManager.LoadScene(SceneManager.GetActiveScene().name); }

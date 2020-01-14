@@ -12,6 +12,9 @@ public class LevelSelection : MonoBehaviour
     [Header("Панель перехода")]
     [SerializeField] private Animator blackout;
 
+    [Header("Текст загрузки")]
+    [SerializeField] private Animator textLoading;
+
     private Image image;
     private TransitionsInMenu transitions;
 
@@ -36,6 +39,8 @@ public class LevelSelection : MonoBehaviour
         {
             // Отображаем анимацию затемнения
             blackout.enabled = true;
+            // Активируем анимацию текста загрузки
+            textLoading.enabled = true;
             // Через полторы секунды загружаем сцену
             Invoke("LoadScene", 1.5f);
         }

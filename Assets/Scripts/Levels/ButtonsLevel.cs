@@ -78,16 +78,16 @@ public class ButtonsLevel : MonoBehaviour, IRewardedVideoAdListener
 
     #region Appodeal
     // Обратные вызовы для видеорекламы с вознаграждением
-    public void onRewardedVideoLoaded(bool isPrecache) { }
-    public void onRewardedVideoFailedToLoad() { }
-    public void onRewardedVideoShown() { }
-    public void onRewardedVideoClosed(bool finished) { }
+    public void onRewardedVideoLoaded(bool isPrecache) {}
+    public void onRewardedVideoFailedToLoad() {}
+    public void onRewardedVideoShown() {}
+    public void onRewardedVideoClosed(bool finished) {}
     // Если реклама полностью просмотрена, возобновляем уровень
     public void onRewardedVideoFinished(double amount, string name) { ResumeLevel(); }
-    public void onRewardedVideoClicked() { }
-    public void onRewardedVideoExpired() { }
+    public void onRewardedVideoClicked() {}
+    public void onRewardedVideoExpired() {}
+    public void onRewardedVideoShowFailed() {}
     #endregion
-
 
     /// <summary>Успешное завершение уровня</summary>
     public void CompleteLevel()

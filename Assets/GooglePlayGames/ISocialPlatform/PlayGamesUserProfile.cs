@@ -22,7 +22,7 @@ namespace GooglePlayGames
     using System.Collections;
     using GooglePlayGames.OurUtils;
     using UnityEngine;
-#if UNITY_2017_1_OR_NEWER
+#if UNITY_2017_2_OR_NEWER
     using UnityEngine.Networking;
 #endif
     using UnityEngine.SocialPlatforms;
@@ -46,7 +46,7 @@ namespace GooglePlayGames
         {
             mDisplayName = displayName;
             mPlayerId = playerId;
-            mAvatarUrl = avatarUrl;
+            setAvatarUrl(avatarUrl);
             mImageLoading = false;
         }
 
@@ -58,7 +58,7 @@ namespace GooglePlayGames
             if (mAvatarUrl != avatarUrl)
             {
                 mImage = null;
-                mAvatarUrl = avatarUrl;
+                setAvatarUrl(avatarUrl);
             }
 
             mImageLoading = false;
@@ -72,6 +72,11 @@ namespace GooglePlayGames
         }
 
         public string id
+        {
+            get { return mPlayerId; }
+        }
+
+        public string gameId
         {
             get { return mPlayerId; }
         }
@@ -120,7 +125,7 @@ namespace GooglePlayGames
             // avatar configured.
             if (!string.IsNullOrEmpty(AvatarURL))
             {
-#if UNITY_2017_1_OR_NEWER
+#if UNITY_2017_2_OR_NEWER
                 UnityWebRequest www = UnityWebRequestTexture.GetTexture(AvatarURL);
                 www.SendWebRequest();
 #else
@@ -133,7 +138,7 @@ namespace GooglePlayGames
 
                 if (www.error == null)
                 {
-#if UNITY_2017_1_OR_NEWER
+#if UNITY_2017_2_OR_NEWER
                     this.mImage = DownloadHandlerTexture.GetContent(www);
 #else
                     this.mImage = www.texture;
@@ -184,6 +189,14 @@ namespace GooglePlayGames
         public override string ToString()
         {
             return string.Format("[Player: '{0}' (id {1})]", mDisplayName, mPlayerId);
+        }
+
+        private void setAvatarUrl(string avatarUrl) {
+            mAvatarUrl = avatarUrl;
+            if (!avatarUrl.StartsWith("https") && avatarUrl.StartsWith("http"))
+            {
+                mAvatarUrl = avatarUrl.Insert(4, "s");
+            }
         }
     }
 }

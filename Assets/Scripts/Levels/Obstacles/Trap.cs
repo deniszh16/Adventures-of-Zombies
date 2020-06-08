@@ -1,33 +1,39 @@
 ﻿using UnityEngine;
 
-public class Trap : MonoBehaviour
+namespace Cubra
 {
-    // Ссылки на компоненты
-    private Animator animator;
-    private SpriteRenderer sprite;
-    private AudioSource audioSource;
-
-    private void Awake()
+    public class Trap : SharpObstacles
     {
-        animator = GetComponent<Animator>();
-        sprite = GetComponentInChildren<SpriteRenderer>();
-        audioSource = GetComponent<AudioSource>();
-    }
+        // Ссылки на компоненты
+        private PlayingSound _playingSound;
+        private SpriteRenderer _spriteRenderer;
+        private Animator _animator;
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        // Если персонаж коснулся капкана
-        if (collision.gameObject.GetComponent<Character>())
+        protected override void Awake()
         {
-            // Перезапускаем анимацию
-            animator.enabled = true;
-            animator.Rebind();
+            base.Awake();
+            _playingSound = InstanseObject.GetComponent<PlayingSound>();
+            _spriteRenderer = InstanseObject.GetComponent<SpriteRenderer>();
+            _animator = InstanseObject.GetComponent<Animator>();
+        }
 
-            // Если звуки не отключены, проигрываем
-            if (Options.sound) audioSource.Play();
+        /// <summary>
+        /// Действия при касании персонажа с коллайдером
+        /// </summary>
+        /// <param name="character">персонаж</param>
+        public override void ActionsOnEnter(Character character)
+        {
+            // Воспроизводим звук
+            _playingSound.PlaySound();
+
+            // Перезапускаем анимацию
+            _animator.enabled = true;
+            _animator.Rebind();
+
+            base.ActionsOnEnter(character);
 
             // Повышаем слой объекта
-            sprite.sortingOrder += 2;
+            _spriteRenderer.sortingOrder += 2;
         }
     }
 }

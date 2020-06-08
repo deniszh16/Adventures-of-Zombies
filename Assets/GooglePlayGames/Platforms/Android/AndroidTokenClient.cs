@@ -1,4 +1,4 @@
-﻿// <copyright file="AndroidTokenClient.cs" company="Google Inc.">
+// <copyright file="AndroidTokenClient.cs" company="Google Inc.">
 // Copyright (C) 2015 Google Inc.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,6 +18,7 @@
 namespace GooglePlayGames.Android
 {
     using System;
+    using System.Linq;
     using BasicApi;
     using OurUtils;
     using UnityEngine;
@@ -130,6 +131,52 @@ namespace GooglePlayGames.Android
         public void FetchTokens(bool silent, Action<int> callback)
         {
             PlayGamesHelperObject.RunOnGameThread(() => DoFetchToken(silent, callback));
+        }
+
+        public void RequestPermissions(string[] scopes, Action<SignInStatus> callback)
+        {
+            using (var bridgeClass = new AndroidJavaClass(HelperFragmentClass))
+            using (var currentActivity = AndroidHelperFragment.GetActivity())
+            using (var task =
+                bridgeClass.CallStatic<AndroidJavaObject>("showRequestPermissionsUi", currentActivity,
+                    oauthScopes.Union(scopes).ToArray()))
+            {
+                AndroidTaskUtils.AddOnSuccessListener<AndroidJavaObject>(task, /* disposeResult= */ false,
+                    accountWithNewScopes =>
+                    {
+                        if (accountWithNewScopes == null)
+                        {
+                            callback(SignInStatus.InternalError);
+                            return;
+                        }
+
+                        account = accountWithNewScopes;
+                        email = account.Call<string>("getEmail");
+                        idToken = account.Call<string>("getIdToken");
+                        authCode = account.Call<string>("getServerAuthCode");
+                        oauthScopes = oauthScopes.Union(scopes).ToList();
+                        callback(SignInStatus.Success);
+                    });
+
+                AndroidTaskUtils.AddOnFailureListener(task, e =>
+                {
+                    var failCode = SignInHelper.ToSignInStatus(e.Call<int>("getStatusCode"));
+                    OurUtils.Logger.e("Exception requesting new permissions: " + failCode);
+                    callback(failCode);
+                });
+            }
+        }
+
+        /// <summary>Returns whether or not user has given permissions for given scopes.</summary>
+        /// <param name="scopes">array of scopes</param>
+        /// <returns><c>true</c>, if given, <c>false</c> otherwise.</returns>
+        public bool HasPermissions(string[] scopes)
+        {
+            using (var bridgeClass = new AndroidJavaClass(HelperFragmentClass))
+            using (var currentActivity = AndroidHelperFragment.GetActivity())
+            {
+                return bridgeClass.CallStatic<bool>("hasPermissions", currentActivity, scopes);
+            }
         }
 
         private void DoFetchToken(bool silent, Action<int> callback)

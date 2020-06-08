@@ -1,104 +1,108 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
-public class FallObject : MonoBehaviour
+namespace Cubra
 {
-    [Header("Время до падения")]
-    [SerializeField] private float time = 1.2f;
-
-    // Начальный слой объекта
-    private int order;
-    // Начальная позиция объекта
-    private Vector3 position;
-
-    // Ссылки на компоненты
-    private Rigidbody2D rigbody;
-    private SpriteRenderer sprite;
-    private AudioSource audioSource;
-
-    private void Awake()
+    public class FallObject : CollisionObjects
     {
-        rigbody = GetComponent<Rigidbody2D>();
-        sprite = GetComponentInChildren<SpriteRenderer>();
-        audioSource = GetComponent<AudioSource>();
+        [Header("Время до падения")]
+        [SerializeField] private float _seconds;
 
-        // Получаем слой объекта
-        order = sprite.sortingOrder;
-        // Получаем позицию объекта
-        position = transform.position;
-    }
+        // Стандартный слой объекта
+        private int _sortingOrder;
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        // Получаем компонент персонажа у конувшегося объекта
-        var character = collision.gameObject.GetComponent<Character>();
+        // Начальная позиция объекта
+        private Vector3 _position;
 
-        if (character)
+        // Ссылка на компонент
+        private Rigidbody2D _rigidbody;
+
+        protected override void Awake()
         {
-            // Вызываем падение объекта через указанное время
-            Invoke("FallPlatform", time);
-
-            // Проигрываем звук падения
-            if (Options.sound) audioSource.Play();
+            base.Awake();
+            _rigidbody = InstanseObject.GetComponent<Rigidbody2D>();
         }
-    }
 
-    /// <summary>Падение объекта</summary>
-    private void FallPlatform()
-    {
-        // Активируем динамическую физику объекта
-        rigbody.bodyType = RigidbodyType2D.Dynamic;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        // Пробуем получить водный компонент у коснувшегося объекта
-        var water = collision.GetComponent<Water>();
-
-        if (water)
+        private void Start()
         {
-            // Переносим объект на нулевой слой
-            sprite.sortingOrder = 0;
+            // Получаем слой объекта
+            _sortingOrder = SpriteRenderer.sortingOrder;
+            // Получаем позицию объекта
+            _position = Transform.position;
         }
-        else
-        {
-            // Иначе пробуем получить компонент урона
-            var damage = collision.GetComponent<DamageObjects>();
 
-            if (damage)
+        /// <summary>
+        /// Действия при касании персонажа с коллайдером
+        /// </summary>
+        /// <param name="character">персонаж</param>
+        public override void ActionsOnEnter(Character character)
+        {
+            _ = StartCoroutine(ObjectFall());
+        }
+
+        /// <summary>
+        /// Падение объекта
+        /// </summary>
+        private IEnumerator ObjectFall()
+        {
+            yield return new WaitForSeconds(_seconds);
+            // Активируем динамическую физику объекта
+            _rigidbody.bodyType = RigidbodyType2D.Dynamic;
+        }
+
+        protected override void OnTriggerEnter2D(Collider2D collision)
+        {
+            // Получаем водный компонент 
+            var river = collision.GetComponent<River>();
+
+            if (river)
+            {
+                // Переносим объект на нулевой слой
+                SpriteRenderer.sortingOrder = 0;
+                return;
+            }
+
+            // Получаем компонент препятствия
+            var obstacle = collision.GetComponent<SharpObstacles>();
+
+            if (obstacle)
             {
                 // Скрываем спрайт
-                sprite.enabled = false;
+                SpriteRenderer.enabled = false;
 
-                // Через несколько секунд восстанавливаем объект
-                Invoke("RestoreObject", 2.5f);
+                _ = StartCoroutine(RestoreObject(2f));
+            }    
+        }
+
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            var river = collision.GetComponent<River>();
+
+            if (river)
+            {
+                _ = StartCoroutine(RestoreObject(1f));
             }
         }
-    }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        // Пробуем получить водный компонент
-        var water = collision.GetComponent<Water>();
+        /// <summary>
+        /// Восстановление объекта
+        /// </summary>
+        /// <param name="seconds">пауза перед восстановлением</param>
+        private IEnumerator RestoreObject(float seconds)
+        {
+            yield return new WaitForSeconds(seconds);
 
-        if (water)
-            // Восстанавливаем объект
-            Invoke("RestoreObject", 1.5f);
-    }
+            // Отображаем спрайт
+            SpriteRenderer.enabled = true;
+            // Восстанавливаем слой объекта
+            SpriteRenderer.sortingOrder = _sortingOrder;
 
-    /// <summary>Восстановление объекта</summary>
-    private void RestoreObject()
-    {
-        // Отображаем спрайт
-        sprite.enabled = true;
-        // Восстанавливаем слой
-        sprite.sortingOrder = order;
+            // Восстанавливаем физику объекта
+            _rigidbody.bodyType = RigidbodyType2D.Kinematic;
+            _rigidbody.velocity = Vector2.zero;
 
-        // Восстанавливаем физику объекта
-        rigbody.bodyType = RigidbodyType2D.Kinematic;
-        rigbody.velocity *= 0;
-
-
-        // Восстанавливаем позицию
-        transform.position = position;
+            // Восстанавливаем позицию
+            Transform.position = _position;
+        }
     }
 }

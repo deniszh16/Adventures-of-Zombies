@@ -43,12 +43,12 @@ namespace GooglePlayGames.BasicApi
         /// </remarks>
         /// <param name="callback">Callback when completed.</param>
         /// <param name="silent">If set to <c>true</c> silent.</param>
-        public void Authenticate(Action<bool, string> callback, bool silent)
+        public void Authenticate(bool silent, Action<SignInStatus> callback)
         {
             LogUsage();
             if (callback != null)
             {
-                callback(false, "Not implemented on this platform");
+                callback(SignInStatus.Failed);
             }
         }
 
@@ -371,6 +371,28 @@ namespace GooglePlayGames.BasicApi
             {
                 callback.Invoke(false);
             }
+        }
+
+        /// <summary>Asks user to give permissions for the given scopes.</summary>
+        /// <param name="scopes">Scope to ask permission for</param>
+        /// <param name="callback">Callback used to indicate the outcome of the operation.</param>
+        public void RequestPermissions(string[] scopes, Action<SignInStatus> callback)
+        {
+            LogUsage();
+            if (callback != null)
+            {
+                callback.Invoke(SignInStatus.Failed);
+            }
+        }
+
+        /// <summary>Returns whether or not user has given permissions for given scopes.</summary>
+        /// <seealso cref="GooglePlayGames.BasicApi.IPlayGamesClient.HasPermissions"/>
+        /// <param name="scopes">array of scopes</param>
+        /// <returns><c>true</c>, if given, <c>false</c> otherwise.</returns>
+        public bool HasPermissions(string[] scopes)
+        {
+            LogUsage();
+            return false;
         }
 
         /// <summary>

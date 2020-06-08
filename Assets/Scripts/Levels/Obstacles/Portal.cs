@@ -1,34 +1,49 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
-public class Portal : MonoBehaviour
+namespace Cubra
 {
-    [Header("Пауза для переходов")]
-    [SerializeField] private float pause = 2f;
-
-    [Header("Точки переходов")]
-    [SerializeField] private Vector3[] points;
-
-    // Активная точка
-    private int activePoint = 0;
-
-    private void Start()
+    public class Portal : BaseObjects
     {
-        // Запускаем переходы платформы
-        InvokeRepeating("TeleportPlatform", pause, pause);
-    }
+        [Header("Пауза для переходов")]
+        [SerializeField] private float _pause;
 
-    /// <summary>Телепортация платформы</summary>
-    private void TeleportPlatform()
-    {
-        // Увеличиваем номер точки
-        activePoint++;
+        [Header("Точки переходов")]
+        [SerializeField] private Vector3[] _points;
 
-        // Если точка вышла за пределы массива
-        if (activePoint > (points.Length - 1))
-            // Обнуляем точку
-            activePoint = 0;
+        // Активная точка
+        private int _point = 0;
 
-        // Выполняем переход платформы к активной точке
-        transform.position = points[activePoint];
+        private void Start()
+        {
+            Main.Instance.LevelLaunched += LaunchTeleportation;
+        }
+
+        /// <summary>
+        /// Запуск телепорта платформы
+        /// </summary>
+        private void LaunchTeleportation()
+        {
+            _ = StartCoroutine(TeleportPlatform());
+        }
+
+        private IEnumerator TeleportPlatform()
+        {
+            while (Main.Instance.CurrentMode == Main.GameModes.Play)
+            {
+                yield return new WaitForSeconds(_pause);
+                _point++;
+
+                // Если точка вышла за пределы массива
+                if (_point > _points.Length - 1)
+                {
+                    // Обнуляем точку
+                    _point = 0;
+                }
+
+                // Переставляем платформу к активной точке
+                Transform.position = _points[_point];
+            }
+        }
     }
 }

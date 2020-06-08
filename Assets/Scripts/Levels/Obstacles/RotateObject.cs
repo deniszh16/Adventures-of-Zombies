@@ -1,38 +1,59 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
-public class RotateObject : MonoBehaviour
+namespace Cubra
 {
-    [Header("Скорость поворота")]
-    [SerializeField] private float speed = 2f;
-
-    [Header("Пауза между поворотами")]
-    [SerializeField] private float pause = 2.5f;
-
-    // Угол для поворота
-    private int angle = 0;
-
-    private void Start()
+    public class RotateObject : BaseObjects
     {
-        // Запускаем повороты объекта
-        InvokeRepeating("ChangeAngle", 1.0f, pause);
-    }
+        [Header("Скорость поворота")]
+        [SerializeField] private float _speed;
 
-    /// <summary>Увеличение целевого угла на 90 градусов</summary>
-    private void ChangeAngle()
-    {
-        angle += 90;
-    }
+        [Header("Пауза между поворотами")]
+        [SerializeField] private float _pause;
 
-    private void Update()
-    {
-        // Если текущий угол нулевой, а переменная набрала полный оборот
-        if ((int)transform.localEulerAngles.z == 0 && angle >= 360)
-            // Обнуляем угол
-            angle = 0;
+        // Угол для поворота
+        private int _angle = 0;
 
-        // Если текущий угол меньше переменной угла
-        if (transform.localEulerAngles.z < angle)
-            // Выполняем поворот объекта
-            transform.Rotate(Vector3.forward, speed);
+        private void Start()
+        {
+            Main.Instance.LevelLaunched += StartRotation;
+        }
+
+        /// <summary>
+        /// Запуск вращения объекта
+        /// </summary>
+        private void StartRotation()
+        {
+            _ = StartCoroutine(ChangeAngle());
+        }
+
+        /// <summary>
+        /// Увеличение целевого угла на 90 градусов
+        /// </summary>
+        private IEnumerator ChangeAngle()
+        {
+            while (Main.Instance.CurrentMode == Main.GameModes.Play)
+            {
+                yield return new WaitForSeconds(_pause);
+                _angle += 90;
+            }
+        }
+
+        private void Update()
+        {
+            // Если текущий угол нулевой, а переменная набрала полный оборот
+            if ((int)Transform.localEulerAngles.z == 0 && _angle >= 360)
+            {
+                // Обнуляем угол
+                _angle = 0;
+            }
+
+            // Если текущий угол меньше целевого угла
+            if (Transform.localEulerAngles.z < _angle)
+            {
+                // Выполняем поворот объекта
+                Transform.Rotate(Vector3.forward, _speed);
+            }
+        }
     }
 }

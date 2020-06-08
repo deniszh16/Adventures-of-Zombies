@@ -1,35 +1,41 @@
 ﻿using UnityEngine;
 
-public class Finish : MonoBehaviour
+namespace Cubra
 {
-    private void OnTriggerEnter2D(Collider2D collision)
+    public class Finish : CollisionObjects
     {
-        // Получаем компонент персонажа у конувшегося объекта
-        var character = collision.GetComponent<Character>();
+        [Header("Финишная кнопка")]
+        [SerializeField] private GameObject _finishButton;
 
-        if (character)
+        /// <summary>
+        /// Действия при касании персонажа с коллайдером
+        /// </summary>
+        /// <param name="character">персонаж</param>
+        public override void ActionsOnEnter(Character character)
         {
-            // Если персонаж жив и собраны все мозги
-            if (character.Life && character.Parameters.Brains == 0)
+            if (character.Life)
             {
-                // Отображаем финишный текст
-                character.Parameters.TextFinish.color = Color.white;
-                // Отображаем кнопку завершения уровня
-                character.Control.ButtonAction(true);
+                // Если собраны все мозги
+                if (Main.Instance.Brains == 0)
+                {
+                    // Отображаем кнопку завершения
+                    _finishButton.SetActive(true);
+                }
             }
         }
-    }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        var character = collision.GetComponent<Character>();
-
-        if (character)
+        private void OnTriggerExit2D(Collider2D collision)
         {
-            // Скрываем финишный текст
-            character.Parameters.TextFinish.color = new Color(1, 1, 1, 0);
-            // Скрываем кнопку действия
-            character.Control.ButtonAction(false);
+            var character = collision.GetComponent<Character>();
+
+            if (character)
+            {
+                if (Main.Instance.Brains == 0)
+                {
+                    // Скрываем кнопку завершения
+                    _finishButton.SetActive(false);
+                }
+            }    
         }
     }
 }

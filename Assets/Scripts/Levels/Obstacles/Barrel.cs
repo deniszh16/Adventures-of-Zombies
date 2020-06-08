@@ -1,65 +1,57 @@
 ﻿using UnityEngine;
 
-public class Barrel : MonoBehaviour
+namespace Cubra
 {
-    // Активность красной бочки
-    private bool activeBarrel = true;
-
-    [Header("Эффект уничтожения")]
-    [SerializeField] private Animator destruction;
-
-    // Ссылка на звуковой компонент эффекта
-    private AudioSource audioSource;
-
-    // Ссылки на компоненты бочки
-    private Animator animator;
-    private CameraShaking cameraShaking;
-
-    private void Awake()
+    public class Barrel : CollisionObjects
     {
-        audioSource = destruction.gameObject.GetComponent<AudioSource>();
-        animator = GetComponent<Animator>();
-        cameraShaking = Camera.main.GetComponent<CameraShaking>();
-    }
+        // Активность бочки
+        private bool _active;
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        // Если бочка активна
-        if (activeBarrel)
+        [Header("Эффект взрыва")]
+        [SerializeField] private Animator _destruction;
+
+        // Ссылки на компоненты
+        private Animator _animator;
+
+        protected override void Awake()
         {
-            // Получаем компонент персонажа у конувшегося объекта
-            var character = collision.gameObject.GetComponent<Character>();
+            base.Awake();
+            _animator = GetComponent<Animator>();
+        }
 
-            if (character)
+        /// <summary>
+        /// Действия при касании персонажа с коллайдером
+        /// </summary>
+        /// <param name="character">персонаж</param>
+        public override void ActionsOnEnter(Character character)
+        {
+            if (character.Life)
             {
-                // Отключаем бочку от повторных касаний
-                activeBarrel = false;
-
-                // Запускаем анимацию уничтожения
-                animator.enabled = true;
-                animator.Rebind();
+                if (_active == false)
+                {
+                    // Активируем анимацию
+                    _animator.enabled = true;
+                    _active = true;
+                }
             }
         }
-    }
 
-    /// <summary>Уничтожение бочки</summary>
-    private void DestroyBarrel()
-    {
-        // Если звуки не отключены, проигрываем
-        if (Options.sound) audioSource.Play();
+        /// <summary>
+        /// Уничтожение бочки
+        /// </summary>
+        public void DestroyBarrel()
+        {
+            // Перемещаем эффект взрыва к бочке
+            _destruction.transform.position = Transform.position;
 
-        // Перемещаем эффект уничтожения к бочке
-        destruction.transform.position = gameObject.transform.position;
-        // Перезапускаем анимацию эффекта
-        destruction.Rebind();
+            if (_destruction.enabled == false) _destruction.enabled = true;
+            // Перезапускаем анимацию
+            _destruction.Rebind();
 
-        // Отображаем эффект дрожания камеры
-        cameraShaking.ShakeCamera();
+            // Увеличиваем число уничтоженных бочек
+            PlayerPrefs.SetInt("barrel", PlayerPrefs.GetInt("barrel") + 1);
 
-        // Увеличиваем число уничтоженных бочек
-        PlayerPrefs.SetInt("barrel", PlayerPrefs.GetInt("barrel") + 1);
-
-        // Отключаем бочку
-        gameObject.SetActive(false);
+            InstanseObject.SetActive(false);
+        }
     }
 }

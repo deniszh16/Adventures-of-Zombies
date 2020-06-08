@@ -1,139 +1,159 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Arrow : MonoBehaviour
+namespace Cubra
 {
-    // Активность полета
-    private bool flight;
-
-    // Скорость полета стрелы
-    private float speed = 15f;
-
-    // Стандартный слой объекта
-    private const int layer = 3;
-
-    [Header("Пул для хранения")]
-    [SerializeField] private GameObject poolObjects;
-
-    // Направление стрелы
-    private Vector3 direction;
-
-    // Ссылки на компоненты
-    private BoxCollider2D boxcollider;
-    private Rigidbody2D rigbody;
-    private SpriteRenderer sprite;
-    private FixedJoint2D joint;
-    private DamageObjects damage;
-
-    private void Awake()
+    public class Arrow : CollisionObjects
     {
-        boxcollider = GetComponent<BoxCollider2D>();
-        rigbody = GetComponent<Rigidbody2D>();
-        sprite = GetComponentInChildren<SpriteRenderer>();
-        joint = GetComponent<FixedJoint2D>();
-        damage = GetComponent<DamageObjects>();
-    }
+        // Активность полета
+        private bool _flight;
 
-    private void OnEnable()
-    {
-        // Преобразуем локальный вектор направления в мировой
-        direction = transform.TransformDirection(Vector3.down);
+        // Скорость полета стрелы
+        private float _speed;
 
-        // Активируем полет
-        flight = true;
+        // Стандартная скорость полета стрелы
+        private readonly float _standardSpeed = 15f;
 
-        // Активируем стандартный коллайдер
-        boxcollider.enabled = true;
-        // Активируем компонент урона
-        damage.enabled = true;
+        // Стандартный слой объекта
+        private int _sortingOrder;
 
-        // Устанавливаем слой объекта
-        sprite.sortingOrder = layer;
+        // Направление стрелы
+        private Vector3 _direction;
 
-        // Сбрасываем скорость
-        speed = 15f;
-    }
+        // Ссылки на компоненты
+        private BoxCollider2D _boxcollider;
+        private Rigidbody2D _rigidbody;
+        private FixedJoint2D _joint;
 
-    private void FixedUpdate()
-    {
-        // Если активен полет, выполняется движение в указанном направлении
-        if (flight) rigbody.MovePosition(transform.position + direction * speed * Time.fixedDeltaTime);
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        // Если стрела касается поверхности
-        if (collision.gameObject.tag == "Surface")
+        protected override void Awake()
         {
-            // Отключаем коллайдер
-            boxcollider.enabled = false;
-            // Понижаем слой объекта
-            sprite.sortingOrder--;
+            base.Awake();
 
-            // Назначаем поверхность родительским объектом стрелы
-            transform.SetParent(collision.transform);
+            _boxcollider = InstanseObject.GetComponent<BoxCollider2D>();
+            _rigidbody = InstanseObject.GetComponent<Rigidbody2D>();
+            _joint = InstanseObject.GetComponent<FixedJoint2D>();
 
-            // Пробуем получить физический компонент у родительского объекта
-            var physics = transform.parent.GetComponent<Rigidbody2D>();
+            // Получаем слой объекта
+            _sortingOrder = SpriteRenderer.sortingOrder;
+        }
 
-            if (physics)
+        private void OnEnable()
+        {
+            // Преобразуем локальный вектор направления в мировой
+            _direction = Transform.TransformDirection(Vector3.down);
+
+            // Активируем полет
+            _flight = true;
+
+            // Активируем коллайдер
+            _boxcollider.enabled = true;
+
+            // Восстанавливаем слой объекта
+            SpriteRenderer.sortingOrder = _sortingOrder;
+
+            // Восстанавливаем скорость
+            _speed = _standardSpeed;
+        }
+
+        private void FixedUpdate()
+        {
+            if (_flight)
             {
-                // Убираем массу
-                rigbody.mass = 0;
-                // Закрепляем стрелу на родительском объекте
-                joint.connectedBody = physics;
+                // Если полет активен, выполняется движение в указанном направлении
+                _rigidbody.MovePosition(Transform.position + (_direction * _speed * Time.fixedDeltaTime));
+            }
+        }
+
+        /// <summary>
+        /// Действия при касании персонажа с коллайдером
+        /// </summary>
+        /// <param name="character">персонаж</param>
+        public override void ActionsOnEnter(Character character)
+        {
+            if (character.Life)
+            {
+                // Наносим урон персонажу с анимацией смерти и отскоком
+                Main.Instance.CharacterController.DamageToCharacter(true, true);
+            }
+        }
+
+        protected override void OnTriggerEnter2D(Collider2D collision)
+        {
+            base.OnTriggerEnter2D(collision);
+
+            // Если стрела касается поверхности
+            if (collision.gameObject.layer == (LayerMask.GetMask("Surface") >> 5))
+            {
+                // Отключаем коллайдер
+                _boxcollider.enabled = false;
+
+                // Понижаем слой объекта
+                SpriteRenderer.sortingOrder--;
+
+                // Пробуем получить физический компонент у поверхности
+                var physics = collision.gameObject.GetComponent<Rigidbody2D>();
+
+                if (physics)
+                {
+                    // Убираем массу
+                    _rigidbody.mass = 0;
+                    // Указываем цель для фиксации стрелы
+                    _joint.connectedBody = physics;
+                }
+
+                if (InstanseObject.activeInHierarchy)
+                {
+                    // Запускаем остановку стрелы
+                    _ = StartCoroutine(StopFlight(0.03f, physics));
+                }
+                
+                return;
             }
 
-            if (gameObject.activeSelf)
-                // Останавливаем полет стрелы через указанное время
-                StartCoroutine(FlightStop(physics ? true : false, 0.03f));
+            // Если стрела попадает в другое препятствие
+            if (collision.gameObject.GetComponent<SharpObstacles>())
+            {
+                InstanseObject.SetActive(false);
+                return;
+            }
+
+            // Если стрела попала в реку
+            if (collision.gameObject.GetComponent<River>())
+            {
+                _speed /= 2;
+            }
         }
-        // Если стрела касается воды
-        else if (collision.gameObject.GetComponent<Water>())
+
+        /// <summary>
+        /// Остановка полета стрелы
+        /// </summary>
+        /// <param name="seconds">секунды до остановки</param>
+        /// <param name="fixation">фиксация стрелы на объекте</param>
+        private IEnumerator StopFlight(float seconds, bool fixation)
         {
-            // Уменьшаем скорость полета
-            speed = 8.5f;
+            yield return new WaitForSeconds(seconds);
+            _flight = false;
 
-            // Отключаем урон под водой
-            damage.enabled = false;
+            if (fixation)
+            {
+                // Закрепляем стрелу на объекте
+                _joint.enabled = true;
+            }
+
+            _ = StartCoroutine(TurnOffObject());
         }
-        else
+
+        /// <summary>
+        /// Отключение стрелы после использования
+        /// </summary>
+        private IEnumerator TurnOffObject()
         {
-            // Пробуем получить компонент урона
-            var damage = collision.gameObject.GetComponent<DamageObjects>();
+            yield return new WaitForSeconds(1.5f);
 
-            // Если активно уничтожение стрел
-            if (damage && damage.DestroyArrow)
-                // Отключаем объект
-                gameObject.SetActive(false);
+            // Сбрасываем угол объекта
+            Transform.localEulerAngles = Vector3.zero;
+            // Отключаем объект
+            InstanseObject.SetActive(false);
         }
-    }
-
-    /// <summary>Остановка полета стрелы (закрепление стрелы на объекте, время до остановки)</summary>
-    private IEnumerator FlightStop(bool fixation, float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-
-        // Отключаем полет
-        flight = false;
-
-        // Если активна фиксация, закрепляем стрелу на объекте
-        if (fixation) joint.enabled = true;
-
-        // Отключаем стрелу через указанное время
-        Invoke("TurnOffObject", 1.6f);
-    }
-
-    /// <summary>Отключение объекта после исползования</summary>
-    private void TurnOffObject()
-    {
-        // Возвращаем стрелу в пул объектов
-        gameObject.transform.SetParent(poolObjects.transform);
-
-        // Сбрасываем угол стрелы
-        transform.localEulerAngles = Vector3.zero;
-
-        // Отключаем объект
-        gameObject.SetActive(false);
     }
 }

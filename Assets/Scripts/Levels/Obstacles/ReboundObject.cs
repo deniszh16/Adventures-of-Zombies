@@ -1,38 +1,42 @@
 ﻿using UnityEngine;
 
-public class ReboundObject : MonoBehaviour
+namespace Cubra
 {
-    [Header("Вектор отскока")]
-    [SerializeField] protected Vector2 rebound;
-
-    [Header("Сила отскока")]
-    [SerializeField] protected float force;
-
-    protected Animator animator;
-    protected AudioSource audioSource;
-
-    private void Awake()
+    public class ReboundObject : CollisionObjects
     {
-        animator = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();
-    }
+        [Header("Вектор отскока")]
+        [SerializeField] protected Vector2 _direction;
 
-    protected virtual void OnCollisionEnter2D(Collision2D collision)
-    {
-        // Пытаемся получить компонент физики у коснувшегося объекта
-        Rigidbody2D rigbody = collision.gameObject.GetComponent<Rigidbody2D>();
+        [Header("Сила отскока")]
+        [SerializeField] protected float _force;
 
-        if (rigbody)
+        // Ссылки на компоненты
+        protected Animator _animator;
+        protected PlayingSound _playingSound;
+
+        protected override void Awake()
         {
-            // Создаем импульсный отскок объекта по вектору
-            rigbody.AddForce(rebound * force, ForceMode2D.Impulse);
+            base.Awake();
 
-            // Если звуки не отключены, проигрываем звук
-            if (Options.sound) audioSource.Play();
-            
+            _animator = InstanseObject.GetComponent<Animator>();
+            _playingSound = InstanseObject.GetComponent<PlayingSound>();
+        }
+
+        /// <summary>
+        /// Действия при касании персонажа с коллайдером
+        /// </summary>
+        /// <param name="character">персонаж</param>
+        public override void ActionsOnEnter(Character character)
+        {
+            // Создаем отскок персонажа в указанном направлении
+            character.Rigidbody.AddForce(_direction * _force, ForceMode2D.Impulse);
+
+            // Воспрозводим звук
+            _playingSound.PlaySound();
+
             // Активируем и перезапускаем анимацию
-            animator.enabled = true;
-            animator.Rebind();
+            _animator.enabled = true;
+            _animator.Rebind();
         }
     }
 }

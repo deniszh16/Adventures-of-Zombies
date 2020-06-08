@@ -1,63 +1,87 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
-public class Training : MonoBehaviour
+namespace Cubra
 {
-    // Отображение подсказки
-    public static bool display = true;
-
-    // Этап обучения
-    private int stage = 0;
-
-    [Header("Ключи подсказок")]
-    [SerializeField] private string[] tips;
-
-    // Ссылка на параметры
-    private Parameters parameters;
-
-    private void Start()
+    public class Training : MonoBehaviour
     {
-        parameters = Camera.main.GetComponent<Parameters>();
+        // Обучение на уровне
+        public static bool PlayerTraining = true;
 
-        // Отображаем панель затемнения и панель подсказок
-        parameters[(int)Parameters.InterfaceElements.Blackout].SetActive(true);
-        parameters[(int)Parameters.InterfaceElements.HintPanel].SetActive(true);
+        // Этап обучения
+        private int _stage;
 
-        // Активируем обработку нажатий на экран
-        parameters[(int)Parameters.InterfaceElements.HintPanel].GetComponent<Image>().raycastTarget = true;
+        [Header("Ключи подсказок")]
+        [SerializeField] private string[] _tips;
 
-        // Запускаем обучение игрока
-        ShowTraining(tips[0]);
-    }
+        // Ссылка на компоненты подсказок
+        private Image _imageHintPanel;
 
-    /// <summary>Обучение игрока (ключ подсказки)</summary>
-    private void ShowTraining(string key)
-    {
-        // Обновляем текст подсказки
-        parameters.TextHint.ChangeKey(key);
-        // Увеличиваем этап обучения
-        stage++;
-    }
-
-    /// <summary>Обновление этапа обучения</summary>
-    public void NextStage()
-    {
-        // Если активен обучающий режим
-        if (parameters.Mode == "training")
+        private void Awake()
         {
-            // Если текущий этап меньше общего количества подсказок
-            if (stage < tips.Length)
-            {
-                // Выводим следующую подсказку
-                ShowTraining(tips[stage]);
-            }
-            else
-            {
-                // Отключаем повторный показ (при рестарте)
-                display = false;
+            _imageHintPanel = Main.Instance.LevelResults.HintPanel.GetComponent<Image>();
+        }
 
-                // Запускаем уровень
-                parameters.RunLevel();
+        public IEnumerator StartTraining()
+        {
+            yield return new WaitForSeconds(1f);
+            // Отображаем панель подсказок
+            Main.Instance.LevelResults.HintPanel.SetActive(true);
+
+            // Отображаем затемнение экрана
+            _imageHintPanel.color = new Color32(0, 0, 0, 230);
+            // Активируем обработку нажатий на экран
+            _imageHintPanel.raycastTarget = true;
+
+            // Запускаем обучение игрока
+            UpdateTrainingText(_tips[0]);
+        }
+
+        /// <summary>
+        /// Обновление обучающего текста
+        /// </summary>
+        /// <param name="key">ключ подсказки</param>
+        private void UpdateTrainingText(string key)
+        {
+            // Обновляем текст подсказки
+            Main.Instance.LevelResults.TextHint.ChangeKey(key);
+            // Увеличиваем этап обучения
+            _stage++;
+        }
+
+        /// <summary>
+        /// Обновление подсказки
+        /// </summary>
+        public void UpdateHint()
+        {
+            // Если активен обучающий режим
+            if (Main.Instance.CurrentMode == Main.GameModes.Training)
+            {
+                // Если этап не превышает количество подсказок
+                if (_stage < _tips.Length)
+                {
+                    // Выводим следующую подсказку
+                    UpdateTrainingText(_tips[_stage]);
+                }
+                else
+                {
+                    // Отключаем повторный показ
+                    PlayerTraining = false;
+
+                    // Отключаем обработку нажатий
+                    _imageHintPanel.raycastTarget = false;
+                    // Скрываем затемнение экрана
+                    _imageHintPanel.color = new Color32(0, 0, 0, 0);
+                    // Скрываем понель подсказок
+                    Main.Instance.LevelResults.HintPanel.SetActive(false);
+
+                    // Включаем управление персонажем
+                    Main.Instance.CharacterController.Enable();
+
+                    // Запускаем уровень
+                    Main.Instance.LaunchALevel();
+                }
             }
         }
     }

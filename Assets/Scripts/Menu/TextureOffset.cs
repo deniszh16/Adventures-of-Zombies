@@ -1,31 +1,34 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class TextureOffset : MonoBehaviour
+namespace Cubra
 {
-    [Header("Скорость смещения")]
-    [SerializeField] private float speed;
-
-    // Позиция текстуры
-    private float position; 
-
-    // Ссылка на графический компонент
-    private RawImage image;
-
-    private void Awake()
+    public class TextureOffset : MonoBehaviour
     {
-        image = GetComponent<RawImage>();
-    }
+        [Header("Скорость смещения")]
+        [SerializeField] private float _offsetSpeed;
 
-    private void Update()
-    {
-        // Вычитаем из позиции скорость движения
-        position -= (speed * Time.deltaTime);
+        // Позиция текстуры
+        private float _position;
 
-        // Если позиция текстуры превышает единицу, сбрасываем значение
-        if (position > 1.0f) position = -1.0f;
+        // Ссылка на компонент
+        private RawImage _rawImage;
 
-        // Обновляем позицию текстуры
-        image.uvRect = new Rect(position, 0, 1, 1);
+        private void Awake()
+        {
+            _rawImage = GetComponent<RawImage>();
+        }
+
+        private void Update()
+        {
+            // Вычитаем из позиции скорость движения
+            _position -= (_offsetSpeed * Time.deltaTime);
+
+            // Если позиция текстуры превышает единицу, сбрасываем значение
+            if (_position > 1.0f) _position = -1.0f;
+
+            // Обновляем позицию текстуры
+            _rawImage.uvRect = new Rect(_position, 0, 1, 1);
+        }
     }
 }

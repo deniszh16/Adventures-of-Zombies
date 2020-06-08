@@ -1,15 +1,20 @@
 ﻿using UnityEngine;
 
-public class Respawn : MonoBehaviour
+namespace Cubra
 {
-    private void OnTriggerEnter2D(Collider2D collision)
+    public class Respawn : CollisionObjects
     {
-        // Получаем компонент персонажа у конувшегося объекта
-        var character = collision.GetComponent<Character>();
-
-        // Если персонаж жив
-        if (character && character.Life)
-            // Записываем в респаун текущую позицию персонажа
-            character.RespawnPosition = transform.position + Vector3.up;
+        /// <summary>
+        /// Действия при касании персонажа с коллайдером
+        /// </summary>
+        /// <param name="character">персонаж</param>
+        public override void ActionsOnEnter(Character character)
+        {
+            if (character.Life)
+            {
+                // Записываем в респаун текущую позицию персонажа
+                Main.Instance.CharacterController.RespawnPosition = transform.position + Vector3.up;
+            }
+        }
     }
 }

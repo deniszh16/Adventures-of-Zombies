@@ -1,44 +1,61 @@
 ﻿using UnityEngine;
 
-public class Hook : MonoBehaviour
+namespace Cubra
 {
-    private void OnTriggerEnter2D(Collider2D collision)
+    public class Hook : CollisionObjects
     {
-        // Получаем компонент персонажа у конувшегося объекта
-        var character = collision.GetComponent<Character>();
+        // Занят ли крюк
+        private bool _busy;
 
-        // Если персонаж живой
-        if (character.Life)
+        /// <summary>
+        /// Действия при касании персонажа с коллайдером
+        /// </summary>
+        /// <param name="character">персонаж</param>
+        public override void ActionsOnEnter(Character character)
         {
-            // Активируем переменную виса
-            character.IsHook = true;
-
-            // Назначаем крюк родительским объектом для персонажа
-            character.transform.parent = transform;
+            if (character.Life)
+            {
+                // Активируем вис на крюке
+                Main.Instance.CharacterController.IsHook = true;
+                // Назначаем крюк родительским объектом для персонажа
+                character.Transform.parent = transform;
+                _busy = true;
+            }
         }
-    }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        var character = collision.GetComponent<Character>();
-
-        if (character.Life)
-            // Если персонаж находится в указанном диапазоне
-            if (character.transform.localPosition.x < 0.5f && character.transform.localPosition.y < -1f)
-                // Фиксируем персонажа на крюке
-                character.ClingToHook();
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        var character = collision.GetComponent<Character>();
-
-        if (character)
+        private void OnTriggerStay2D(Collider2D collision)
         {
-            // Сбрасываем родительский объект для персонажа
-            character.transform.parent = null;
-            // Восстанавливаем стандартную гравитацию персонажа
-            character.Rigbody.gravityScale = 1.5f;
+            if (_busy)
+            {
+                // Получаем компонент персонажа у касающегося объекта
+                var character = collision.GetComponent<Character>();
+
+                if (character.Life)
+                {
+                    // Если персонаж находится в указанных пределах крюка
+                    if (character.Transform.localPosition.x < 0.5f && character.Transform.localPosition.y < -0.35f)
+                    {
+                        // Фиксируем персонажа на крюке
+                        Main.Instance.CharacterController.HangOnHook();
+                        _busy = false;
+                    }
+                }
+            }
+        }
+
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            var character = collision.GetComponent<Character>();
+
+            if (character.Life)
+            {
+                // Сбрасываем родительский объект для персонажа
+                character.transform.parent = null;
+                // Восстанавливаем стандартную гравитацию персонажа
+                character.Rigidbody.gravityScale = 1.5f;
+                // Восстанавливаем скорость
+                character.Speed = 8.5f;
+            }
         }
     }
 }

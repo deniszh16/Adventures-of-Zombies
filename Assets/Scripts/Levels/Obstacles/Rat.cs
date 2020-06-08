@@ -53,12 +53,12 @@ public class Rat : MonoBehaviour
             // Если найден коллайдер
             if (hit.collider)
             {
-                // Пытаемся у него получить компонент персонажа
-                var character = hit.collider.gameObject.GetComponent<Character>();
+            //    // Пытаемся у него получить компонент персонажа
+            //    var character = hit.collider.gameObject.GetComponent<Character>();
 
-                if (character)
-                    // Записываем персонажа в цель
-                    target = character.gameObject;
+            //    if (character)
+            //        // Записываем персонажа в цель
+            //        target = character.gameObject;
             }
         }
         else
@@ -96,18 +96,18 @@ public class Rat : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         // Пытаемся получить компонент персонажа у касающегося объекта
-        var character = collision.gameObject.GetComponent<Character>();
+        //var character = collision.gameObject.GetComponent<Character>();
 
-        // Если персонаж живой
-        if (character.Life)
-        {
-            // Устанавливаем атакующую анимацию
-            State = RatAnimations.Attack;
+        //// Если персонаж живой
+        //if (character.Life)
+        //{
+        //    // Устанавливаем атакующую анимацию
+        //    State = RatAnimations.Attack;
 
-            // Отображаем эффект урона
-            character.ShowDamageEffect();
-            // Наносим урон персонажу без отскока и с анимацией смерти
-            character.RecieveDamageCharacter(false, true, 1.5f);
-        }
+        //    // Отображаем эффект урона
+        //    character.ShowDamageEffect();
+        //    // Наносим урон персонажу без отскока и с анимацией смерти
+        //    character.RecieveDamageCharacter(false, true, 1.5f);
+        //}
     }
 }

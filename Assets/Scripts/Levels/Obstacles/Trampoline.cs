@@ -1,25 +1,29 @@
 ﻿using UnityEngine;
 
-public class Trampoline : ReboundObject
+namespace Cubra
 {
-    protected override void OnCollisionEnter2D(Collision2D collision)
+    public class Trampoline : ReboundObject
     {
-        // Пытаемся получить компонент физики у коснувшегося объекта
-        Rigidbody2D rigbody = collision.gameObject.GetComponent<Rigidbody2D>();
-
-        if (rigbody)
+        /// <summary>
+        /// Действия при касании персонажа с коллайдером
+        /// </summary>
+        /// <param name="character">персонаж</param>
+        public override void ActionsOnEnter(Character character)
         {
-            // Сбрасываем скорость объекта
-            rigbody.velocity *= 0;
-            // Создаем импульсный отскок объекта
-            rigbody.AddForce(rebound * force, ForceMode2D.Impulse);
+            if (character.Life)
+            {
+                // Сбрасываем скорость объекта
+                character.Rigidbody.velocity = Vector2.zero;
+                // Создаем импульсный отскок персонажа
+                character.Rigidbody.AddForce(_direction * _force, ForceMode2D.Impulse);
 
-            // Если звуки не отключены, проигрываем
-            if (Options.sound) audioSource.Play();
+                // Воспроизводим звук
+                _playingSound.PlaySound();
 
-            // Перезапускаем анимацию пружины
-            animator.enabled = true;
-            animator.Rebind();
+                // Перезапускаем анимацию пружины
+                _animator.enabled = true;
+                _animator.Rebind();
+            }
         }
     }
 }

@@ -1,28 +1,46 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
-public class Blade : MonoBehaviour
+namespace Cubra
 {
-    // Частота ускорения объекта
-    private float time = 3.0f;
-
-    // Ссылка на компонент физики
-    private Rigidbody2D rigbody;
-
-    private void Awake()
+    public class Blade : SharpObstacles
     {
-        rigbody = GetComponent<Rigidbody2D>();
-    }
+        // Секунды до повторения ускорения
+        private float _secondsToRepeat = 3f;
 
-    private void Start()
-    {
-        // Ускоряем объект каждые три секунды
-        InvokeRepeating("AccelerationBlade", time, time);
-    }
+        // Ссылка на физический компонент
+        private Rigidbody2D _rigidbody;
 
-    /// <summary>Увеличение скорости объекта</summary>
-    private void AccelerationBlade()
-    {
-        // Увеличиваем физическую скорость
-        rigbody.velocity *= 1.2f;
+        protected override void Awake()
+        {
+            base.Awake();
+            _rigidbody = GetComponent<Rigidbody2D>();
+        }
+
+        private void Start()
+        {
+            Main.Instance.LevelLaunched += StartAcceleration;
+        }
+
+        /// <summary>
+        /// Запуск раскачивания лезвия
+        /// </summary>
+        private void StartAcceleration()
+        {
+            _ = StartCoroutine(SpeedUpRocking());
+        }
+
+        /// <summary>
+        /// Переодическое увеличение скорости раскачивания лезвия
+        /// </summary>
+        private IEnumerator SpeedUpRocking()
+        {
+            while (Main.Instance.CurrentMode == Main.GameModes.Play)
+            {
+                yield return new WaitForSeconds(_secondsToRepeat);
+                // Увеличиваем физическую скорость
+                _rigidbody.velocity *= 1.2f;
+            }
+        }
     }
 }

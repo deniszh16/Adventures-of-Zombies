@@ -6,7 +6,7 @@ namespace Cubra
     public class Blade : SharpObstacles
     {
         // Секунды до повторения ускорения
-        private float _secondsToRepeat = 3f;
+        private float _secondsToRepeat = 2.6f;
 
         // Ссылка на физический компонент
         private Rigidbody2D _rigidbody;

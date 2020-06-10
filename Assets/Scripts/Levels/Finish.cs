@@ -18,7 +18,6 @@ namespace Cubra
                 // Если собраны все мозги
                 if (Main.Instance.Brains == 0)
                 {
-                    // Отображаем кнопку завершения
                     _finishButton.SetActive(true);
                 }
             }
@@ -32,7 +31,6 @@ namespace Cubra
             {
                 if (Main.Instance.Brains == 0)
                 {
-                    // Скрываем кнопку завершения
                     _finishButton.SetActive(false);
                 }
             }    

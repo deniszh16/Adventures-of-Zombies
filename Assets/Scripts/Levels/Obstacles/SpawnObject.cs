@@ -14,7 +14,7 @@ namespace Cubra
         // Номер доступного объекта в пуле
         private int _objectNumber;
 
-        // Ссылка на компонент
+        // Ссылка на музыкальный компонент
         private PlayingSound _playingSound;
 
         private void Awake()
@@ -24,7 +24,6 @@ namespace Cubra
 
         private void Start()
         {
-            // Подписываем создание объектов в событие запуска
             Main.Instance.LevelLaunched += StartCreation;
         }
 
@@ -37,7 +36,7 @@ namespace Cubra
         }
 
         /// <summary>
-        /// Переодическое создание объектов
+        /// Переодическое создание (взятие из пула) объектов
         /// </summary>
         private IEnumerator CreateObject()
         {
@@ -50,13 +49,10 @@ namespace Cubra
                 {
                     var obj = _pool.transform.GetChild(_objectNumber);
 
-                    // Перемещаем объект к точке создания
                     obj.position = transform.position;
                     obj.rotation = transform.rotation;
 
-                    // Активируем объект
                     obj.gameObject.SetActive(true);
-                    // Проигрываем звук создания
                     _playingSound.PlaySound();
 
                     _objectNumber++;

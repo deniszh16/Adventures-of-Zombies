@@ -9,7 +9,6 @@ namespace Cubra
             // Если текущая позиция не равна позиции активной точки
             if (_points.Length > 0 && Transform.position != _points[_currentPoint])
             {
-                // Перемещаем объект в указанном направлении
                 Transform.position = Vector3.MoveTowards(Transform.position, _points[_currentPoint], _speed * Time.deltaTime);
             }
             else

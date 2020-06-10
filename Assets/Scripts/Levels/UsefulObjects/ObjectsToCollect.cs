@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace Cubra
+﻿namespace Cubra
 {
     public abstract class ObjectsToCollect : CollisionObjects
     {

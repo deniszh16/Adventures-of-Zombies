@@ -41,19 +41,10 @@ namespace Cubra
 
         private void Update()
         {
-            // Если текущий угол нулевой, а переменная набрала полный оборот
-            if ((int)Transform.localEulerAngles.z == 0 && _angle >= 360)
-            {
-                // Обнуляем угол
-                _angle = 0;
-            }
+            // Если угол нулевой, а переменная набрала оборот, обнуляем угол
+            if ((int)Transform.localEulerAngles.z == 0 && _angle >= 360) _angle = 0;
 
-            // Если текущий угол меньше целевого угла
-            if (Transform.localEulerAngles.z < _angle)
-            {
-                // Выполняем поворот объекта
-                Transform.Rotate(Vector3.forward, _speed);
-            }
+            if (Transform.localEulerAngles.z < _angle) Transform.Rotate(Vector3.forward, _speed);
         }
     }
 }

@@ -21,7 +21,6 @@ namespace Cubra.Controllers
 
         private void Awake()
         {
-            // Загружаем xml файл с переводами
             FileParseHelper.ParseXml("languages");
         }
 
@@ -30,11 +29,10 @@ namespace Cubra.Controllers
         /// </summary>
         public void SwitchLanguage()
         {
-            // Обмениваем значение на противоположное
             Language = (Language == "ru-RU") ? "en-US" : "ru-RU";
 
+            // Номер языка в перечислении
             var language = (Language == "ru-RU") ? (int)Languages.Russian : (int)Languages.English;
-            // Сообщаем об изменении
             LanguageChanged?.Invoke(language);
         }
     }

@@ -70,7 +70,6 @@ namespace Cubra.Controllers
         {
             if (_character.Life)
             {
-                // Если персонаж не движется
                 if (_direction == Vector2.zero)
                 {
                     _character.SetAnimation(Character.Animations.Idle);
@@ -79,7 +78,6 @@ namespace Cubra.Controllers
                 }
                 else
                 {
-                    // Перемещаем персонажа в указанном направлении с указанной скоростью
                     _character.Rigidbody.position = _character.Rigidbody.position + _direction * _character.Speed * Time.fixedDeltaTime;
                     if (_isGrounded) _character.SetAnimation(Character.Animations.Run);
                     if (_isJumping) _character.SetAnimation(Character.Animations.Jump);
@@ -100,9 +98,8 @@ namespace Cubra.Controllers
         {
             if (Enabled)
             {
-                // Устанавливаем вектор движения
                 _direction = Vector2.right * direction;
-                // Устанавливаем направление спрайта
+                // Устанавливаем направление спрайта (через transform для поворота коллайдера)
                 _character.Transform.localScale = new Vector3(direction, 1, 1);
             }
         }
@@ -124,7 +121,6 @@ namespace Cubra.Controllers
             {
                 if ((_isGrounded && _character.Rigidbody.velocity.y < 0.5f) || IsHook)
                 {
-                    // Создаем импульсный прыжок с указанной силой
                     _character.Rigidbody.AddForce(transform.up * _character.Jump, ForceMode2D.Impulse);
 
                     // Если персонаж висел, сбрасываем вис
@@ -138,9 +134,9 @@ namespace Cubra.Controllers
         /// </summary>
         private void SurfaceFinding()
         {
-            // Определяем позицию для коллайдера
+            // Позиция для коллайдера персонажа
             var position = _character.Transform.position - new Vector3(0, 1.5f, 0);
-            // Создаем массив поверхностей, которых касается персонаж
+            // Массив поверхностей, которых касается персонаж
             Collider2D[] colliders = Physics2D.OverlapBoxAll(position, new Vector2(1, 1.5f), 0, LayerMask.GetMask("Surface"));
 
             if (colliders.Length > 0)
@@ -149,7 +145,6 @@ namespace Cubra.Controllers
                 if (IsAccelerated && _isJumping == false)
                 {
                     IsAccelerated = false;
-                    // Восстанавливаем скорость
                     _character.Speed = 8.5f;
                 }
 
@@ -168,7 +163,6 @@ namespace Cubra.Controllers
         /// </summary>
         public void HangOnHook()
         {
-            // Сбрасываем гравитацию и скорость
             _character.Rigidbody.gravityScale = 0;
             _character.Rigidbody.velocity = Vector2.zero;
             _character.Speed = 0;
@@ -183,19 +177,14 @@ namespace Cubra.Controllers
         {
             if (_character.Life)
             {
-                // Сбрасываем жизнь персонажа
                 _character.Life = false;
 
                 if (animation)
                 {
-                    // Устанавливаем анимацию смерти
                     _character.SetAnimation(Character.Animations.Dead);
-
-                    // Устанавливаем звук смерти и воспроизводим
                     _character.SetSound(Character.Sounds.Dead);
                     _character.PlayingSound.PlaySound();
 
-                    // Переключаем коллайдер на триггер
                     _character.PolygonCollider.isTrigger = true;
                 }
 
@@ -203,33 +192,23 @@ namespace Cubra.Controllers
                 {
                     // Отбрасываем персонажа по случайному вектору
                     _character.Rigidbody.AddForce(new Vector2(UnityEngine.Random.Range(-135, -100) * _character.Transform.localScale.x, UnityEngine.Random.Range(160, 190)));
-                    // Воспроизводим эффект крови
                     _character.BloodEffect.Play();
                 }
 
-                // Сообщаем подписчикам о смерти персонажа
                 IsDead?.Invoke();
             }
         }
 
         /// <summary>
-        /// Восстановление персонажа после проигрыша
+        /// Восстановление персонажа после воскрешения
         /// </summary>
         public void RestoreCharacter()
         {
-            // Сбрасываем физическую скорость
             _character.Rigidbody.velocity = Vector2.zero;
-            // Возвращаем персонажа к последнему респауну
             _character.Transform.position = RespawnPosition;
-
-            // Восстанавливаем жизнь
             _character.Life = true;
-            // Восстанавливаем стандартную анимацию
             _character.SetAnimation(Character.Animations.Idle);
-            // Восстанавливаем стандартный коллайдер
             _character.PolygonCollider.isTrigger = false;
-
-            // Восстанавливаем слой персонажа на сцене
             _character.SpriteRenderer.sortingOrder = 5;
         }
 
@@ -240,7 +219,6 @@ namespace Cubra.Controllers
         {
             if (_character.Life)
             {
-                // Если персонаж двигается, обновляем скорость
                 if (_direction.x != 0) _character.Speed = speed;
             }
         }

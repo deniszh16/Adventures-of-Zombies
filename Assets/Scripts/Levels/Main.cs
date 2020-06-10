@@ -71,23 +71,20 @@ namespace Cubra
         {
             Instance = this;
 
-            // Получаем номер активного персонажа
+            // Номер активного персонажа
             var activeCharacter = PlayerPrefs.GetInt("character");
             // Создаем активного персонажа в стартовой позиции и получаем его компонент
             _character = Instantiate(characters[activeCharacter - 1], position, Quaternion.identity).GetComponent<Character>();
 
-            // Настраиваем камеру
             SnapCameraToTarget();
 
             // Преобразовваем сохраненную json строку в объект
             ZombieHelper = JsonUtility.FromJson<ZombieHelper>(PlayerPrefs.GetString("character-" + PlayerPrefs.GetInt("character")));
 
-            // Получаем контроллер персонажа
             CharacterController = gameObject.GetComponent<Controllers.CharacterController>();
 
-            // Получаем компоненты
-            _training = gameObject.GetComponent<Training>();
             LevelResults = gameObject.GetComponent<LevelResults>();
+            _training = gameObject.GetComponent<Training>();
             _backgroundMusic = FindObjectOfType<BackgroundMusic>();
         }
 
@@ -96,13 +93,9 @@ namespace Cubra
             // Если на уровне присутствует обучение
             if (_training & Training.PlayerTraining)
             {
-                // Переключаем режим на обучение
                 CurrentMode = GameModes.Training;
-
-                // Отключаем управление персонажем
                 CharacterController.Disable();
 
-                // Запускаем обучение
                 _ = StartCoroutine(_training.StartTraining());
             }
             else
@@ -117,7 +110,6 @@ namespace Cubra
         public void LaunchALevel()
         {
             CurrentMode = GameModes.Play;
-            // Сообщаем о запуске уровня
             LevelLaunched?.Invoke();
 
             // Если звуки не отключены
@@ -134,16 +126,7 @@ namespace Cubra
         /// </summary>
         public void SnapCameraToTarget()
         {
-            // Если персонаж живой
-            if (_character.Life)
-            {
-                // Привязываем камеру к персонажу
-                _cinemachineVirtual.Follow = _character.Transform;
-            }
-            else
-            {
-                _cinemachineVirtual.Follow = null;
-            }
+            _cinemachineVirtual.Follow = _character.Life ? _character.Transform : null;
         }
     }
 }

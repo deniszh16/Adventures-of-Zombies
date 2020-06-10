@@ -34,9 +34,7 @@ namespace Cubra
             }
             else
             {
-                // Отключаем кнопку выбора
                 _selectButton.interactable = false;
-                // Обновляем перевод текста
                 _textTranslation.TranslateText();
             }
         }
@@ -49,16 +47,12 @@ namespace Cubra
             // Если текущий персонаж выбран
             if (_number == PlayerPrefs.GetInt("character"))
             {
-                // Отключаем кнопку выбора
                 _selectButton.interactable = false;
-                // Обновляем текст на кнопке
                 _textTranslation.ChangeKey("button-selected");
             }
             else
             {
-                // Активируем кнопку выбора
                 _selectButton.interactable = true;
-                // Обновляем текст на кнопке
                 _textTranslation.ChangeKey("button-select");
             }
         }

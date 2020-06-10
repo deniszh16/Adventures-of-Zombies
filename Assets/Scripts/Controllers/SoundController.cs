@@ -18,7 +18,7 @@ namespace Cubra.Controllers
         // Активность проигрывания звуков
         public static bool PlayingSounds
         {
-            get => SoundActivity == 0 ? true : false;
+            get => SoundActivity == 0;
         }    
 
         /// <summary>
@@ -26,10 +26,7 @@ namespace Cubra.Controllers
         /// </summary>
         public void SwitchSound()
         {
-            // Обмениваем значение на противоположное
             SoundActivity = SoundActivity > 0 ? 0 : 1;
-
-            // Сообщаем об изменении
             SoundChanged?.Invoke(SoundActivity);
         }
     }

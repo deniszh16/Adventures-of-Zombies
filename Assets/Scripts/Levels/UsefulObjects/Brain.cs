@@ -14,16 +14,13 @@ namespace Cubra
         /// <param name="character">персонаж</param>
         public override void ActionsOnEnter(Character character)
         {
-            // Устанавливаем звук и воспроизводим
             character.SetSound(Character.Sounds.Brain);
             character.PlayingSound.PlaySound();
 
-            // Уменьшаем количество оставшихся мозгов
+            // Уменьшаем количество мозгов
             Main.Instance.Brains--;
-            // Обновляем информацию по мозгам
             UpdateQuantityBrains();
 
-            // Отключаем объект
             InstanseObject.SetActive(false);
         }
 
@@ -34,13 +31,11 @@ namespace Cubra
         {
             if (Main.Instance.Brains > 0)
             {
-                // Выводим число оставшихся мозгов на уровне
                 _amountBrains.text = "x" + Main.Instance.Brains;
             }
             else
             {
                 _amountBrains.text = "ok";
-                // Перекрашиваем текст в зеленй цвет
                 _amountBrains.color = new Color32(127, 255, 0, 255);
             }
         }

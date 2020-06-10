@@ -28,13 +28,9 @@ namespace Cubra
         /// <param name="character">персонаж</param>
         public override void ActionsOnEnter(Character character)
         {
-            // Создаем отскок персонажа в указанном направлении
             character.Rigidbody.AddForce(_direction * _force, ForceMode2D.Impulse);
 
-            // Воспрозводим звук
             _playingSound.PlaySound();
-
-            // Активируем и перезапускаем анимацию
             _animator.enabled = true;
             _animator.Rebind();
         }

@@ -33,7 +33,6 @@ namespace Cubra
             _rigidbody = InstanseObject.GetComponent<Rigidbody2D>();
             _joint = InstanseObject.GetComponent<FixedJoint2D>();
 
-            // Получаем слой объекта
             _sortingOrder = SpriteRenderer.sortingOrder;
         }
 
@@ -42,16 +41,9 @@ namespace Cubra
             // Преобразуем локальный вектор направления в мировой
             _direction = Transform.TransformDirection(Vector3.down);
 
-            // Активируем полет
             _flight = true;
-
-            // Активируем коллайдер
             _boxcollider.enabled = true;
-
-            // Восстанавливаем слой объекта
             SpriteRenderer.sortingOrder = _sortingOrder;
-
-            // Восстанавливаем скорость
             _speed = _standardSpeed;
         }
 
@@ -59,7 +51,6 @@ namespace Cubra
         {
             if (_flight)
             {
-                // Если полет активен, выполняется движение в указанном направлении
                 _rigidbody.MovePosition(Transform.position + (_direction * _speed * Time.fixedDeltaTime));
             }
         }
@@ -72,7 +63,6 @@ namespace Cubra
         {
             if (character.Life)
             {
-                // Наносим урон персонажу с анимацией смерти и отскоком
                 Main.Instance.CharacterController.DamageToCharacter(true, true);
             }
         }
@@ -84,10 +74,7 @@ namespace Cubra
             // Если стрела касается поверхности
             if (collision.gameObject.layer == (LayerMask.GetMask("Surface") >> 5))
             {
-                // Отключаем коллайдер
                 _boxcollider.enabled = false;
-
-                // Понижаем слой объекта
                 SpriteRenderer.sortingOrder--;
 
                 // Пробуем получить физический компонент у поверхности
@@ -95,17 +82,14 @@ namespace Cubra
 
                 if (physics)
                 {
-                    // Убираем массу
                     _rigidbody.mass = 0;
-                    // Указываем цель для фиксации стрелы
                     _joint.connectedBody = physics;
                 }
 
+                // Если стрела активна
                 if (InstanseObject.activeInHierarchy)
-                {
-                    // Запускаем остановку стрелы
+                    // Запускаем ее остановку
                     _ = StartCoroutine(StopFlight(0.03f, physics));
-                }
                 
                 return;
             }
@@ -134,11 +118,7 @@ namespace Cubra
             yield return new WaitForSeconds(seconds);
             _flight = false;
 
-            if (fixation)
-            {
-                // Закрепляем стрелу на объекте
-                _joint.enabled = true;
-            }
+            if (fixation) _joint.enabled = true;
 
             _ = StartCoroutine(TurnOffObject());
         }
@@ -150,9 +130,7 @@ namespace Cubra
         {
             yield return new WaitForSeconds(1.5f);
 
-            // Сбрасываем угол объекта
             Transform.localEulerAngles = Vector3.zero;
-            // Отключаем объект
             InstanseObject.SetActive(false);
         }
     }

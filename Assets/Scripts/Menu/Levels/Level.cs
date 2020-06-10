@@ -29,9 +29,7 @@ namespace Cubra
             // Если номер уровня меньше прогресса
             if (_number <= PlayerPrefs.GetInt("progress"))
             {
-                // Отображаем открытую карточку
                 _image.sprite = _openLevel;
-                // Активируем кнопку
                 _button.interactable = true;
             }
         }

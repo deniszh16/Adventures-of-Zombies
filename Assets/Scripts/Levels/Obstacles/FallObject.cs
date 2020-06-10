@@ -14,7 +14,7 @@ namespace Cubra
         // Начальная позиция объекта
         private Vector3 _position;
 
-        // Ссылка на компонент
+        // Ссылка на физический компонент
         private Rigidbody2D _rigidbody;
 
         protected override void Awake()
@@ -25,9 +25,7 @@ namespace Cubra
 
         private void Start()
         {
-            // Получаем слой объекта
             _sortingOrder = SpriteRenderer.sortingOrder;
-            // Получаем позицию объекта
             _position = Transform.position;
         }
 
@@ -41,47 +39,33 @@ namespace Cubra
         }
 
         /// <summary>
-        /// Падение объекта
+        /// Падение объекта через указанное время
         /// </summary>
         private IEnumerator ObjectFall()
         {
             yield return new WaitForSeconds(_seconds);
-            // Активируем динамическую физику объекта
             _rigidbody.bodyType = RigidbodyType2D.Dynamic;
         }
 
         protected override void OnTriggerEnter2D(Collider2D collision)
         {
-            // Получаем водный компонент 
-            var river = collision.GetComponent<River>();
-
-            if (river)
+            if (collision.GetComponent<River>())
             {
-                // Переносим объект на нулевой слой
                 SpriteRenderer.sortingOrder = 0;
                 return;
             }
 
-            // Получаем компонент препятствия
-            var obstacle = collision.GetComponent<SharpObstacles>();
-
-            if (obstacle)
+            if (collision.GetComponent<SharpObstacles>())
             {
-                // Скрываем спрайт
                 SpriteRenderer.enabled = false;
-
                 _ = StartCoroutine(RestoreObject(2f));
             }    
         }
 
         private void OnTriggerExit2D(Collider2D collision)
         {
-            var river = collision.GetComponent<River>();
-
-            if (river)
-            {
+            if (collision.GetComponent<River>())
                 _ = StartCoroutine(RestoreObject(1f));
-            }
         }
 
         /// <summary>
@@ -92,16 +76,12 @@ namespace Cubra
         {
             yield return new WaitForSeconds(seconds);
 
-            // Отображаем спрайт
             SpriteRenderer.enabled = true;
-            // Восстанавливаем слой объекта
             SpriteRenderer.sortingOrder = _sortingOrder;
 
-            // Восстанавливаем физику объекта
             _rigidbody.bodyType = RigidbodyType2D.Kinematic;
             _rigidbody.velocity = Vector2.zero;
 
-            // Восстанавливаем позицию
             Transform.position = _position;
         }
     }

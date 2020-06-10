@@ -14,7 +14,7 @@ namespace Cubra
         [Header("Текст таймера")]
         [SerializeField] private Text _textSeconds;
 
-        // Ссылка на компонент обводки текста
+        // Ссылка на обводку текста
         private Outline _textOutline;
 
         [Header("Секунды на звезды")]
@@ -53,15 +53,13 @@ namespace Cubra
                     yield return new WaitForSeconds(1);
 
                     _seconds--;
-                    // Обновляем значение секунд на экране
                     _textSeconds.text = _seconds.ToString();
 
                     // Если не хватает секунд для текущего количества звезд
                     if (_seconds < _totalSeconds[Main.Instance.Stars - 1])
                     {
-                        // Скрываем звездочку
-                        _starsSeconds[Main.Instance.Stars - 1].enabled = false;
                         // Уменьшаем текущее количество звезд
+                        _starsSeconds[Main.Instance.Stars - 1].enabled = false;
                         Main.Instance.Stars--;
 
                         if (Main.Instance.Stars == 1)
@@ -73,7 +71,6 @@ namespace Cubra
                 }
                 else
                 {
-                    // Если секунды закончились, уничтожаем персонажа
                     Main.Instance.CharacterController.DamageToCharacter(true, false);
                     yield break;
                 }

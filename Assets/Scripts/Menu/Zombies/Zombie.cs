@@ -36,14 +36,10 @@ namespace Cubra
             // Если прогресс достаточный для открытия
             if (_progress <= PlayerPrefs.GetInt("progress"))
             {
-                // Скрываем части персонажа
                 _parts.SetActive(false);
-                // Отображаем полного персонажа
                 _zombie.SetActive(true);
 
-                // Обновляем статистику по персонажу
                 _zombieStats.UpdateStatistics();
-                // Обновляем текст на активной кнопке
                 _zombieSelection.ChangeButton(true);
 
                 // Подписываем обновление кнопок в событие смены персонажа
@@ -51,7 +47,6 @@ namespace Cubra
             }
             else
             {
-                // Обновляем текст на отключенной кнопке
                 _zombieSelection.ChangeButton(false);
             }
         }
@@ -61,9 +56,7 @@ namespace Cubra
         /// </summary>
         public void ChooseZombie()
         {
-            // Сохраняем номер выбранного персонажа
             PlayerPrefs.SetInt("character", _number);
-            // Обновляем кнопки выбора у персонажей
             _buttonUpdateHelper.UpdateButtons();
         }
     }

@@ -17,9 +17,8 @@ namespace Cubra
         protected override void Awake()
         {
             base.Awake();
-            _soundController = Camera.main.GetComponent<SoundController>();
 
-            // Подписываем переключение музыки
+            _soundController = Camera.main.GetComponent<SoundController>();
             _soundController.SoundChanged += SwitchMusic;
 
             SetBackgroundMusic();
@@ -79,17 +78,14 @@ namespace Cubra
         /// <param name="value">шаг изменения</param>
         private IEnumerator ChangeVolume(Func<bool> func, float pause, float value)
         {
-            // Если громкость увеличивается, запускаем музыку
             if (value > 0) _audioSource.Play();
 
             while (func())
             {
                 yield return new WaitForSeconds(pause);
-                // Изменяем громкость
                 _audioSource.volume += value;
             }
 
-            // Если громкость уменьшается, останавливаем музыку
             if (value < 0) _audioSource.Stop();
         }
     }

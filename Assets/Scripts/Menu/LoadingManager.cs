@@ -54,8 +54,6 @@ namespace Cubra
             }
             #endregion
 
-            PlayerPrefs.SetInt("progress", 10);
-
             // Активация игровых сервисов Google Play
             _ = PlayGamesPlatform.Activate();
         }

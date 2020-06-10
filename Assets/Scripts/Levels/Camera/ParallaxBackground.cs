@@ -29,9 +29,8 @@ namespace Cubra
         {
             // Вектор между текущим и последним положением камеры
             Vector3 deltaMovenent = _cameraTransform.position - _lastCameraPosition;
-            // Перемещаем камеру с множителем паралакса
+
             transform.position += new Vector3(deltaMovenent.x * _parallaxMultiplier, 0, 0);
-            // Обновляем последнюю позицию камеры
             _lastCameraPosition = _cameraTransform.position;
 
             if (Mathf.Abs(_cameraTransform.position.x - transform.position.x) >= _textureUnitSizeX)

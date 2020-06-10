@@ -9,7 +9,6 @@
         public override void ActionsOnEnter(Character character)
         {
             if (character.Life)
-                // Наносим урон персонажу с анимацией смерти и отскоком
                 Main.Instance.CharacterController.DamageToCharacter(true, true);
         }
     }

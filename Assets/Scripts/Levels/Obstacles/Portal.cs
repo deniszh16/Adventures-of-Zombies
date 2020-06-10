@@ -27,21 +27,19 @@ namespace Cubra
             _ = StartCoroutine(TeleportPlatform());
         }
 
+        /// <summary>
+        /// Переставление платформы в активную точку
+        /// </summary>
         private IEnumerator TeleportPlatform()
         {
             while (Main.Instance.CurrentMode == Main.GameModes.Play)
             {
                 yield return new WaitForSeconds(_pause);
+
                 _point++;
 
-                // Если точка вышла за пределы массива
-                if (_point > _points.Length - 1)
-                {
-                    // Обнуляем точку
-                    _point = 0;
-                }
+                if (_point > _points.Length - 1) _point = 0;
 
-                // Переставляем платформу к активной точке
                 Transform.position = _points[_point];
             }
         }

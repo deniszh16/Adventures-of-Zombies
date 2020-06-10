@@ -10,7 +10,7 @@ namespace Cubra
         [Header("Эффект взрыва")]
         [SerializeField] private Animator _destruction;
 
-        // Ссылки на компоненты
+        // Ссылка на анимацию бочки
         private Animator _animator;
 
         protected override void Awake()
@@ -29,7 +29,6 @@ namespace Cubra
             {
                 if (_active == false)
                 {
-                    // Активируем анимацию
                     _animator.enabled = true;
                     _active = true;
                 }
@@ -41,11 +40,10 @@ namespace Cubra
         /// </summary>
         public void DestroyBarrel()
         {
-            // Перемещаем эффект взрыва к бочке
             _destruction.transform.position = Transform.position;
 
+            // Перезапускаем анимацию взрыва
             if (_destruction.enabled == false) _destruction.enabled = true;
-            // Перезапускаем анимацию
             _destruction.Rebind();
 
             // Увеличиваем число уничтоженных бочек

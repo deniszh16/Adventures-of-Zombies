@@ -11,10 +11,7 @@ namespace Cubra
         public override void ActionsOnEnter(Character character)
         {
             if (character.Life)
-            {
-                // Назначаем платформу родительской для персонажа
                 character.Transform.parent = Transform.parent;
-            }
         }
 
         private void OnCollisionExit2D(Collision2D collision)
@@ -22,10 +19,7 @@ namespace Cubra
             var character = collision.gameObject.GetComponent<Character>();
 
             if (character)
-            {
-                // Убираем родительский объект персонажа
                 character.Transform.parent = null;
-            }
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Cubra.Controllers
 {
     public class TransitionsController : BaseController
     {
-        // Перечисление сцен в меню (с id сцен)
+        // Перечисление сцен в меню (id сцен)
         public enum Scenes { Menu = 1, Levels, Zombies, Leaderboard }
 
         // Страница приложения на Google Play

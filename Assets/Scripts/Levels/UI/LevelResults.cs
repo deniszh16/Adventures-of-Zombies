@@ -79,7 +79,6 @@ namespace Cubra
         {
             UpdateSavedData();
 
-            // Отображаем панель победы и подсказок
             _victoryPanel.SetActive(true);
             _hintPanel.SetActive(true);
 
@@ -88,11 +87,9 @@ namespace Cubra
                 // Увеличиваем прогресс
                 PlayerPrefs.SetInt("progress", Main.Instance.LevelNumber);
 
-            // Подсчитываем набранные на уровне очки
+            // Набранные на уровне очки
             var points = Main.Instance.Timer.Seconds * 55;
-            // Выводим результат в текстовое поле
             _levelScore.text = points.ToString();
-            // Обновляем общее количество очков
             PlayerPrefs.SetInt("score", PlayerPrefs.GetInt("score") + points);
 
             // Выводим победный текст
@@ -100,12 +97,8 @@ namespace Cubra
 
             if (Application.internetReachability != NetworkReachability.NotReachable)
             {
-                // Если это любой уровень (кроме первого) и получены три звезды
                 if (Main.Instance.LevelNumber > 1 && Main.Instance.Stars == 3)
-                {
-                    // Разблокируем достижение (как много звёзд)
                     GooglePlayServices.UnlockingAchievement(GPGSIds.achievement_2);
-                }
             }
 
             // Сохраняем обновленную статистику по персонажу
@@ -126,7 +119,6 @@ namespace Cubra
             {
                 // Создаем новый элемент с количеством полученных звезд
                 _starsHelper.Stars.Add(Main.Instance.Stars);
-                // Сохраняем значение
                 PlayerPrefs.SetString("stars-level", JsonUtility.ToJson(_starsHelper));
             }
             else if (_starsHelper.Stars[Main.Instance.LevelNumber - 1] < Main.Instance.Stars)
@@ -144,18 +136,15 @@ namespace Cubra
         {
             UpdateSavedData();
 
-            // Отображаем панель проигрыша
             _losePanel.SetActive(true);
-            // Отображаем панель подсказок
             _hintPanel.SetActive(true);
 
-            // Выводим количество монет, необходимых для воскрешения
             _quantityCoins.text = PlayerPrefs.GetInt("coins").ToString();
 
             // Если недостаточно монет
             if (PlayerPrefs.GetInt("coins") < 50)
             {
-                // Если недоступен интернет
+                // И недоступен интернет
                 if (Application.internetReachability == NetworkReachability.NotReachable)
                 {
                     // Отключаем кнопку воскрешения
@@ -168,8 +157,6 @@ namespace Cubra
 
             // Увеличиваем количество смертей персонажа
             Main.Instance.ZombieHelper.Deaths++;
-
-            // Сохраняем обновленную статистику по персонажу
             PlayerPrefs.SetString("character-" + PlayerPrefs.GetInt("character"), JsonUtility.ToJson(Main.Instance.ZombieHelper));
         }
 
@@ -181,12 +168,8 @@ namespace Cubra
             // Увеличиваем количество игр персонажа
             Main.Instance.ZombieHelper.Played++;
 
-            // Обновляем текущее количество монет
             PlayerPrefs.SetInt("coins", PlayerPrefs.GetInt("coins") + Main.Instance.Coins);
-            // Обновляем общее количество монет
             PlayerPrefs.SetInt("total-coins", PlayerPrefs.GetInt("total-coins") + Main.Instance.Coins);
-
-            // Обновляем общее количество собранных мозгов
             PlayerPrefs.SetInt("brains", PlayerPrefs.GetInt("brains") + Main.Instance.Brains);
         }
 
@@ -195,7 +178,6 @@ namespace Cubra
         /// </summary>
         public void ResumeLevel()
         {
-            // Скрываем панель проигрыша
             _losePanel.SetActive(false);
 
             // Запускаем уровень

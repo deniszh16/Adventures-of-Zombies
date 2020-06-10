@@ -12,7 +12,6 @@ namespace Cubra
         {
             if (character.Life)
             {
-                // Записываем в респаун текущую позицию персонажа
                 Main.Instance.CharacterController.RespawnPosition = transform.position + Vector3.up;
             }
         }

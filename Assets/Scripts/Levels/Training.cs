@@ -23,18 +23,17 @@ namespace Cubra
             _imageHintPanel = Main.Instance.LevelResults.HintPanel.GetComponent<Image>();
         }
 
+        /// <summary>
+        /// Запускаем обучение игрока
+        /// </summary>
         public IEnumerator StartTraining()
         {
             yield return new WaitForSeconds(1f);
-            // Отображаем панель подсказок
-            Main.Instance.LevelResults.HintPanel.SetActive(true);
 
-            // Отображаем затемнение экрана
+            Main.Instance.LevelResults.HintPanel.SetActive(true);
             _imageHintPanel.color = new Color32(0, 0, 0, 230);
-            // Активируем обработку нажатий на экран
             _imageHintPanel.raycastTarget = true;
 
-            // Запускаем обучение игрока
             UpdateTrainingText(_tips[0]);
         }
 
@@ -46,7 +45,6 @@ namespace Cubra
         {
             // Обновляем текст подсказки
             Main.Instance.LevelResults.TextHint.ChangeKey(key);
-            // Увеличиваем этап обучения
             _stage++;
         }
 
@@ -55,10 +53,8 @@ namespace Cubra
         /// </summary>
         public void UpdateHint()
         {
-            // Если активен обучающий режим
             if (Main.Instance.CurrentMode == Main.GameModes.Training)
             {
-                // Если этап не превышает количество подсказок
                 if (_stage < _tips.Length)
                 {
                     // Выводим следующую подсказку
@@ -69,17 +65,11 @@ namespace Cubra
                     // Отключаем повторный показ
                     PlayerTraining = false;
 
-                    // Отключаем обработку нажатий
                     _imageHintPanel.raycastTarget = false;
-                    // Скрываем затемнение экрана
                     _imageHintPanel.color = new Color32(0, 0, 0, 0);
-                    // Скрываем понель подсказок
                     Main.Instance.LevelResults.HintPanel.SetActive(false);
 
-                    // Включаем управление персонажем
                     Main.Instance.CharacterController.Enable();
-
-                    // Запускаем уровень
                     Main.Instance.LaunchALevel();
                 }
             }

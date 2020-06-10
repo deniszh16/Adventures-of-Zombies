@@ -8,7 +8,6 @@ namespace Cubra
     {
         private void Start()
         {
-            // Активация обратных вызовов для видеорекламы
             Appodeal.setRewardedVideoCallbacks(this);
         }
 
@@ -20,25 +19,18 @@ namespace Cubra
             // Если достаточно монет
             if (PlayerPrefs.GetInt("coins") >= 50)
             {
-                // Вычитаем стоимость воскрешения
                 PlayerPrefs.SetInt("coins", PlayerPrefs.GetInt("coins") - 50);
-                // Запускаем продолжение уровня
                 Main.Instance.LevelResults.ResumeLevel();
             }
             else
             {
-                // Иначе проверяем предзагрузку видеорекламы
+                // Иначе вызываем видеорекламу
                 _ = Appodeal.isLoaded(Appodeal.REWARDED_VIDEO);
-                // Затем отображаем рекламу
                 _ = Appodeal.show(Appodeal.REWARDED_VIDEO);
             }
 
-            // Если доступен интернет
             if (Application.internetReachability != NetworkReachability.NotReachable)
-            {
-                // Разблокируем достижение (только не сначала)
                 GooglePlayServices.UnlockingAchievement(GPGSIds.achievement_10);
-            }
         }
 
         /// <summary>
@@ -46,7 +38,6 @@ namespace Cubra
         /// </summary>
         public void onRewardedVideoFinished(double amount, string name)
         {
-            // Запускаем продолжение уровня
             Main.Instance.LevelResults.ResumeLevel();
         }
 

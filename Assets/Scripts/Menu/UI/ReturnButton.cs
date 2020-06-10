@@ -21,7 +21,6 @@ namespace Cubra
             // Если нажата кнопка возврата
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                // Переходим на указанную сцену
                 _transitionsController.GoToScene((int)_scene);
             }
         }

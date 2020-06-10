@@ -4,7 +4,7 @@ namespace Cubra
 {
     public class Hook : CollisionObjects
     {
-        // Занят ли крюк
+        // Касание крюка
         private bool _busy;
 
         /// <summary>
@@ -15,9 +15,7 @@ namespace Cubra
         {
             if (character.Life)
             {
-                // Активируем вис на крюке
                 Main.Instance.CharacterController.IsHook = true;
-                // Назначаем крюк родительским объектом для персонажа
                 character.Transform.parent = transform;
                 _busy = true;
             }
@@ -35,7 +33,6 @@ namespace Cubra
                     // Если персонаж находится в указанных пределах крюка
                     if (character.Transform.localPosition.x < 0.5f && character.Transform.localPosition.y < -0.35f)
                     {
-                        // Фиксируем персонажа на крюке
                         Main.Instance.CharacterController.HangOnHook();
                         _busy = false;
                     }
@@ -49,11 +46,8 @@ namespace Cubra
 
             if (character.Life)
             {
-                // Сбрасываем родительский объект для персонажа
                 character.transform.parent = null;
-                // Восстанавливаем стандартную гравитацию персонажа
                 character.Rigidbody.gravityScale = 1.5f;
-                // Восстанавливаем скорость
                 character.Speed = 8.5f;
             }
         }

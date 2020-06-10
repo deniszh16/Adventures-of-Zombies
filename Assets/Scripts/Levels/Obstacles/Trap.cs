@@ -23,16 +23,12 @@ namespace Cubra
         /// <param name="character">персонаж</param>
         public override void ActionsOnEnter(Character character)
         {
-            // Воспроизводим звук
             _playingSound.PlaySound();
-
-            // Перезапускаем анимацию
             _animator.enabled = true;
             _animator.Rebind();
 
             base.ActionsOnEnter(character);
 
-            // Повышаем слой объекта
             _spriteRenderer.sortingOrder += 2;
         }
     }

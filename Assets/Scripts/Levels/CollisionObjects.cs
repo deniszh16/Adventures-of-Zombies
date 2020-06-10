@@ -6,7 +6,6 @@ namespace Cubra
     {
         protected virtual void OnTriggerEnter2D(Collider2D collision)
         {
-            // Получаем компонент персонажа у конувшегося объекта
             var character = collision.GetComponent<Character>();
 
             if (character)
@@ -15,7 +14,6 @@ namespace Cubra
 
         protected virtual void OnCollisionEnter2D(Collision2D collision)
         {
-            // Получаем компонент персонажа у конувшегося объекта
             var character = collision.gameObject.GetComponent<Character>();
 
             if (character)

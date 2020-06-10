@@ -119,7 +119,6 @@ namespace Cubra
                 if (user.id == userid) return user;
             }
 
-            // Иначе возвращаем null
             return null;
         }
 

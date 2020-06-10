@@ -38,7 +38,6 @@ namespace Cubra
             while (Main.Instance.CurrentMode == Main.GameModes.Play)
             {
                 yield return new WaitForSeconds(_secondsToRepeat);
-                // Увеличиваем физическую скорость
                 _rigidbody.velocity *= 1.2f;
             }
         }

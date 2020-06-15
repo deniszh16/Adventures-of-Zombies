@@ -26,7 +26,8 @@ namespace Cubra
                 Transform.localPosition = Vector3.MoveTowards(Transform.localPosition, Transform.localPosition + _direction, _speed * Time.deltaTime);
 
                 // Если пила достигает предельной точки, меняем направление
-                if (Transform.localPosition.x <= -1.7f || Transform.localPosition.x >= 1.7f) _direction *= -1;
+                if (Transform.localPosition.x <= -1.7f) _direction = Vector3.left;
+                else if (Transform.localPosition.x >= 1.7f) _direction = Vector3.right;
             }
         }
     }

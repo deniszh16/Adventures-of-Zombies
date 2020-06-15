@@ -100,7 +100,7 @@ namespace Cubra
             }
             else
             {
-                LaunchALevel();
+                Invoke("LaunchALevel", 0.2f);
             }
         }
 

@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 4380005162262790}
   - component: {fileID: 50899509265556728}
   - component: {fileID: 58021154223525110}
-  - component: {fileID: 114995393325504670}
+  - component: {fileID: 3519559137578982511}
   m_Layer: 0
-  m_Name: Saw 4
+  m_Name: Saw (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -71,7 +71,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.8
---- !u!114 &114995393325504670
+--- !u!114 &3519559137578982511
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -83,7 +83,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c03be94c753bed48b8b1fa23d7479c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _massAfloat: 0.2
+  _massAfloat: 1.8
 --- !u!1 &1862368745189608
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,7 +25,7 @@ namespace Cubra
 
             if (thing)
             {
-                thing.SpriteRenderer.sortingOrder = 0;
+                if (thing.SpriteRenderer) thing.SpriteRenderer.sortingOrder = 0;
                 thing.Rigidbody.mass = thing.MassAfloat;
 
                 _spray.transform.position = new Vector3(thing.Transform.position.x, thing.Transform.position.y - 0.5f, 0);

@@ -1383,7 +1383,7 @@ SpriteRenderer:
   m_Size: {x: 1.1, y: 0.91}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &710267557
@@ -1431,7 +1431,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!224 &791762451
 RectTransform:
@@ -1949,7 +1949,7 @@ SpriteRenderer:
   m_Size: {x: 1.1, y: 0.91}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &957924416
@@ -2985,7 +2985,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!224 &1543553797
 RectTransform:
@@ -3110,8 +3110,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _autoTranslation: 1
   _key: heading-leaderboard
-  auto: 1
-  key: heading-leaderboard
 --- !u!1 &1583808491
 GameObject:
   m_ObjectHideFlags: 0
@@ -3284,7 +3282,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!224 &1643858259
 RectTransform:
@@ -4113,8 +4111,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _autoTranslation: 1
   _key: rank-user
-  auto: 1
-  key: rank-user
 --- !u!1 &2009151875
 GameObject:
   m_ObjectHideFlags: 0
@@ -4456,7 +4452,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!224 &2138939352
 RectTransform:

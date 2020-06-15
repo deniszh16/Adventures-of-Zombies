@@ -379,8 +379,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _autoTranslation: 0
   _key: statistics-losses
-  auto: 1
-  key: 
 --- !u!114 &94657225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -606,8 +604,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _autoTranslation: 1
   _key: get-character-two
-  auto: 1
-  key: get-character-two
 --- !u!114 &157119418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -928,8 +924,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _autoTranslation: 0
   _key: statistics-losses
-  auto: 0
-  key: 
 --- !u!114 &170272181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1317,7 +1311,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!224 &304979240
 RectTransform:
@@ -1352,8 +1346,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _autoTranslation: 1
   _key: zombies
-  auto: 0
-  key: 
 --- !u!95 &304979242
 Animator:
   serializedVersion: 3
@@ -2095,8 +2087,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _autoTranslation: 0
   _key: statistics-played
-  auto: 1
-  key: 
 --- !u!114 &461167512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2286,8 +2276,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _autoTranslation: 0
   _key: button-select
-  auto: 0
-  key: button-select
 --- !u!114 &485814958
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2699,8 +2687,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _autoTranslation: 0
   _key: button-select
-  auto: 0
-  key: button-select
 --- !u!114 &648676573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4184,7 +4170,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!224 &896381057
 RectTransform:
@@ -4380,8 +4366,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _autoTranslation: 0
   _key: statistics-losses
-  auto: 0
-  key: 
 --- !u!114 &973002567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4491,8 +4475,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _autoTranslation: 0
   _key: statistics-losses
-  auto: 1
-  key: 
 --- !u!114 &973885284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4885,8 +4867,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _autoTranslation: 0
   _key: button-select
-  auto: 0
-  key: button-select
 --- !u!114 &1108192153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4981,8 +4961,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _autoTranslation: 0
   _key: statistics-losses
-  auto: 1
-  key: 
 --- !u!114 &1150635977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5124,7 +5102,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!224 &1205189548
 RectTransform:
@@ -5615,8 +5593,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _autoTranslation: 0
   _key: button-select
-  auto: 0
-  key: button-select
 --- !u!114 &1340596997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5861,8 +5837,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _autoTranslation: 1
   _key: get-character-three
-  auto: 1
-  key: get-character-three
 --- !u!114 &1349929796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6080,8 +6054,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _autoTranslation: 1
   _key: get-character-five
-  auto: 1
-  key: get-character-five
 --- !u!114 &1407969932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6717,8 +6689,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _autoTranslation: 0
   _key: statistics-played
-  auto: 0
-  key: 
 --- !u!114 &1564426514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6853,7 +6823,7 @@ SpriteRenderer:
   m_Size: {x: 1.1, y: 0.91}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1599874087
@@ -7075,7 +7045,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!224 &1683654382
 RectTransform:
@@ -7152,8 +7122,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _autoTranslation: 1
   _key: statistics-played
-  auto: 1
-  key: 
 --- !u!114 &1687978948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7689,8 +7657,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _autoTranslation: 0
   _key: statistics-played
-  auto: 1
-  key: 
 --- !u!114 &1826636007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8871,8 +8837,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _autoTranslation: 1
   _key: get-character-four
-  auto: 1
-  key: get-character-four
 --- !u!114 &2017223962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9145,8 +9109,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _autoTranslation: 0
   _key: statistics-played
-  auto: 0
-  key: 
 --- !u!114 &2054739201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9281,7 +9243,7 @@ SpriteRenderer:
   m_Size: {x: 1.1, y: 0.91}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &2104787233
@@ -9411,8 +9373,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _autoTranslation: 0
   _key: button-select
-  auto: 0
-  key: button-select
 --- !u!114 &2105362015
 MonoBehaviour:
   m_ObjectHideFlags: 0

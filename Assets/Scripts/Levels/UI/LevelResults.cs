@@ -179,11 +179,14 @@ namespace Cubra
         public void ResumeLevel()
         {
             _losePanel.SetActive(false);
+            _hintPanel.SetActive(false);
 
             // Запускаем уровень
             Main.Instance.LaunchALevel();
             // Восстанавливаем персонажа к последнему респауну
             Main.Instance.CharacterController.RestoreCharacter();
+            // Возобновляем привязку камеры
+            Main.Instance.SnapCameraToTarget();
         }
     }
 }

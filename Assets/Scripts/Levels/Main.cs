@@ -61,6 +61,11 @@ namespace Cubra
 
         public Timer Timer => _timer;
 
+        [Header("Отсчет для старта")]
+        [SerializeField] private CountdownToStart _countdown;
+
+        public CountdownToStart Countdown => _countdown;
+
         // Ссылка на компонент результатов
         public LevelResults LevelResults { get; private set; }
 

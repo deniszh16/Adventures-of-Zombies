@@ -1,40 +1,42 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Stones : MonoBehaviour
+namespace Cubra
 {
-    // Начальная позиция объекта
-    private Vector2 position;
-
-    // Ссылка на компонент физики
-    private Rigidbody2D rigbody;
-
-    private void Awake()
+    public class Stones : MonoBehaviour
     {
-        rigbody = GetComponent<Rigidbody2D>();
+        // Начальная позиция объекта
+        private Vector2 _position;
 
-        // Записываем начальную позицию объекта
-        position = transform.position;
-    }
+        private Rigidbody2D _rigidbody;
 
-    private void OnEnable()
-    {
-        // Восстанавливаем объект при активации
-        StartCoroutine(RestoreObject());
-    }
+        private void Awake()
+        {
+            _rigidbody = GetComponent<Rigidbody2D>();
+        }
 
-    /// <summary>Восстановление объекта с изменением позиции</summary>
-    private IEnumerator RestoreObject()
-    {
-        yield return new WaitForSeconds(5f);
+        private void Start()
+        {
+            _position = transform.position;
+        }
 
-        // Сбрасываем скорость
-        rigbody.velocity *= 0;
+        private void OnEnable()
+        {
+            // Запускаем сброс объекта при включении
+            _ = StartCoroutine(RestoreObject());
+        }
 
-        // Перемещаем объект к начальной позиции с небольшим смещением
-        transform.position = new Vector2(position.x + Random.Range(-3, 3), position.y + Random.Range(-2, 2));
+        /// <summary>
+        /// Восстановление объекта с изменением позиции
+        /// </summary>
+        private IEnumerator RestoreObject()
+        {
+            yield return new WaitForSeconds(5f);
+            _rigidbody.velocity *= 0;
 
-        // Отключаем объект до следующего использования
-        gameObject.SetActive(false);
+            // Перемещаем объект к начальной позиции с небольшим смещением
+            transform.position = new Vector2(_position.x + Random.Range(-3, 3), _position.y + Random.Range(-2, 2));
+            gameObject.SetActive(false);
+        }
     }
 }

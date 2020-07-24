@@ -49,13 +49,13 @@ namespace Cubra
                 // Таблица лучших игроков
                 PlayerPrefs.SetString("gp-leaderboard", "");
 
-                // Запись сохранений
-                PlayerPrefs.SetString("saved-data", "true");
+                // Первоначальные сохранения
+                PlayerPrefs.SetString("saved-data", "yes");
             }
             #endregion
 
             // Активация игровых сервисов Google Play
-            _ = PlayGamesPlatform.Activate();
+            PlayGamesPlatform.Activate();
         }
 
         private void Start()

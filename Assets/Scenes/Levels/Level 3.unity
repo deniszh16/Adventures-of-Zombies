@@ -1936,6 +1936,7 @@ MonoBehaviour:
   m_OptimizeCollider: 1
   m_OptimizeGeometry: 1
   m_EnableTangents: 0
+  m_GeometryCached: 0
 --- !u!1971053207 &65153304
 SpriteShapeRenderer:
   m_ObjectHideFlags: 0
@@ -8818,7 +8819,7 @@ RectTransform:
   m_GameObject: {fileID: 352615883}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.01, y: 1.01, z: 1}
   m_Children:
   - {fileID: 1777068158}
   - {fileID: 768881866}
@@ -11011,6 +11012,7 @@ MonoBehaviour:
   m_OptimizeCollider: 1
   m_OptimizeGeometry: 1
   m_EnableTangents: 0
+  m_GeometryCached: 0
 --- !u!1971053207 &404934158
 SpriteShapeRenderer:
   m_ObjectHideFlags: 0
@@ -11978,6 +11980,7 @@ MonoBehaviour:
   _brains: 4
   _cinemachineVirtual: {fileID: 451063552}
   _timer: {fileID: 246671751}
+  _countdown: {fileID: 0}
 --- !u!1001 &443261155
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12256,7 +12259,7 @@ MonoBehaviour:
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 15
+    OrthographicSize: 13
     NearClipPlane: 0.3
     FarClipPlane: 50
     Dutch: 0
@@ -16246,6 +16249,7 @@ MonoBehaviour:
   m_OptimizeCollider: 1
   m_OptimizeGeometry: 1
   m_EnableTangents: 0
+  m_GeometryCached: 0
 --- !u!1971053207 &587193120
 SpriteShapeRenderer:
   m_ObjectHideFlags: 0
@@ -21636,6 +21640,7 @@ MonoBehaviour:
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
+  m_TargetMovementOnly: 0
   m_ScreenX: 0.5
   m_ScreenY: 0.6
   m_CameraDistance: 10
@@ -22667,6 +22672,7 @@ MonoBehaviour:
   m_OptimizeCollider: 1
   m_OptimizeGeometry: 1
   m_EnableTangents: 0
+  m_GeometryCached: 0
 --- !u!1971053207 &832519321
 SpriteShapeRenderer:
   m_ObjectHideFlags: 0
@@ -25730,6 +25736,7 @@ MonoBehaviour:
   m_OptimizeCollider: 1
   m_OptimizeGeometry: 1
   m_EnableTangents: 0
+  m_GeometryCached: 0
 --- !u!1971053207 &982430481
 SpriteShapeRenderer:
   m_ObjectHideFlags: 0
@@ -27214,6 +27221,7 @@ MonoBehaviour:
   m_OptimizeCollider: 1
   m_OptimizeGeometry: 1
   m_EnableTangents: 0
+  m_GeometryCached: 0
 --- !u!1971053207 &1006209726
 SpriteShapeRenderer:
   m_ObjectHideFlags: 0
@@ -27727,6 +27735,7 @@ MonoBehaviour:
   m_OptimizeCollider: 1
   m_OptimizeGeometry: 1
   m_EnableTangents: 0
+  m_GeometryCached: 0
 --- !u!1971053207 &1012572975
 SpriteShapeRenderer:
   m_ObjectHideFlags: 0
@@ -30761,7 +30770,7 @@ PrefabInstance:
     - target: {fileID: 8785342587311668993, guid: b236cd7893b7cf847bb130136ebac7fa,
         type: 3}
       propertyPath: _speed
-      value: 1
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 8785342587311668993, guid: b236cd7893b7cf847bb130136ebac7fa,
         type: 3}
@@ -33416,7 +33425,7 @@ PrefabInstance:
     - target: {fileID: 8785342587311668993, guid: b236cd7893b7cf847bb130136ebac7fa,
         type: 3}
       propertyPath: _speed
-      value: -1.5
+      value: -135
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b236cd7893b7cf847bb130136ebac7fa, type: 3}
@@ -34548,7 +34557,7 @@ RectTransform:
   m_GameObject: {fileID: 1254532983}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.01, y: 1.01, z: 1}
   m_Children:
   - {fileID: 729873442}
   - {fileID: 622903052}
@@ -34980,6 +34989,7 @@ MonoBehaviour:
   m_OptimizeCollider: 1
   m_OptimizeGeometry: 1
   m_EnableTangents: 0
+  m_GeometryCached: 0
 --- !u!1971053207 &1262778951
 SpriteShapeRenderer:
   m_ObjectHideFlags: 0
@@ -35283,6 +35293,7 @@ MonoBehaviour:
   m_OptimizeCollider: 1
   m_OptimizeGeometry: 1
   m_EnableTangents: 0
+  m_GeometryCached: 0
 --- !u!1971053207 &1271776108
 SpriteShapeRenderer:
   m_ObjectHideFlags: 0
@@ -35990,6 +36001,7 @@ MonoBehaviour:
   m_OptimizeCollider: 1
   m_OptimizeGeometry: 1
   m_EnableTangents: 0
+  m_GeometryCached: 0
 --- !u!1971053207 &1291105470
 SpriteShapeRenderer:
   m_ObjectHideFlags: 0
@@ -36065,7 +36077,7 @@ RectTransform:
   m_GameObject: {fileID: 1291229875}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.01, y: 1.01, z: 1}
   m_Children:
   - {fileID: 1329049841}
   - {fileID: 1259437886}
@@ -42997,7 +43009,7 @@ Camera:
   far clip plane: 50
   field of view: 60
   orthographic: 1
-  orthographic size: 15
+  orthographic size: 13
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -43094,7 +43106,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1534369617}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.1999998, z: -10}
+  m_LocalPosition: {x: 0, y: 1.1999998, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1823201198}
@@ -44176,6 +44188,7 @@ MonoBehaviour:
   m_OptimizeCollider: 1
   m_OptimizeGeometry: 1
   m_EnableTangents: 0
+  m_GeometryCached: 0
 --- !u!1971053207 &1579813571
 SpriteShapeRenderer:
   m_ObjectHideFlags: 0
@@ -46019,6 +46032,7 @@ MonoBehaviour:
   m_OptimizeCollider: 1
   m_OptimizeGeometry: 1
   m_EnableTangents: 0
+  m_GeometryCached: 0
 --- !u!1971053207 &1637745600
 SpriteShapeRenderer:
   m_ObjectHideFlags: 0
@@ -49286,7 +49300,6 @@ GameObject:
   - component: {fileID: 1737894944}
   - component: {fileID: 1737894947}
   - component: {fileID: 1737894946}
-  - component: {fileID: 1737894945}
   m_Layer: 0
   m_Name: Hint
   m_TagString: Untagged
@@ -49316,34 +49329,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1737894945
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1737894943}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 2
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 0}
-          m_MethodName: UpdateHint
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!114 &1737894946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59821,6 +59806,7 @@ MonoBehaviour:
   m_OptimizeCollider: 1
   m_OptimizeGeometry: 1
   m_EnableTangents: 0
+  m_GeometryCached: 0
 --- !u!1971053207 &2123948391
 SpriteShapeRenderer:
   m_ObjectHideFlags: 0

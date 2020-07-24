@@ -25,8 +25,8 @@ namespace Cubra
             else
             {
                 // Иначе вызываем видеорекламу
-                _ = Appodeal.isLoaded(Appodeal.REWARDED_VIDEO);
-                _ = Appodeal.show(Appodeal.REWARDED_VIDEO);
+                Appodeal.isLoaded(Appodeal.REWARDED_VIDEO);
+                Appodeal.show(Appodeal.REWARDED_VIDEO);
             }
 
             if (Application.internetReachability != NetworkReachability.NotReachable)

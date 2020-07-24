@@ -15,7 +15,7 @@ public class Bull : Boss
     private void Start()
     {
         // Добавляем в событие завершения отсчета метод пробуждения быка
-        countdown.AfterCountdown.AddListener(AwakenBoss);
+        //countdown.AfterCountdown.AddListener(AwakenBoss);
 
         // Определяем количество атакующих забегов
         SetQuantityRun();

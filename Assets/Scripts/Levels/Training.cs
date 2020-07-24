@@ -18,7 +18,7 @@ namespace Cubra
         // Ссылка на компоненты подсказок
         private Image _imageHintPanel;
 
-        private void Awake()
+        private void Start()
         {
             _imageHintPanel = Main.Instance.LevelResults.HintPanel.GetComponent<Image>();
         }
@@ -69,8 +69,16 @@ namespace Cubra
                     _imageHintPanel.color = new Color32(0, 0, 0, 0);
                     Main.Instance.LevelResults.HintPanel.SetActive(false);
 
-                    Main.Instance.CharacterController.Enable();
-                    Main.Instance.LaunchALevel();
+                    if (Main.Instance.Countdown != null)
+                    {
+                        // Если присутствует отсчет, запускаем его
+                        _ = StartCoroutine(Main.Instance.Countdown.StartCountdown());
+                    }
+                    else
+                    {
+                        Main.Instance.CharacterController.Enable();
+                        Main.Instance.LaunchALevel();
+                    }
                 }
             }
         }

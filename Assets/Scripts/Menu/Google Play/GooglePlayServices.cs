@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using GooglePlayGames;
 
 namespace Cubra
 {
@@ -10,11 +9,7 @@ namespace Cubra
 
         private void Start()
         {
-            // Если интернет доступен, подключаемся к Google Play
-            if (Application.internetReachability != NetworkReachability.NotReachable)
-            {
-                SignGooglePlay();
-            }
+            SignGooglePlay();
         }
 
         /// <summary>
@@ -22,7 +17,10 @@ namespace Cubra
         /// </summary>
         private static void SignGooglePlay()
         {
-            Social.localUser.Authenticate((bool success) => {});
+            if (Application.internetReachability != NetworkReachability.NotReachable)
+            {
+                Social.localUser.Authenticate((bool success) => {});
+            }  
         }
 
         /// <summary>

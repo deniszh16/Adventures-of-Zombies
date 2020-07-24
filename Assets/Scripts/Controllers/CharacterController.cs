@@ -178,6 +178,7 @@ namespace Cubra.Controllers
             if (_character.Life)
             {
                 _character.Life = false;
+                _character.Rigidbody.velocity = Vector2.zero;
 
                 if (animation)
                 {

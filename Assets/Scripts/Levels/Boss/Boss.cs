@@ -39,7 +39,7 @@ public abstract class Boss : MonoBehaviour
     // Ссылки на дополнительные компоненты
     //protected Character character;
     //protected CameraShaking cameraShaking;
-    protected CountdownToStart countdown;
+   // protected CountdownToStart countdown;
 
     protected void Awake()
     {
@@ -50,7 +50,7 @@ public abstract class Boss : MonoBehaviour
 
         //character = GameObject.FindGameObjectWithTag("Character").GetComponent<Character>();
         //cameraShaking = Camera.main.GetComponent<CameraShaking>();
-        countdown = FindObjectOfType<CountdownToStart>();
+        //countdown = FindObjectOfType<CountdownToStart>();
     }
 
     protected virtual void FixedUpdate()

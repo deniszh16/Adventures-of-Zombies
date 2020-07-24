@@ -85,7 +85,7 @@ namespace Cubra
             // Если сохраненный прогресс меньше номера текущего уровня
             if (PlayerPrefs.GetInt("progress") <= Main.Instance.LevelNumber)
                 // Увеличиваем прогресс
-                PlayerPrefs.SetInt("progress", Main.Instance.LevelNumber);
+                PlayerPrefs.SetInt("progress", Main.Instance.LevelNumber + 1);
 
             // Набранные на уровне очки
             var points = Main.Instance.Timer.Seconds * 55;

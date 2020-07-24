@@ -22,7 +22,7 @@ namespace Cubra
         {
             if (Main.Instance.CurrentMode == Main.GameModes.Play)
             {
-                Transform.Rotate(Vector3.forward * _rotate);
+                Transform.Rotate(Vector3.forward * _rotate * Time.deltaTime);
                 Transform.localPosition = Vector3.MoveTowards(Transform.localPosition, Transform.localPosition + _direction, _speed * Time.deltaTime);
 
                 // Если пила достигает предельной точки, меняем направление

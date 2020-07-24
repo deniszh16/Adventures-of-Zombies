@@ -3,50 +3,37 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
-public class CountdownToStart : MonoBehaviour
+namespace Cubra
 {
-    // Событие по завершению отсчета
-    public UnityEvent AfterCountdown { get; } = new UnityEvent();
-
-    [Header("Количество секунд")]
-    [SerializeField] private int countdown = 3;
-
-    // Ссылки на компоненты
-    private Text textComponent;
-    //private Parameters parameters;
-
-    private void Awake()
+    public class CountdownToStart : MonoBehaviour
     {
-        textComponent = GetComponent<Text>();
-       // parameters = Camera.main.GetComponent<Parameters>();
+        // Событие по завершению отсчета
+        public UnityEvent AfterCountdown;
 
-        // Подписываем запуск отсчета в событие по запуску уровня
-        //parameters.StartLevel.AddListener(StartCountdown);
-    }
+        [Header("Количество секунд")]
+        [SerializeField] private int _countdown = 3;
 
-    /// <summary>Запуск отсчета</summary>
-    private void StartCountdown()
-    {
-        StartCoroutine(Countdown());
-    }
+        private Text _textComponent;
 
-    /// <summary>Отсчет времени до начала уровня</summary>
-    private IEnumerator Countdown()
-    {
-        while (countdown > 0)
+        private void Awake()
         {
-            // Обновляем текст отсчета
-            textComponent.text = countdown.ToString();
-
-            yield return new WaitForSeconds(1.0f);
-            // Уменьшаем секунды
-            countdown--;
+            _textComponent = GetComponent<Text>();
         }
 
-        // Вызываем зарегистрированные методы
-        AfterCountdown?.Invoke();
+        /// <summary>
+        /// Отсчет времени до начала уровня
+        /// </summary>
+        public IEnumerator StartCountdown()
+        {
+            while (_countdown > 0)
+            {
+                _textComponent.text = _countdown.ToString();
+                yield return new WaitForSeconds(1.0f);
+                _countdown--;
+            }
 
-        // Скрываем текст таймера
-        gameObject.SetActive(false);
+            AfterCountdown?.Invoke();
+            gameObject.SetActive(false);
+        }
     }
 }

@@ -524,7 +524,7 @@ RectTransform:
   m_GameObject: {fileID: 22356711}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.01, y: 1.01, z: 1}
   m_Children:
   - {fileID: 1649804012}
   - {fileID: 737085326}
@@ -9423,7 +9423,7 @@ Camera:
   far clip plane: 50
   field of view: 60
   orthographic: 1
-  orthographic size: 15
+  orthographic size: 13
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -9447,7 +9447,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.0000019073486, y: 3.1999998, z: -10}
+  m_LocalPosition: {x: 0, y: 1.1999998, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 182081401}
@@ -20647,6 +20647,7 @@ MonoBehaviour:
   m_OptimizeCollider: 1
   m_OptimizeGeometry: 1
   m_EnableTangents: 0
+  m_GeometryCached: 0
 --- !u!1971053207 &1024557695
 SpriteShapeRenderer:
   m_ObjectHideFlags: 0
@@ -23012,6 +23013,7 @@ MonoBehaviour:
   m_OptimizeCollider: 1
   m_OptimizeGeometry: 1
   m_EnableTangents: 0
+  m_GeometryCached: 0
 --- !u!1971053207 &1125907730
 SpriteShapeRenderer:
   m_ObjectHideFlags: 0
@@ -24132,6 +24134,7 @@ MonoBehaviour:
   m_OptimizeCollider: 1
   m_OptimizeGeometry: 1
   m_EnableTangents: 0
+  m_GeometryCached: 0
 --- !u!1971053207 &1159305587
 SpriteShapeRenderer:
   m_ObjectHideFlags: 0
@@ -28672,6 +28675,7 @@ MonoBehaviour:
   m_OptimizeCollider: 1
   m_OptimizeGeometry: 1
   m_EnableTangents: 0
+  m_GeometryCached: 0
 --- !u!1971053207 &1377759373
 SpriteShapeRenderer:
   m_ObjectHideFlags: 0
@@ -29684,7 +29688,7 @@ RectTransform:
   m_GameObject: {fileID: 1433699714}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.01, y: 1.01, z: 1}
   m_Children:
   - {fileID: 877542959}
   - {fileID: 1556952518}
@@ -32762,6 +32766,7 @@ MonoBehaviour:
   m_OptimizeCollider: 1
   m_OptimizeGeometry: 1
   m_EnableTangents: 0
+  m_GeometryCached: 0
 --- !u!1971053207 &1548586958
 SpriteShapeRenderer:
   m_ObjectHideFlags: 0
@@ -35217,6 +35222,7 @@ MonoBehaviour:
   m_OptimizeCollider: 1
   m_OptimizeGeometry: 1
   m_EnableTangents: 0
+  m_GeometryCached: 0
 --- !u!1971053207 &1635592865
 SpriteShapeRenderer:
   m_ObjectHideFlags: 0
@@ -37450,6 +37456,7 @@ MonoBehaviour:
   m_OptimizeCollider: 1
   m_OptimizeGeometry: 1
   m_EnableTangents: 0
+  m_GeometryCached: 0
 --- !u!1971053207 &1737151249
 SpriteShapeRenderer:
   m_ObjectHideFlags: 0
@@ -38699,7 +38706,7 @@ RectTransform:
   m_GameObject: {fileID: 1797649528}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.01, y: 1.01, z: 1}
   m_Children:
   - {fileID: 2050829253}
   - {fileID: 432750117}
@@ -40274,7 +40281,7 @@ MonoBehaviour:
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 15
+    OrthographicSize: 13
     NearClipPlane: 0.3
     FarClipPlane: 50
     Dutch: 0
@@ -42408,6 +42415,7 @@ MonoBehaviour:
   m_OptimizeCollider: 1
   m_OptimizeGeometry: 1
   m_EnableTangents: 0
+  m_GeometryCached: 0
 --- !u!1971053207 &1976062162
 SpriteShapeRenderer:
   m_ObjectHideFlags: 0
@@ -45188,6 +45196,7 @@ MonoBehaviour:
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
+  m_TargetMovementOnly: 0
   m_ScreenX: 0.5
   m_ScreenY: 0.6
   m_CameraDistance: 10
@@ -45792,6 +45801,7 @@ MonoBehaviour:
   m_OptimizeCollider: 1
   m_OptimizeGeometry: 1
   m_EnableTangents: 0
+  m_GeometryCached: 0
 --- !u!1971053207 &2115095799
 SpriteShapeRenderer:
   m_ObjectHideFlags: 0
@@ -45947,6 +45957,7 @@ MonoBehaviour:
   _brains: 3
   _cinemachineVirtual: {fileID: 1866912189}
   _timer: {fileID: 142899321}
+  _countdown: {fileID: 0}
 --- !u!114 &2116905392
 MonoBehaviour:
   m_ObjectHideFlags: 0

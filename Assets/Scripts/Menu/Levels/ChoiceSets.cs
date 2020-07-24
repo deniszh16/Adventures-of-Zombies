@@ -14,6 +14,8 @@ namespace Cubra
         {
             // Активируем выбранный (сохраненный) набор уровней
             _sets[PlayerPrefs.GetInt("sets") - 1].SetActive(true);
+            // Активируем обучение на уровнях
+            Training.PlayerTraining = true;
         }
 
         /// <summary>

@@ -1,4 +1,4 @@
-﻿// <copyright file="AndroidTokenClient.cs" company="Google Inc.">
+// <copyright file="AndroidTokenClient.cs" company="Google Inc.">
 // Copyright (C) 2015 Google Inc.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,9 +19,9 @@ namespace GooglePlayGames.Android
 {
     using GooglePlayGames.BasicApi;
     using GooglePlayGames.BasicApi.SavedGame;
-    using GooglePlayGames.BasicApi.Multiplayer;
     using OurUtils;
     using UnityEngine;
+    using UnityEngine.SocialPlatforms;
     using System;
     using System.Collections.Generic;
 
@@ -30,8 +30,7 @@ namespace GooglePlayGames.Android
         internal static System.DateTime ToDateTime(long milliseconds)
         {
             System.DateTime result = new System.DateTime(1970, 1, 1, 0, 0, 0, 0);
-            result.AddMilliseconds(milliseconds);
-            return result;
+            return result.AddMilliseconds(milliseconds);
         }
 
         // Convert to LeaderboardVariant.java#TimeSpan
@@ -55,7 +54,7 @@ namespace GooglePlayGames.Android
             switch (collection)
             {
                 case LeaderboardCollection.Social:
-                    return 1 /* COLLECTION_SOCIAL */;
+                  return 3 /* COLLECTION_FRIENDS */;
                 case LeaderboardCollection.Public:
                 default:
                     return 0 /* COLLECTION_PUBLIC */;
@@ -76,65 +75,6 @@ namespace GooglePlayGames.Android
             }
         }
 
-        internal static Invitation.InvType FromInvitationType(int invitationTypeJava)
-        {
-            switch (invitationTypeJava)
-            {
-                case 0: // INVITATION_TYPE_REAL_TIME
-                    return Invitation.InvType.RealTime;
-                case 1: // INVITATION_TYPE_TURN_BASED
-                    return Invitation.InvType.TurnBased;
-                default:
-                    return Invitation.InvType.Unknown;
-            }
-        }
-
-        internal static Participant.ParticipantStatus FromParticipantStatus(int participantStatusJava)
-        {
-            switch (participantStatusJava)
-            {
-                case 0: // STATUS_NOT_INVITED_YET
-                    return Participant.ParticipantStatus.NotInvitedYet;
-                case 1: // STATUS_INVITED
-                    return Participant.ParticipantStatus.Invited;
-                case 2: // STATUS_JOINED
-                    return Participant.ParticipantStatus.Joined;
-                case 3: // STATUS_DECLINED
-                    return Participant.ParticipantStatus.Declined;
-                case 4: // STATUS_LEFT
-                    return Participant.ParticipantStatus.Left;
-                case 5: // STATUS_FINISHED
-                    return Participant.ParticipantStatus.Finished;
-                case 6: // STATUS_UNRESPONSIVE
-                    return Participant.ParticipantStatus.Unresponsive;
-                default:
-                    return Participant.ParticipantStatus.Unknown;
-            }
-        }
-
-        internal static Participant ToParticipant(AndroidJavaObject participant)
-        {
-            string displayName = participant.Call<string>("getDisplayName");
-            string participantId = participant.Call<string>("getParticipantId");
-            Participant.ParticipantStatus status =
-                AndroidJavaConverter.FromParticipantStatus(participant.Call<int>("getStatus"));
-            bool connectedToRoom = participant.Call<bool>("isConnectedToRoom");
-            Player player = null;
-            try
-            {
-                using (var playerObject = participant.Call<AndroidJavaObject>("getPlayer"))
-                {
-                    player = ToPlayer(playerObject);
-                }
-            }
-            catch (Exception)
-            {
-                // Unity throws exception for returned null
-            }
-
-            return new Participant(displayName, participantId, status, player, connectedToRoom);
-        }
-
         internal static Player ToPlayer(AndroidJavaObject player)
         {
             if (player == null)
@@ -148,71 +88,18 @@ namespace GooglePlayGames.Android
             return new Player(displayName, playerId, avatarUrl);
         }
 
-        internal static Invitation ToInvitation(AndroidJavaObject invitation)
-        {
-            string invitationId = invitation.Call<string>("getInvitationId");
-            int invitationType = invitation.Call<int>("getInvitationType");
-            int variant = invitation.Call<int>("getVariant");
-            long creationTimestamp = invitation.Call<long>("getCreationTimestamp");
-            System.DateTime creationTime = AndroidJavaConverter.ToDateTime(creationTimestamp);
-            using (var participant = invitation.Call<AndroidJavaObject>("getInviter"))
-            {
-                return new Invitation(
-                    AndroidJavaConverter.FromInvitationType(invitationType),
-                    invitationId,
-                    AndroidJavaConverter.ToParticipant(participant),
-                    variant,
-                    creationTime);
-            }
-        }
+        internal static PlayerProfile ToPlayerProfile(AndroidJavaObject player) {
+          if (player == null) {
+            return null;
+          }
 
-        internal static TurnBasedMatch ToTurnBasedMatch(AndroidJavaObject turnBasedMatch)
-        {
-            if (turnBasedMatch == null)
-            {
-                return null;
-            }
-
-            string matchId = turnBasedMatch.Call<string>("getMatchId");
-            byte[] data = turnBasedMatch.Call<byte[]>("getData");
-            bool canRematch = turnBasedMatch.Call<bool>("canRematch");
-            uint availableAutomatchSlots = (uint) turnBasedMatch.Call<int>("getAvailableAutoMatchSlots");
-            string selfParticipantId = turnBasedMatch.Call<string>("getCreatorId");
-            List<Participant> participants = ToParticipantList(turnBasedMatch);
-            string pendingParticipantId = turnBasedMatch.Call<string>("getPendingParticipantId");
-            TurnBasedMatch.MatchStatus turnStatus = ToMatchStatus(turnBasedMatch.Call<int>("getStatus"));
-            TurnBasedMatch.MatchTurnStatus matchStatus =
-                AndroidJavaConverter.ToMatchTurnStatus(turnBasedMatch.Call<int>("getTurnStatus"));
-            uint variant = (uint) turnBasedMatch.Call<int>("getVariant");
-            uint version = (uint) turnBasedMatch.Call<int>("getVersion");
-            DateTime creationTime = AndroidJavaConverter.ToDateTime(turnBasedMatch.Call<long>("getCreationTimestamp"));
-            DateTime lastUpdateTime =
-                AndroidJavaConverter.ToDateTime(turnBasedMatch.Call<long>("getLastUpdatedTimestamp"));
-
-            return new TurnBasedMatch(matchId, data, canRematch, selfParticipantId, participants,
-                availableAutomatchSlots, pendingParticipantId, matchStatus, turnStatus, variant, version, creationTime,
-                lastUpdateTime);
-        }
-
-        internal static List<Participant> ToParticipantList(AndroidJavaObject turnBasedMatch)
-        {
-            using (var participantsObject = turnBasedMatch.Call<AndroidJavaObject>("getParticipantIds"))
-            {
-                List<Participant> participants = new List<Participant>();
-                int size = participantsObject.Call<int>("size");
-
-                for (int i = 0; i < size; i++)
-                {
-                    string participantId = participantsObject.Call<string>("get", i);
-                    using (var participantObject =
-                        turnBasedMatch.Call<AndroidJavaObject>("getParticipant", participantId))
-                    {
-                        participants.Add(AndroidJavaConverter.ToParticipant(participantObject));
-                    }
-                }
-
-                return participants;
-            }
+          string displayName = player.Call<String>("getDisplayName");
+          string playerId = player.Call<String>("getPlayerId");
+          string avatarUrl = player.Call<String>("getIconImageUrl");
+          bool isFriend =
+              player.Call<AndroidJavaObject>("getRelationshipInfo").Call<int>("getFriendStatus") ==
+              4 /* PlayerFriendStatus.Friend*/;
+          return new PlayerProfile(displayName, playerId, avatarUrl, isFriend);
         }
 
         internal static List<string> ToStringList(AndroidJavaObject stringList)
@@ -245,42 +132,33 @@ namespace GooglePlayGames.Android
             return converted;
         }
 
-        internal static TurnBasedMatch.MatchStatus ToMatchStatus(int matchStatus)
-        {
-            switch (matchStatus)
+        internal static FriendsListVisibilityStatus ToFriendsListVisibilityStatus(int playerListVisibility) {
+            switch (playerListVisibility)
             {
-                case 0: // MATCH_STATUS_AUTO_MATCHING
-                    return TurnBasedMatch.MatchStatus.AutoMatching;
-                case 1: // MATCH_STATUS_ACTIVE
-                    return TurnBasedMatch.MatchStatus.Active;
-                case 2: // MATCH_STATUS_COMPLETE
-                    return TurnBasedMatch.MatchStatus.Complete;
-                case 3: // MATCH_STATUS_EXPIRED
-                    return TurnBasedMatch.MatchStatus.Expired;
-                case 4: // MATCH_STATUS_CANCELED
-                    return TurnBasedMatch.MatchStatus.Cancelled;
-                case 5: // MATCH_STATUS_DELETED
-                    return TurnBasedMatch.MatchStatus.Deleted;
+                case /* FriendsListVisibilityStatus.UNKNOWN */ 0:
+                    return FriendsListVisibilityStatus.Unknown;
+                case /* FriendsListVisibilityStatus.VISIBLE */ 1:
+                    return FriendsListVisibilityStatus.Visible;
+                case /* FriendsListVisibilityStatus.REQUEST_REQUIRED */ 2:
+                    return FriendsListVisibilityStatus.ResolutionRequired;
+                case /* FriendsListVisibilityStatus.FEATURE_UNAVAILABLE */ 3:
+                    return FriendsListVisibilityStatus.Unavailable;
                 default:
-                    return TurnBasedMatch.MatchStatus.Unknown;
+                    return FriendsListVisibilityStatus.Unknown;
             }
         }
 
-        internal static TurnBasedMatch.MatchTurnStatus ToMatchTurnStatus(int matchTurnStatus)
-        {
-            switch (matchTurnStatus)
-            {
-                case 0: // MATCH_TURN_STATUS_INVITED
-                    return TurnBasedMatch.MatchTurnStatus.Invited;
-                case 1: // MATCH_TURN_STATUS_MY_TURN
-                    return TurnBasedMatch.MatchTurnStatus.MyTurn;
-                case 2: // MATCH_TURN_STATUS_THEIR_TURN
-                    return TurnBasedMatch.MatchTurnStatus.TheirTurn;
-                case 3: // MATCH_TURN_STATUS_COMPLETE
-                    return TurnBasedMatch.MatchTurnStatus.Complete;
-                default:
-                    return TurnBasedMatch.MatchTurnStatus.Unknown;
+        internal static IUserProfile[] playersBufferToArray(AndroidJavaObject playersBuffer) {
+          int count = playersBuffer.Call<int>("getCount");
+          IUserProfile[] users = new IUserProfile[count];
+          for (int i = 0; i < count; ++i) {
+            using (var player = playersBuffer.Call<AndroidJavaObject>("get", i)) {
+              users[i] = AndroidJavaConverter.ToPlayerProfile(player);
             }
+          }
+
+          playersBuffer.Call("release");
+          return users;
         }
     }
 }

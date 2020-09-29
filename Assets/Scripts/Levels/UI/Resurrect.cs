@@ -28,7 +28,7 @@ namespace Cubra
                 Appodeal.isLoaded(Appodeal.REWARDED_VIDEO);
                 Appodeal.show(Appodeal.REWARDED_VIDEO);
             }
-
+            
             if (Application.internetReachability != NetworkReachability.NotReachable)
                 GooglePlayServices.UnlockingAchievement(GPGSIds.achievement_10);
         }

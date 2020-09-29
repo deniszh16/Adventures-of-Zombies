@@ -10,7 +10,7 @@ namespace Cubra
 
         private void Start()
         {
-            Appodeal.initialize(_key, Appodeal.INTERSTITIAL | Appodeal.REWARDED_VIDEO, true);
+            Appodeal.initialize(_key, Appodeal.REWARDED_VIDEO, true);
         }
     }
 }

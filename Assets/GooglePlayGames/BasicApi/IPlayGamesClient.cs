@@ -19,7 +19,6 @@
 namespace GooglePlayGames.BasicApi
 {
     using System;
-    using Multiplayer;
     using UnityEngine.SocialPlatforms;
 
     /// <summary>
@@ -82,7 +81,7 @@ namespace GooglePlayGames.BasicApi
         string GetUserId();
 
         /// <summary>
-        /// Load friends of the authenticated user.
+        /// Loads friends of the authenticated user. This loads the entire list of friends.
         /// </summary>
         /// <param name="callback">Callback invoked when complete.  bool argument
         /// indicates success.</param>
@@ -229,6 +228,70 @@ namespace GooglePlayGames.BasicApi
         void ShowAchievementsUI(Action<UIStatus> callback);
 
         /// <summary>
+        /// Shows the appropriate platform-specific friends sharing UI.
+        /// <param name="callback">The callback to invoke when complete. If null,
+        /// no callback is called. </param>
+        /// </summary>
+        void AskForLoadFriendsResolution(Action<UIStatus> callback);
+
+        /// <summary>
+        /// Returns the latest LoadFriendsStatus obtained from loading friends.
+        /// </summary>
+        LoadFriendsStatus GetLastLoadFriendsStatus();
+
+        /// <summary>
+        /// Shows the Play Games Player Profile UI for a specific user identifier.
+        /// </summary>
+        /// <param name="otherUserId">User Identifier.</param>
+        /// <param name="otherPlayerInGameName">
+        /// The game's own display name of the player referred to by userId.
+        /// </param>
+        /// <param name="currentPlayerInGameName">
+        /// The game's own display name of the current player.
+        /// </param>
+        /// <param name="callback">Callback invoked upon completion.</param>
+        void ShowCompareProfileWithAlternativeNameHintsUI(
+            string otherUserId, string otherPlayerInGameName, string currentPlayerInGameName,
+            Action<UIStatus> callback);
+
+        /// <summary>
+        /// Returns if the user has allowed permission for the game to access the friends list.
+        /// </summary>
+        /// <param name="forceReload">If true, this call will clear any locally cached data and
+        /// attempt to fetch the latest data from the server. Normally, this should be set to {@code
+        /// false} to gain advantages of data caching.</param> <param name="callback">Callback
+        /// invoked upon completion.</param>
+        void GetFriendsListVisibility(bool forceReload,
+                                      Action<FriendsListVisibilityStatus> callback);
+
+        /// <summary>
+        /// Loads the first page of the user's friends
+        /// </summary>
+        /// <param name="pageSize">
+        /// The number of entries to request for this initial page. Note that if cached
+        /// data already exists, the returned buffer may contain more than this size, but it is
+        /// guaranteed to contain at least this many if the collection contains enough records.
+        /// </param>
+        /// <param name="forceReload">
+        /// If true, this call will clear any locally cached data and attempt to
+        /// fetch the latest data from the server. This would commonly be used for something like a
+        /// user-initiated refresh. Normally, this should be set to {@code false} to gain advantages
+        /// of data caching.</param>
+        /// <param name="callback">Callback invoked upon completion.</param>
+        void LoadFriends(int pageSize, bool forceReload, Action<LoadFriendsStatus> callback);
+
+        /// <summary>
+        /// Loads the friends list page
+        /// </summary>
+        /// <param name="pageSize">
+        /// The number of entries to request for this page. Note that if cached data already
+        /// exists, the returned buffer may contain more than this size, but it is guaranteed
+        /// to contain at least this many if the collection contains enough records.
+        /// </param>
+        /// <param name="callback"></param>
+        void LoadMoreFriends(int pageSize, Action<LoadFriendsStatus> callback);
+
+        /// <summary>
         /// Shows the leaderboard UI for a specific leaderboard.
         /// </summary>
         /// <remarks>If the passed ID is <code>null</code>, all leaderboards are displayed.
@@ -320,19 +383,6 @@ namespace GooglePlayGames.BasicApi
         bool HasPermissions(string[] scopes);
 
         /// <summary>
-        /// Returns a real-time multiplayer client.
-        /// </summary>
-        /// <seealso cref="GooglePlayGames.BasicApi.Multiplayer.IRealTimeMultiplayerClient"/>
-        /// <returns>The rtmp client.</returns>
-        IRealTimeMultiplayerClient GetRtmpClient();
-
-        /// <summary>
-        /// Returns a turn-based multiplayer client.
-        /// </summary>
-        /// <returns>The tbmp client.</returns>
-        ITurnBasedMultiplayerClient GetTbmpClient();
-
-        /// <summary>
         /// Gets the saved game client.
         /// </summary>
         /// <returns>The saved game client.</returns>
@@ -350,12 +400,6 @@ namespace GooglePlayGames.BasicApi
         /// <returns>The video client.</returns>
         Video.IVideoClient GetVideoClient();
 
-        /// <summary>
-        /// Registers the invitation delegate.
-        /// </summary>
-        /// <param name="invitationDelegate">Invitation delegate.</param>
-        void RegisterInvitationDelegate(InvitationReceivedDelegate invitationDelegate);
-
         IUserProfile[] GetFriends();
 
         /// <summary>
@@ -366,21 +410,5 @@ namespace GooglePlayGames.BasicApi
         /// <param name="gravity">Gravity for the popup.</param>
         void SetGravityForPopups(Gravity gravity);
     }
-
-    /// <summary>
-    /// Delegate that handles an incoming invitation (for both RTMP and TBMP).
-    /// </summary>
-    /// <param name="invitation">The invitation received.</param>
-    /// <param name="shouldAutoAccept">If this is true, then the game should immediately
-    /// accept the invitation and go to the game screen without prompting the user. If
-    /// false, you should prompt the user before accepting the invitation. As an example,
-    /// when a user taps on the "Accept" button on a notification in Android, it is
-    /// clear that they want to accept that invitation right away, so the plugin calls this
-    /// delegate with shouldAutoAccept = true. However, if we receive an incoming invitation
-    /// that the player hasn't specifically indicated they wish to accept (for example,
-    /// we received one in the background from the server), this delegate will be called
-    /// with shouldAutoAccept=false to indicate that you should confirm with the user
-    /// to see if they wish to accept or decline the invitation.</param>
-    public delegate void InvitationReceivedDelegate(Invitation invitation, bool shouldAutoAccept);
 }
 #endif

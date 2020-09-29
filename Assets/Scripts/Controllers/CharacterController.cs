@@ -15,8 +15,10 @@ namespace Cubra.Controllers
         private bool _isGrounded;
         // Прыгает ли персонаж
         private bool _isJumping;
+
         // Висит ли персонаж на крюке
         public bool IsHook { get; set; }
+
         // Увеличена ли скорость персонажа
         public bool IsAccelerated { get; set; }
 

@@ -19,7 +19,6 @@
 namespace GooglePlayGames.BasicApi
 {
     using System;
-    using GooglePlayGames.BasicApi.Multiplayer;
     using GooglePlayGames.OurUtils;
     using UnityEngine.SocialPlatforms;
 
@@ -259,6 +258,51 @@ namespace GooglePlayGames.BasicApi
             }
         }
 
+        public void AskForLoadFriendsResolution(Action<UIStatus> callback) {
+          LogUsage();
+          if (callback != null) {
+            callback.Invoke(UIStatus.VersionUpdateRequired);
+          }
+        }
+
+        public LoadFriendsStatus GetLastLoadFriendsStatus() {
+          LogUsage();
+          return LoadFriendsStatus.Unknown;
+        }
+
+        public void LoadFriends(int pageSize, bool forceReload,
+                                Action<LoadFriendsStatus> callback) {
+          LogUsage();
+          if (callback != null) {
+            callback.Invoke(LoadFriendsStatus.Unknown);
+          }
+        }
+
+        public void LoadMoreFriends(int pageSize, Action<LoadFriendsStatus> callback) {
+          LogUsage();
+          if (callback != null) {
+            callback.Invoke(LoadFriendsStatus.Unknown);
+          }
+        }
+
+        public void ShowCompareProfileWithAlternativeNameHintsUI(string userId,
+                                                                 string otherPlayerInGameName,
+                                                                 string currentPlayerInGameName,
+                                                                 Action<UIStatus> callback) {
+          LogUsage();
+          if (callback != null) {
+            callback.Invoke(UIStatus.VersionUpdateRequired);
+          }
+        }
+
+        public void GetFriendsListVisibility(bool forceReload,
+                                            Action<FriendsListVisibilityStatus> callback) {
+          LogUsage();
+          if (callback != null) {
+            callback.Invoke(FriendsListVisibilityStatus.Unknown);
+          }
+        }
+
         /// <summary>
         /// Shows the leaderboard UI
         /// </summary>
@@ -396,27 +440,6 @@ namespace GooglePlayGames.BasicApi
         }
 
         /// <summary>
-        /// Returns a real-time multiplayer client.
-        /// </summary>
-        /// <seealso cref="GooglePlayGames.BasicApi.Multiplayer.IRealTimeMultiplayerClient"></seealso>
-        /// <returns>The rtmp client.</returns>
-        public IRealTimeMultiplayerClient GetRtmpClient()
-        {
-            LogUsage();
-            return null;
-        }
-
-        /// <summary>
-        /// Returns a turn-based multiplayer client.
-        /// </summary>
-        /// <returns>The tbmp client.</returns>
-        public ITurnBasedMultiplayerClient GetTbmpClient()
-        {
-            LogUsage();
-            return null;
-        }
-
-        /// <summary>
         /// Gets the saved game client.
         /// </summary>
         /// <returns>The saved game client.</returns>
@@ -444,35 +467,6 @@ namespace GooglePlayGames.BasicApi
         {
             LogUsage();
             return null;
-        }
-
-        /// <summary>
-        /// Registers the invitation delegate.
-        /// </summary>
-        /// <param name="invitationDelegate">Invitation delegate.</param>
-        public void RegisterInvitationDelegate(InvitationReceivedDelegate invitationDelegate)
-        {
-            LogUsage();
-        }
-
-        /// <summary>
-        /// Gets the invitation from notification.
-        /// </summary>
-        /// <returns>The invitation from notification.</returns>
-        public Invitation GetInvitationFromNotification()
-        {
-            LogUsage();
-            return null;
-        }
-
-        /// <summary>
-        /// Determines whether this instance has invitation from notification.
-        /// </summary>
-        /// <returns><c>true</c> if this instance has invitation from notification; otherwise, <c>false</c>.</returns>
-        public bool HasInvitationFromNotification()
-        {
-            LogUsage();
-            return false;
         }
 
         /// <summary>

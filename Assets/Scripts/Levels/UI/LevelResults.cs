@@ -49,7 +49,7 @@ namespace Cubra
             _starsHelper = JsonUtility.FromJson<StarsHelper>(PlayerPrefs.GetString("stars-level"));
 
             // Подписываем отображение проигрыша в событие смерти персонажа
-            Main.Instance.CharacterController.IsDead += FailedLevel;
+            GameManager.Instance.CharacterController.IsDead += FailedLevel;
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Cubra
         public void CompleteLevel()
         {
             // Переключаем режим игры на успешное завершение
-            Main.Instance.CurrentMode = Main.GameModes.Completed;
+            GameManager.Instance.CurrentMode = GameManager.GameModes.Completed;
             Invoke("WinningAtLevel", 0.7f);
         }
 
@@ -68,7 +68,7 @@ namespace Cubra
         public void FailedLevel()
         {
             // Переключаем режим игры на проигрыш
-            Main.Instance.CurrentMode = Main.GameModes.Losing;
+            GameManager.Instance.CurrentMode = GameManager.GameModes.Losing;
             Invoke("LosingAtLevel", 1.5f);
         }
 
@@ -83,29 +83,29 @@ namespace Cubra
             _hintPanel.SetActive(true);
 
             // Если сохраненный прогресс меньше номера текущего уровня
-            if (PlayerPrefs.GetInt("progress") <= Main.Instance.LevelNumber)
+            if (PlayerPrefs.GetInt("progress") <= GameManager.Instance.LevelNumber)
                 // Увеличиваем прогресс
-                PlayerPrefs.SetInt("progress", Main.Instance.LevelNumber + 1);
+                PlayerPrefs.SetInt("progress", GameManager.Instance.LevelNumber + 1);
 
             // Набранные на уровне очки
-            var points = Main.Instance.Timer.Seconds * 55;
+            var points = GameManager.Instance.Timer.Seconds * 55;
             _levelScore.text = points.ToString();
             PlayerPrefs.SetInt("score", PlayerPrefs.GetInt("score") + points);
 
             // Выводим победный текст
-            _textHint.ChangeKey(_winningTexts[Main.Instance.Stars - 1]);
+            _textHint.ChangeKey(_winningTexts[GameManager.Instance.Stars - 1]);
 
             if (Application.internetReachability != NetworkReachability.NotReachable)
             {
-                if (Main.Instance.LevelNumber > 1 && Main.Instance.Stars == 3)
+                if (GameManager.Instance.LevelNumber > 1 && GameManager.Instance.Stars == 3)
                     GooglePlayServices.UnlockingAchievement(GPGSIds.achievement_2);
             }
 
             // Сохраняем обновленную статистику по персонажу
-            PlayerPrefs.SetString("character-" + PlayerPrefs.GetInt("character"), JsonUtility.ToJson(Main.Instance.ZombieHelper));
+            PlayerPrefs.SetString("character-" + PlayerPrefs.GetInt("character"), JsonUtility.ToJson(GameManager.Instance.ZombieHelper));
 
             // Выводим полученные звезды за уровень
-            _levelStars.sprite = _spritesStars[Main.Instance.Stars - 1];
+            _levelStars.sprite = _spritesStars[GameManager.Instance.Stars - 1];
             SaveStars();
         }
 
@@ -115,16 +115,16 @@ namespace Cubra
         private void SaveStars()
         {
             // Если в списке меньше значений, чем номер уровня
-            if (_starsHelper.Stars.Count < Main.Instance.LevelNumber)
+            if (_starsHelper.Stars.Count < GameManager.Instance.LevelNumber)
             {
                 // Создаем новый элемент с количеством полученных звезд
-                _starsHelper.Stars.Add(Main.Instance.Stars);
+                _starsHelper.Stars.Add(GameManager.Instance.Stars);
                 PlayerPrefs.SetString("stars-level", JsonUtility.ToJson(_starsHelper));
             }
-            else if (_starsHelper.Stars[Main.Instance.LevelNumber - 1] < Main.Instance.Stars)
+            else if (_starsHelper.Stars[GameManager.Instance.LevelNumber - 1] < GameManager.Instance.Stars)
             {
                 // Записываем новое значение и сохраняем
-                _starsHelper.Stars[Main.Instance.LevelNumber - 1] = Main.Instance.Stars;
+                _starsHelper.Stars[GameManager.Instance.LevelNumber - 1] = GameManager.Instance.Stars;
                 PlayerPrefs.SetString("stars-level", JsonUtility.ToJson(_starsHelper));
             }
         }
@@ -156,8 +156,8 @@ namespace Cubra
             _textHint.ChangeKey("result-lose");
 
             // Увеличиваем количество смертей персонажа
-            Main.Instance.ZombieHelper.Deaths++;
-            PlayerPrefs.SetString("character-" + PlayerPrefs.GetInt("character"), JsonUtility.ToJson(Main.Instance.ZombieHelper));
+            GameManager.Instance.ZombieHelper.Deaths++;
+            PlayerPrefs.SetString("character-" + PlayerPrefs.GetInt("character"), JsonUtility.ToJson(GameManager.Instance.ZombieHelper));
         }
 
         /// <summary>
@@ -166,11 +166,11 @@ namespace Cubra
         private void UpdateSavedData()
         {
             // Увеличиваем количество игр персонажа
-            Main.Instance.ZombieHelper.Played++;
+            GameManager.Instance.ZombieHelper.Played++;
 
-            PlayerPrefs.SetInt("coins", PlayerPrefs.GetInt("coins") + Main.Instance.Coins);
-            PlayerPrefs.SetInt("total-coins", PlayerPrefs.GetInt("total-coins") + Main.Instance.Coins);
-            PlayerPrefs.SetInt("brains", PlayerPrefs.GetInt("brains") + Main.Instance.Brains);
+            PlayerPrefs.SetInt("coins", PlayerPrefs.GetInt("coins") + GameManager.Instance.Coins);
+            PlayerPrefs.SetInt("total-coins", PlayerPrefs.GetInt("total-coins") + GameManager.Instance.Coins);
+            PlayerPrefs.SetInt("brains", PlayerPrefs.GetInt("brains") + GameManager.Instance.Brains);
         }
 
         /// <summary>
@@ -182,11 +182,11 @@ namespace Cubra
             _hintPanel.SetActive(false);
 
             // Запускаем уровень
-            Main.Instance.LaunchALevel();
+            GameManager.Instance.LaunchALevel();
             // Восстанавливаем персонажа к последнему респауну
-            Main.Instance.CharacterController.RestoreCharacter();
+            GameManager.Instance.CharacterController.RestoreCharacter();
             // Возобновляем привязку камеры
-            Main.Instance.SnapCameraToTarget();
+            GameManager.Instance.SnapCameraToTarget();
         }
     }
 }

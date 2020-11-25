@@ -9,8 +9,7 @@ namespace Cubra
 
         [Header("Скорость вращения")]
         [SerializeField] protected float _rotate;
-
-        // Вектор движения пилы
+        
         private Vector3 _direction;
 
         private void Start()
@@ -20,7 +19,7 @@ namespace Cubra
 
         private void Update()
         {
-            if (Main.Instance.CurrentMode == Main.GameModes.Play)
+            if (GameManager.Instance.CurrentMode == GameManager.GameModes.Play)
             {
                 Transform.Rotate(Vector3.forward * _rotate * Time.deltaTime);
                 Transform.localPosition = Vector3.MoveTowards(Transform.localPosition, Transform.localPosition + _direction, _speed * Time.deltaTime);

@@ -8,7 +8,6 @@ namespace Cubra
         // Секунды до повторения ускорения
         private float _secondsToRepeat = 2.6f;
 
-        // Ссылка на физический компонент
         private Rigidbody2D _rigidbody;
 
         protected override void Awake()
@@ -19,12 +18,9 @@ namespace Cubra
 
         private void Start()
         {
-            Main.Instance.LevelLaunched += StartAcceleration;
+            GameManager.Instance.LevelLaunched += StartAcceleration;
         }
-
-        /// <summary>
-        /// Запуск раскачивания лезвия
-        /// </summary>
+        
         private void StartAcceleration()
         {
             _ = StartCoroutine(SpeedUpRocking());
@@ -35,7 +31,7 @@ namespace Cubra
         /// </summary>
         private IEnumerator SpeedUpRocking()
         {
-            while (Main.Instance.CurrentMode == Main.GameModes.Play)
+            while (GameManager.Instance.CurrentMode == GameManager.GameModes.Play)
             {
                 yield return new WaitForSeconds(_secondsToRepeat);
                 _rigidbody.velocity *= 1.2f;

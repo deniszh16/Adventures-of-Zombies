@@ -10,8 +10,7 @@ namespace Cubra
 
         // Номер персонажа
         private int _number;
-
-        // Ссылки на компоненты
+        
         private Text _textButton;
         private TextTranslation _textTranslation;
 

@@ -19,7 +19,6 @@ namespace Cubra
         // Цель для крысиных атак
         private GameObject _target;
 
-        // Перечисление анимаций крысы
         private enum RatAnimations { Idle, Run, Attack }
 
         private SpriteRenderer _sprite;
@@ -91,12 +90,11 @@ namespace Cubra
         {
             if (collision.gameObject.TryGetComponent(out Character character))
             {
-                // Если персонаж живой
                 if (character.Life)
                 {
                     _target = null;
                     _animator.SetInteger("State", (int)RatAnimations.Attack);
-                    Main.Instance.CharacterController.DamageToCharacter(true, true);
+                    GameManager.Instance.CharacterController.DamageToCharacter(true, true);
                 }
             }
         }

@@ -14,7 +14,6 @@ namespace Cubra
         // Номер доступного объекта в пуле
         private int _objectNumber;
 
-        // Ссылка на музыкальный компонент
         private PlayingSound _playingSound;
 
         private void Awake()
@@ -24,12 +23,9 @@ namespace Cubra
 
         private void Start()
         {
-            Main.Instance.LevelLaunched += StartCreation;
+            GameManager.Instance.LevelLaunched += StartCreation;
         }
-
-        /// <summary>
-        /// Запуск создания объектов
-        /// </summary>
+        
         private void StartCreation()
         {
             _ = StartCoroutine(CreateObject());
@@ -40,7 +36,7 @@ namespace Cubra
         /// </summary>
         private IEnumerator CreateObject()
         {
-            while (Main.Instance.CurrentMode == Main.GameModes.Play)
+            while (GameManager.Instance.CurrentMode == GameManager.GameModes.Play)
             {
                 yield return new WaitForSeconds(_pause);
 

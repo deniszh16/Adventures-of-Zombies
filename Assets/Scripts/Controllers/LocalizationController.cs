@@ -15,8 +15,7 @@ namespace Cubra.Controllers
             get => PlayerPrefs.GetString("current-language");
             set => PlayerPrefs.SetString("current-language", value);
         }
-
-        // Перечисления языков игры
+        
         private enum Languages { Russian, English }
 
         private void Awake()

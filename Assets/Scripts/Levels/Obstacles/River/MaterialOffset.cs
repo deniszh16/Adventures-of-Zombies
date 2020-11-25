@@ -9,8 +9,7 @@ namespace Cubra
 
         // Вектор смещения текстуры
         private Vector3 _offset;
-
-        // Ссылка на компонент
+        
         private Renderer _render;
 
         private void Awake()

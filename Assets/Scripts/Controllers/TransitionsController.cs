@@ -20,12 +20,7 @@ namespace Cubra.Controllers
         {
             SceneManager.LoadScene(scene);
         }
-
-        /// <summary>
-        /// Переход на указанную сцену с паузой
-        /// </summary>
-        /// <param name="seconds">секунды до загрузки</param>
-        /// <param name="scene">сцена для загрузки</param>
+        
         public IEnumerator GoToSceneWithPause(float seconds, int scene)
         {
             yield return new WaitForSeconds(seconds);
@@ -42,25 +37,16 @@ namespace Cubra.Controllers
             _ = SceneManager.LoadSceneAsync("Level " + level.Number.ToString());
         }
 
-        /// <summary>
-        /// Перезагрузка текущей сцены
-        /// </summary>
         public void ReloadScene()
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
-        /// <summary>
-        /// Переход на страницу приложения
-        /// </summary>
         public void OpenGamePage()
         {
             Application.OpenURL(URL);
         }
-
-        /// <summary>
-        /// Выход из игры
-        /// </summary>
+        
         public void ExitGame()
         {
             Application.Quit();

@@ -4,7 +4,6 @@ namespace Cubra
 {
     public class Explosion : SharpObstacles
     {
-        // Ссылки на компоненты
         private PlayingSound _playingSound;
         private CameraShaking _cameraShaking;
 

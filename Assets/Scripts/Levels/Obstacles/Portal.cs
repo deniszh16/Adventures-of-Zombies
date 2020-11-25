@@ -16,12 +16,9 @@ namespace Cubra
 
         private void Start()
         {
-            Main.Instance.LevelLaunched += LaunchTeleportation;
+            GameManager.Instance.LevelLaunched += LaunchTeleportation;
         }
-
-        /// <summary>
-        /// Запуск телепорта платформы
-        /// </summary>
+        
         private void LaunchTeleportation()
         {
             _ = StartCoroutine(TeleportPlatform());
@@ -32,7 +29,7 @@ namespace Cubra
         /// </summary>
         private IEnumerator TeleportPlatform()
         {
-            while (Main.Instance.CurrentMode == Main.GameModes.Play)
+            while (GameManager.Instance.CurrentMode == GameManager.GameModes.Play)
             {
                 yield return new WaitForSeconds(_pause);
 

@@ -6,16 +6,12 @@ namespace Cubra
     {
         // Касание крюка
         private bool _busy;
-
-        /// <summary>
-        /// Действия при касании персонажа с коллайдером
-        /// </summary>
-        /// <param name="character">персонаж</param>
+        
         public override void ActionsOnEnter(Character character)
         {
             if (character.Life)
             {
-                Main.Instance.CharacterController.IsHook = true;
+                GameManager.Instance.CharacterController.IsHanging = true;
                 character.Transform.parent = transform;
                 _busy = true;
             }
@@ -33,7 +29,7 @@ namespace Cubra
                     // Если персонаж находится в указанных пределах крюка
                     if (character.Transform.localPosition.x < 0.5f && character.Transform.localPosition.y < -0.35f)
                     {
-                        Main.Instance.CharacterController.HangOnHook();
+                        GameManager.Instance.CharacterController.HangOnHook();
                         _busy = false;
                     }
                 }

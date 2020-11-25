@@ -18,8 +18,7 @@ namespace Cubra
 
         [Header("Полный персонаж")]
         [SerializeField] private GameObject _zombie;
-
-        // Ссылки на компоненты
+        
         private ZombieStats _zombieStats;
         private ZombieSelection _zombieSelection;
         private ButtonUpdateHelper _buttonUpdateHelper;

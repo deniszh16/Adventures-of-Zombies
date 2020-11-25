@@ -17,10 +17,10 @@ namespace Cubra
         // Ссылка на обводку текста
         private Outline _textOutline;
 
-        [Header("Секунды на звезды")]
+        [Header("Время для получения звезд")]
         [SerializeField] private int[] _totalSeconds;
 
-        [Header("Звезды уровня")]
+        [Header("Звезды в интерфейсе")]
         [SerializeField] private Image[] _starsSeconds;
 
         private void Awake()
@@ -30,12 +30,9 @@ namespace Cubra
 
         private void Start()
         {
-            Main.Instance.LevelLaunched += StartTimer;
+            GameManager.Instance.LevelLaunched += StartTimer;
         }
-
-        /// <summary>
-        /// Запуск таймера
-        /// </summary>
+        
         public void StartTimer()
         {
             _ = StartCoroutine(TimerCountdown());
@@ -46,7 +43,7 @@ namespace Cubra
         /// </summary>
         public IEnumerator TimerCountdown()
         {
-            while (Main.Instance.CurrentMode == Main.GameModes.Play)
+            while (GameManager.Instance.CurrentMode == GameManager.GameModes.Play)
             {
                 if (_seconds > 0)
                 {
@@ -56,13 +53,13 @@ namespace Cubra
                     _textSeconds.text = _seconds.ToString();
 
                     // Если не хватает секунд для текущего количества звезд
-                    if (_seconds < _totalSeconds[Main.Instance.Stars - 1])
+                    if (_seconds < _totalSeconds[GameManager.Instance.Stars - 1])
                     {
                         // Уменьшаем текущее количество звезд
-                        _starsSeconds[Main.Instance.Stars - 1].enabled = false;
-                        Main.Instance.Stars--;
+                        _starsSeconds[GameManager.Instance.Stars - 1].enabled = false;
+                        GameManager.Instance.Stars--;
 
-                        if (Main.Instance.Stars == 1)
+                        if (GameManager.Instance.Stars == 1)
                         {
                             // Перекрашиваем обводку текста в красный цвет
                             _textOutline.effectColor = new Color32(255, 0, 0, 128);
@@ -71,7 +68,7 @@ namespace Cubra
                 }
                 else
                 {
-                    Main.Instance.CharacterController.DamageToCharacter(true, false);
+                    GameManager.Instance.CharacterController.DamageToCharacter(true, false);
                     yield break;
                 }
             }

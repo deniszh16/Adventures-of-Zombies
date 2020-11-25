@@ -17,13 +17,11 @@ namespace Cubra
 
         public float Speed { get => _speed; set => _speed = value; }
 
-        // Перечисление анимаций персонажа
         public enum Animations { Idle, Run, Jump, Dead, Hang }
 
         [Header("Звуки персонажа")]
         [SerializeField] private AudioClip[] _audioClips;
 
-        // Перечисление звуков персонажа
         public enum Sounds { Dead, Brain, Coin }
 
         // Ссылки на компоненты персонажа

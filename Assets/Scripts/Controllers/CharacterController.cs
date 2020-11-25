@@ -8,16 +8,13 @@ namespace Cubra.Controllers
         // Событие смерти персонажа
         public event Action IsDead;
 
-        // Вектор движения персонажа
         private Vector2 _direction;
 
-        // Находится ли персонаж на земле
         private bool _isGrounded;
-        // Прыгает ли персонаж
         private bool _isJumping;
 
         // Висит ли персонаж на крюке
-        public bool IsHook { get; set; }
+        public bool IsHanging { get; set; }
 
         // Увеличена ли скорость персонажа
         public bool IsAccelerated { get; set; }
@@ -28,7 +25,6 @@ namespace Cubra.Controllers
         [Header("Управление на клавиатуре")]
         [SerializeField] private bool _keyboardControl;
 
-        // Ссылка на персонажа
         private Character _character;
 
         private void Start()
@@ -39,10 +35,9 @@ namespace Cubra.Controllers
             RespawnPosition = _character.Transform.position + Vector3.up;
 
             // Подписываем отвязку камеры от персонажа
-            IsDead += Main.Instance.SnapCameraToTarget;
+            IsDead += GameManager.Instance.SnapCameraToTarget;
         }
-
-        // Управление на клавиатуре для тестирования
+        
         #if UNITY_EDITOR || UNITY_STANDALONE
         private void Update()
         {
@@ -76,7 +71,7 @@ namespace Cubra.Controllers
                 {
                     _character.SetAnimation(Character.Animations.Idle);
                     if (_isJumping) _character.SetAnimation(Character.Animations.Jump);
-                    if (IsHook) _character.SetAnimation(Character.Animations.Hang);
+                    if (IsHanging) _character.SetAnimation(Character.Animations.Hang);
                 }
                 else
                 {
@@ -86,9 +81,6 @@ namespace Cubra.Controllers
                 }
 
                 SurfaceFinding();
-
-                // Если персонаж улетел за экран, уничтожаем его
-                if (_character.Transform.position.y < -15) DamageToCharacter(false, false);
             }
         }
 
@@ -105,10 +97,7 @@ namespace Cubra.Controllers
                 _character.Transform.localScale = new Vector3(direction, 1, 1);
             }
         }
-
-        /// <summary>
-        /// Отпускание кнопки движения
-        /// </summary>
+        
         public void ButtonArrowUp()
         {
             _direction = Vector2.zero;
@@ -121,12 +110,12 @@ namespace Cubra.Controllers
         {
             if (Enabled)
             {
-                if ((_isGrounded && _character.Rigidbody.velocity.y < 0.5f) || IsHook)
+                if ((_isGrounded && _character.Rigidbody.velocity.y < 0.5f) || IsHanging)
                 {
                     _character.Rigidbody.AddForce(transform.up * _character.Jump, ForceMode2D.Impulse);
 
                     // Если персонаж висел, сбрасываем вис
-                    if (IsHook) IsHook = false;
+                    if (IsHanging) IsHanging = false;
                 }
             }
         }
@@ -156,7 +145,7 @@ namespace Cubra.Controllers
             else
             {
                 _isGrounded = false;
-                _isJumping = !IsHook;
+                _isJumping = !IsHanging;
             }
         }
 

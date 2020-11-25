@@ -5,7 +5,6 @@ namespace Cubra
 {
     public class SoundButton : ChangeSettingsButton
     {
-        // Ссылка на компонент
         private SoundController _soundController;
 
         protected override void Awake()

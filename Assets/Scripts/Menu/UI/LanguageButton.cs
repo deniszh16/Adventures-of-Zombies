@@ -5,7 +5,6 @@ namespace Cubra
 {
     public class LanguageButton : ChangeSettingsButton
     {
-        // Ссылка на компонент
         private LocalizationController _localizationController;
 
         protected override void Awake()

@@ -39,7 +39,6 @@ namespace Cubra
                 ShowSavedResults();
             }
 
-            // Выводим общий счет текущего игрока
             _playerScore.text = "(" + PlayerPrefs.GetInt("score") + ")";
         }
 
@@ -59,7 +58,6 @@ namespace Cubra
                 {
                     // Обновляем перевод в текстовом поле
                     _playerRank.GetComponent<TextTranslation>().ChangeKey("rank-description");
-                    // Добавляем позицию игрока в рейтинге
                     _playerRank.text = data.PlayerScore.rank.ToString() + "\n" + _playerRank.text;
 
                     // Сохраняем ранг игрока
@@ -87,7 +85,6 @@ namespace Cubra
                 // Скрываем значок загрузки
                 _loading.SetActive(false);
 
-                // Перебираем результаты в массиве
                 foreach (IScore score in scores)
                 {
                     // Создаем пользователя и ищем его id массиве
@@ -97,9 +94,7 @@ namespace Cubra
                     _leaderboard.text = score.rank + " - " + ((user != null) ? user.userName : "Unknown") + " (" + score.value + ")\n\n";
                 }
 
-                // Перемещаем скролл вверх
                 _scrollRect.verticalNormalizedPosition = 1;
-                // Сохраняем полученные данные
                 PlayerPrefs.SetString("gp-leaderboard", _leaderboard.text);
 
             });
@@ -112,7 +107,6 @@ namespace Cubra
         /// <param name="userid">идентификатор игрока</param>
         private IUserProfile FindUser(IUserProfile[] users, string userid)
         {
-            // Переборка игроков в массиве
             foreach (IUserProfile user in users)
             {
                 // Если id совпадают, возвращаем найденного игрока
@@ -134,7 +128,6 @@ namespace Cubra
             {
                 // Обновляем перевод в текстовом поле
                 _playerRank.GetComponent<TextTranslation>().ChangeKey("rank-description");
-                // Добавляем позицию игрока в рейтинге
                 _playerRank.text = rank + "\n" + _playerRank.text;
             }
 

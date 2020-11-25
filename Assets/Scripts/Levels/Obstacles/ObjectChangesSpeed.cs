@@ -9,8 +9,8 @@ namespace Cubra
 
         private void OnTriggerStay2D(Collider2D collision)
         {
-            Main.Instance.CharacterController.IsAccelerated = true;
-            Main.Instance.CharacterController.SpeedUpCharacter(_speed);
+            GameManager.Instance.CharacterController.IsAccelerated = true;
+            GameManager.Instance.CharacterController.SpeedUpCharacter(_speed);
         }
     }
 }

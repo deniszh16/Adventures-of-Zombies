@@ -7,7 +7,6 @@ namespace Cubra
         [Header("Брызги воды")]
         [SerializeField] private ParticleSystem _spray;
 
-        // Ссылка на компонент звука брызг
         private PlayingSound _splashingSound;
 
         protected override void Awake()
@@ -34,15 +33,11 @@ namespace Cubra
                 _splashingSound.PlaySound();
             }
         }
-
-        /// <summary>
-        /// Действия при касании персонажа с коллайдером
-        /// </summary>
-        /// <param name="character">персонаж</param>
+        
         public override void ActionsOnEnter(Character character)
         {
             if (character.Life)
-                Main.Instance.CharacterController.DamageToCharacter(false, false);
+                GameManager.Instance.CharacterController.DamageToCharacter(false, false);
 
             character.SpriteRenderer.sortingOrder = 0;
 

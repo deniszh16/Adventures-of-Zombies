@@ -18,7 +18,6 @@ namespace Cubra
 
         private void Update()
         {
-            // Если нажата кнопка возврата
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 _transitionsController.GoToScene((int)_scene);

@@ -16,12 +16,9 @@ namespace Cubra
 
         private void Start()
         {
-            Main.Instance.LevelLaunched += StartRotation;
+            GameManager.Instance.LevelLaunched += StartRotation;
         }
-
-        /// <summary>
-        /// Запуск вращения объекта
-        /// </summary>
+        
         private void StartRotation()
         {
             _ = StartCoroutine(ChangeAngle());
@@ -32,7 +29,7 @@ namespace Cubra
         /// </summary>
         private IEnumerator ChangeAngle()
         {
-            while (Main.Instance.CurrentMode == Main.GameModes.Play)
+            while (GameManager.Instance.CurrentMode == GameManager.GameModes.Play)
             {
                 yield return new WaitForSeconds(_pause);
                 _angle += 90;

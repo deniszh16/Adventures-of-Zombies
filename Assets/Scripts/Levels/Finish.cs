@@ -6,17 +6,13 @@ namespace Cubra
     {
         [Header("Финишная кнопка")]
         [SerializeField] private GameObject _finishButton;
-
-        /// <summary>
-        /// Действия при касании персонажа с коллайдером
-        /// </summary>
-        /// <param name="character">персонаж</param>
+        
         public override void ActionsOnEnter(Character character)
         {
             if (character.Life)
             {
                 // Если собраны все мозги
-                if (Main.Instance.Brains == 0)
+                if (GameManager.Instance.Brains == 0)
                 {
                     _finishButton.SetActive(true);
                 }
@@ -29,7 +25,7 @@ namespace Cubra
 
             if (character)
             {
-                if (Main.Instance.Brains == 0)
+                if (GameManager.Instance.Brains == 0)
                 {
                     _finishButton.SetActive(false);
                 }

@@ -8,7 +8,6 @@ namespace Cubra
         // Активность полета
         private bool _flight;
 
-        // Скорость полета стрелы
         private float _speed;
 
         // Стандартная скорость полета стрелы
@@ -16,8 +15,7 @@ namespace Cubra
 
         // Стандартный слой объекта
         private int _sortingOrder;
-
-        // Направление стрелы
+        
         private Vector3 _direction;
 
         // Ссылки на компоненты
@@ -54,16 +52,12 @@ namespace Cubra
                 _rigidbody.MovePosition(Transform.position + (_direction * _speed * Time.fixedDeltaTime));
             }
         }
-
-        /// <summary>
-        /// Действия при касании персонажа с коллайдером
-        /// </summary>
-        /// <param name="character">персонаж</param>
+        
         public override void ActionsOnEnter(Character character)
         {
             if (character.Life)
             {
-                Main.Instance.CharacterController.DamageToCharacter(true, true);
+                GameManager.Instance.CharacterController.DamageToCharacter(true, true);
             }
         }
 

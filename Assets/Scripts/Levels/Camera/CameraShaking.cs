@@ -8,8 +8,7 @@ namespace Cubra
     {
         [Header("Виртуальная камера")]
         [SerializeField] private CinemachineVirtualCamera _virtualCamera;
-
-        // Ссылка на компонент камеры
+        
         private CinemachineBasicMultiChannelPerlin _virtualCameraNoise;
 
         private void Awake()

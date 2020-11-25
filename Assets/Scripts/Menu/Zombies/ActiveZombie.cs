@@ -6,8 +6,7 @@ namespace Cubra
     {
         [Header("Спрайты персонажей")]
         [SerializeField] private Sprite[] _zombies;
-
-        // Ссылка на компонент
+        
         private SpriteRenderer _spriteRenderer;
 
         private void Awake()

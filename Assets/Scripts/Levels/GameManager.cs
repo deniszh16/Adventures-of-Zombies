@@ -6,14 +6,13 @@ using Cubra.Controllers;
 
 namespace Cubra
 {
-    public class Main : MonoBehaviour
+    public class GameManager : MonoBehaviour
     {
-        public static Main Instance;
+        public static GameManager Instance;
 
         // Перечисление режимов игры
         public enum GameModes { Start, Training, Play, Completed, Losing }
 
-        // Текущий игровой режим
         public GameModes CurrentMode { get; set; }
 
         [Header("Номер уровня")]
@@ -24,20 +23,17 @@ namespace Cubra
         // Событие по запуску уровня
         public event Action LevelLaunched;
 
-        // Ссылка на компонент обучения
+        // Ссылка на обучение игрока
         private Training _training;
 
         [Header("Префабы персонажей")]
         [SerializeField] private GameObject[] characters;
 
-        [Header("Стартовая позиция персонажа")]
+        [Header("Стартовая позиция")]
         [SerializeField] private Vector3 position;
 
-        // Ссылка на контроллер персонажа
-        public Controllers.CharacterController CharacterController { get; private set; }
-
-        // Ссылка на персонажа
         private Character _character;
+        public Controllers.CharacterController CharacterController { get; private set; }
 
         // Объект для работы со статистикой по персонажам
         public ZombieHelper ZombieHelper { get; set; }
@@ -108,10 +104,7 @@ namespace Cubra
                 Invoke("LaunchALevel", 0.2f);
             }
         }
-
-        /// <summary>
-        /// Запуск уровня
-        /// </summary>
+        
         public void LaunchALevel()
         {
             CurrentMode = GameModes.Play;

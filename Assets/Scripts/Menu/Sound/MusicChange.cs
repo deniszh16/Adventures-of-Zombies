@@ -5,7 +5,6 @@ namespace Cubra
 {
     public class MusicChange : MonoBehaviour
     {
-        // Ссылка на компонент фоновой музыки
         private BackgroundMusic _backgroundMusic;
 
         private void Awake()

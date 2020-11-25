@@ -6,7 +6,7 @@ namespace Cubra
 {
     public class Training : MonoBehaviour
     {
-        // Обучение на уровне
+        // Обучение на текущем уровне
         public static bool PlayerTraining = true;
 
         // Этап обучения
@@ -15,22 +15,18 @@ namespace Cubra
         [Header("Ключи подсказок")]
         [SerializeField] private string[] _tips;
 
-        // Ссылка на компоненты подсказок
         private Image _imageHintPanel;
 
         private void Start()
         {
-            _imageHintPanel = Main.Instance.LevelResults.HintPanel.GetComponent<Image>();
+            _imageHintPanel = GameManager.Instance.LevelResults.HintPanel.GetComponent<Image>();
         }
-
-        /// <summary>
-        /// Запускаем обучение игрока
-        /// </summary>
+        
         public IEnumerator StartTraining()
         {
             yield return new WaitForSeconds(1f);
 
-            Main.Instance.LevelResults.HintPanel.SetActive(true);
+            GameManager.Instance.LevelResults.HintPanel.SetActive(true);
             _imageHintPanel.color = new Color32(0, 0, 0, 230);
             _imageHintPanel.raycastTarget = true;
 
@@ -44,7 +40,7 @@ namespace Cubra
         private void UpdateTrainingText(string key)
         {
             // Обновляем текст подсказки
-            Main.Instance.LevelResults.TextHint.ChangeKey(key);
+            GameManager.Instance.LevelResults.TextHint.ChangeKey(key);
             _stage++;
         }
 
@@ -53,7 +49,7 @@ namespace Cubra
         /// </summary>
         public void UpdateHint()
         {
-            if (Main.Instance.CurrentMode == Main.GameModes.Training)
+            if (GameManager.Instance.CurrentMode == GameManager.GameModes.Training)
             {
                 if (_stage < _tips.Length)
                 {
@@ -62,22 +58,21 @@ namespace Cubra
                 }
                 else
                 {
-                    // Отключаем повторный показ
                     PlayerTraining = false;
 
                     _imageHintPanel.raycastTarget = false;
                     _imageHintPanel.color = new Color32(0, 0, 0, 0);
-                    Main.Instance.LevelResults.HintPanel.SetActive(false);
+                    GameManager.Instance.LevelResults.HintPanel.SetActive(false);
 
-                    if (Main.Instance.Countdown != null)
+                    if (GameManager.Instance.Countdown != null)
                     {
                         // Если присутствует отсчет, запускаем его
-                        _ = StartCoroutine(Main.Instance.Countdown.StartCountdown());
+                        _ = StartCoroutine(GameManager.Instance.Countdown.StartCountdown());
                     }
                     else
                     {
-                        Main.Instance.CharacterController.Enable();
-                        Main.Instance.LaunchALevel();
+                        GameManager.Instance.CharacterController.Enable();
+                        GameManager.Instance.LaunchALevel();
                     }
                 }
             }

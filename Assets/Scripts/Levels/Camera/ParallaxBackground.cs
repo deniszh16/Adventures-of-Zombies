@@ -7,9 +7,8 @@ namespace Cubra
         [Header("Множитель паралакса")]
         [SerializeField] private float _parallaxMultiplier;
 
-        // Текущая позиция камеры
+        // Текущая и последняя позиция камеры
         private Transform _cameraTransform;
-        // Последняя позиция камеры
         private Vector3 _lastCameraPosition;
 
         // Размер текстурных блоков

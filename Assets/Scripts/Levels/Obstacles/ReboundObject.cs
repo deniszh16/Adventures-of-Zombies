@@ -10,7 +10,6 @@ namespace Cubra
         [Header("Сила отскока")]
         [SerializeField] protected float _force;
 
-        // Ссылки на компоненты
         protected Animator _animator;
         protected PlayingSound _playingSound;
 
@@ -21,11 +20,7 @@ namespace Cubra
             _animator = InstanseObject.GetComponent<Animator>();
             _playingSound = InstanseObject.GetComponent<PlayingSound>();
         }
-
-        /// <summary>
-        /// Действия при касании персонажа с коллайдером
-        /// </summary>
-        /// <param name="character">персонаж</param>
+        
         public override void ActionsOnEnter(Character character)
         {
             character.Rigidbody.AddForce(_direction * _force, ForceMode2D.Impulse);

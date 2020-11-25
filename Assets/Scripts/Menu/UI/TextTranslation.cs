@@ -12,8 +12,7 @@ namespace Cubra
 
         [Header("Ключ перевода")]
         [SerializeField] private string _key;
-
-        // Ссылка на компонент
+        
         private Text _textComponent;
 
         private void Awake()

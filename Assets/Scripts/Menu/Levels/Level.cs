@@ -13,8 +13,7 @@ namespace Cubra
 
         [Header("Открытый уровень")]
         [SerializeField] private Sprite _openLevel;
-
-        // Ссылки на компоненты
+        
         private Image _image;
         private Button _button;
 

@@ -14,8 +14,7 @@ namespace Cubra
 
         // Объект для работы с json по звездам
         private StarsHelper StarsHelper { get; set; } = new StarsHelper();
-
-        // Ссылка на компонент
+        
         private Image _image;
 
         public void Awake()

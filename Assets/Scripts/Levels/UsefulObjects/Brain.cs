@@ -7,18 +7,14 @@ namespace Cubra
     {
         [Header("Количество мозгов")]
         [SerializeField] private Text _amountBrains;
-
-        /// <summary>
-        /// Действия при касании персонажа с коллайдером
-        /// </summary>
-        /// <param name="character">персонаж</param>
+        
         public override void ActionsOnEnter(Character character)
         {
             character.SetSound(Character.Sounds.Brain);
             character.PlayingSound.PlaySound();
 
             // Уменьшаем количество мозгов
-            Main.Instance.Brains--;
+            GameManager.Instance.Brains--;
             UpdateQuantityBrains();
 
             InstanseObject.SetActive(false);
@@ -29,9 +25,9 @@ namespace Cubra
         /// </summary>
         private void UpdateQuantityBrains()
         {
-            if (Main.Instance.Brains > 0)
+            if (GameManager.Instance.Brains > 0)
             {
-                _amountBrains.text = "x" + Main.Instance.Brains;
+                _amountBrains.text = "x" + GameManager.Instance.Brains;
             }
             else
             {

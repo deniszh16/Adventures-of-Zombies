@@ -7,8 +7,7 @@ namespace Cubra
     {
         [Header("Спрайты кнопок")]
         [SerializeField] protected Sprite[] _sprites;
-
-        // Ссылка на компонент
+        
         protected Image _imageButton;
 
         protected virtual void Awake()

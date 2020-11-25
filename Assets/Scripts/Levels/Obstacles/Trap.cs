@@ -4,7 +4,6 @@ namespace Cubra
 {
     public class Trap : SharpObstacles
     {
-        // Ссылки на компоненты
         private PlayingSound _playingSound;
         private SpriteRenderer _spriteRenderer;
         private Animator _animator;
@@ -16,11 +15,7 @@ namespace Cubra
             _spriteRenderer = InstanseObject.GetComponent<SpriteRenderer>();
             _animator = InstanseObject.GetComponent<Animator>();
         }
-
-        /// <summary>
-        /// Действия при касании персонажа с коллайдером
-        /// </summary>
-        /// <param name="character">персонаж</param>
+        
         public override void ActionsOnEnter(Character character)
         {
             _playingSound.PlaySound();

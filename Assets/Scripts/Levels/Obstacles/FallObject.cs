@@ -14,7 +14,6 @@ namespace Cubra
         // Начальная позиция объекта
         private Vector3 _position;
 
-        // Ссылка на физический компонент
         private Rigidbody2D _rigidbody;
 
         protected override void Awake()
@@ -28,11 +27,7 @@ namespace Cubra
             _sortingOrder = SpriteRenderer.sortingOrder;
             _position = Transform.position;
         }
-
-        /// <summary>
-        /// Действия при касании персонажа с коллайдером
-        /// </summary>
-        /// <param name="character">персонаж</param>
+        
         public override void ActionsOnEnter(Character character)
         {
             _ = StartCoroutine(ObjectFall());

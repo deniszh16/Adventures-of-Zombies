@@ -20,7 +20,7 @@ namespace Cubra
             if (PlayerPrefs.GetInt("coins") >= 50)
             {
                 PlayerPrefs.SetInt("coins", PlayerPrefs.GetInt("coins") - 50);
-                Main.Instance.LevelResults.ResumeLevel();
+                GameManager.Instance.LevelResults.ResumeLevel();
             }
             else
             {
@@ -38,7 +38,7 @@ namespace Cubra
         /// </summary>
         public void onRewardedVideoFinished(double amount, string name)
         {
-            Main.Instance.LevelResults.ResumeLevel();
+            GameManager.Instance.LevelResults.ResumeLevel();
         }
 
         public void onRewardedVideoLoaded(bool isPrecache) {}

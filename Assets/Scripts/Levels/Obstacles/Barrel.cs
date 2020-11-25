@@ -10,7 +10,6 @@ namespace Cubra
         [Header("Эффект взрыва")]
         [SerializeField] private Animator _destruction;
 
-        // Ссылка на анимацию бочки
         private Animator _animator;
 
         protected override void Awake()
@@ -18,11 +17,7 @@ namespace Cubra
             base.Awake();
             _animator = GetComponent<Animator>();
         }
-
-        /// <summary>
-        /// Действия при касании персонажа с коллайдером
-        /// </summary>
-        /// <param name="character">персонаж</param>
+        
         public override void ActionsOnEnter(Character character)
         {
             if (character.Life)

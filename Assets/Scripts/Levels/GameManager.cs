@@ -126,5 +126,13 @@ namespace Cubra
         {
             _cinemachineVirtual.Follow = _character.Life ? _character.Transform : null;
         }
+
+        /// <summary>
+        /// Отключение фиксации виртуальной камеры
+        /// </summary>
+        public void DisableCameraLock()
+        {
+            _cinemachineVirtual.AddCinemachineComponent<CinemachineFramingTransposer>();
+        }
     }
 }

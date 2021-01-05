@@ -65,7 +65,7 @@ namespace Cubra
 
                     // Загружаем информацию по остальным игрокам
                     LoadUsersLeaderboard(data.Scores);
-                });
+            });
         }
 
         /// <summary>

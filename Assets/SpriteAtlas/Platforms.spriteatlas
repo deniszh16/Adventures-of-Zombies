@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Platforms
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 1
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: 3f29a3b99b11142468a1af46332eb23e, type: 3}
+    - {fileID: 2800000, guid: 5c4e2d854824bb54098b27806e0927cf, type: 3}
+    totalSpriteSurfaceArea: 132356
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 3699495491141136313, guid: 5c4e2d854824bb54098b27806e0927cf, type: 3}
+  - {fileID: 303625002523189455, guid: 5c4e2d854824bb54098b27806e0927cf, type: 3}
+  - {fileID: 3060927516922892560, guid: 5c4e2d854824bb54098b27806e0927cf, type: 3}
+  - {fileID: -1748672253216590662, guid: 5c4e2d854824bb54098b27806e0927cf, type: 3}
+  - {fileID: -1841660442071600808, guid: 5c4e2d854824bb54098b27806e0927cf, type: 3}
+  - {fileID: -586972033896344875, guid: 3f29a3b99b11142468a1af46332eb23e, type: 3}
+  - {fileID: 2055153008835038240, guid: 3f29a3b99b11142468a1af46332eb23e, type: 3}
+  - {fileID: -2114233804336852664, guid: 3f29a3b99b11142468a1af46332eb23e, type: 3}
+  - {fileID: 235771998588910746, guid: 3f29a3b99b11142468a1af46332eb23e, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Platforms Bottom_3
+  - Platforms Bottom_2
+  - Platforms Bottom_1
+  - Platforms Bottom_0
+  - Platforms Bottom_4
+  - Crack_2
+  - Crack_3
+  - Crack_0
+  - Crack_1
+  m_RenderDataMap: {}
+  m_Tag: Platforms
+  m_IsVariant: 0

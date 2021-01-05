@@ -3,7 +3,7 @@
 --- !u!129 &1
 PlayerSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 20
+  serializedVersion: 22
   productGUID: 844de72fc47d6a74eb4de195e611cc44
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
@@ -119,6 +119,7 @@ PlayerSettings:
   stadiaTargetFramerate: 0
   vulkanNumSwapchainBuffers: 3
   vulkanEnableSetSRGBWrite: 0
+  vulkanEnablePreTransform: 0
   vulkanEnableLateAcquireNextImage: 0
   m_SupportedAspectRatios:
     4:3: 1
@@ -126,7 +127,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 1.4.5
+  bundleVersion: 1.6.0
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -134,31 +135,6 @@ PlayerSettings:
   xboxOneDisableKinectGpuReservation: 0
   xboxOneEnable7thCore: 0
   vrSettings:
-    cardboard:
-      depthFormat: 0
-      enableTransitionView: 0
-    daydream:
-      depthFormat: 0
-      useSustainedPerformanceMode: 0
-      enableVideoLayer: 0
-      useProtectedVideoMemory: 0
-      minimumSupportedHeadTracking: 0
-      maximumSupportedHeadTracking: 1
-    hololens:
-      depthFormat: 1
-      depthBufferSharingEnabled: 0
-    lumin:
-      depthFormat: 0
-      frameTiming: 2
-      enableGLCache: 0
-      glCacheMaxBlobSize: 524288
-      glCacheMaxFileSize: 8388608
-    oculus:
-      sharedDepthBuffer: 0
-      dashSupport: 0
-      lowOverheadMode: 0
-      protectedContext: 0
-      v2Signing: 0
     enable360StereoCapture: 0
   isWsaHolographicRemotingEnabled: 0
   enableFrameTimingStats: 0
@@ -172,10 +148,14 @@ PlayerSettings:
   applicationIdentifier:
     Android: ru.cubra.zombie
     Standalone: com.Company.ProductName
-  buildNumber: {}
-  AndroidBundleVersionCode: 54
+  buildNumber:
+    Standalone: 0
+    iPhone: 0
+    tvOS: 0
+  overrideDefaultApplicationIdentifier: 1
+  AndroidBundleVersionCode: 60
   AndroidMinSdkVersion: 21
-  AndroidTargetSdkVersion: 29
+  AndroidTargetSdkVersion: 30
   AndroidPreferredInstallLocation: 1
   aotOptions: 
   stripEngineCode: 1
@@ -226,8 +206,8 @@ PlayerSettings:
   iOSLaunchScreeniPadFillPct: 100
   iOSLaunchScreeniPadSize: 100
   iOSLaunchScreeniPadCustomXibPath: 
-  iOSUseLaunchScreenStoryboard: 0
   iOSLaunchScreenCustomStoryboardPath: 
+  iOSLaunchScreeniPadCustomStoryboardPath: 
   iOSDeviceRequirements: []
   iOSURLSchemes: []
   iOSBackgroundModes: 0
@@ -245,9 +225,17 @@ PlayerSettings:
   iOSRequireARKit: 0
   iOSAutomaticallyDetectAndAddCapabilities: 1
   appleEnableProMotion: 0
+  shaderPrecisionModel: 0
   clonedFromGUID: 5f34be1353de5cf4398729fda238591b
   templatePackageId: com.unity.template.2d@1.0.1
   templateDefaultScene: Assets/Scenes/SampleScene.unity
+  useCustomMainManifest: 1
+  useCustomLauncherManifest: 0
+  useCustomMainGradleTemplate: 1
+  useCustomLauncherGradleManifest: 0
+  useCustomBaseGradleTemplate: 1
+  useCustomGradlePropertiesTemplate: 1
+  useCustomProguardFile: 0
   AndroidTargetArchitectures: 3
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
@@ -411,7 +399,10 @@ PlayerSettings:
     m_GraphicsJobMode: 0
   - m_BuildTarget: XboxOnePlayer
     m_GraphicsJobMode: 0
-  m_BuildTargetGraphicsAPIs: []
+  m_BuildTargetGraphicsAPIs:
+  - m_BuildTarget: iOSSupport
+    m_APIs: 10000000
+    m_Automatic: 1
   m_BuildTargetVRSettings: []
   openGLRequireES31: 0
   openGLRequireES31AEP: 0
@@ -423,6 +414,7 @@ PlayerSettings:
     tvOS: 1
   m_BuildTargetGroupLightmapEncodingQuality: []
   m_BuildTargetGroupLightmapSettings: []
+  m_BuildTargetNormalMapEncoding: []
   playModeTestRunnerEnabled: 0
   runPlayModeTestAsEditModeTest: 0
   actionOnDotNetUnhandledException: 1
@@ -564,6 +556,7 @@ PlayerSettings:
   switchSocketInitializeEnabled: 1
   switchNetworkInterfaceManagerInitializeEnabled: 1
   switchPlayerConnectionEnabled: 1
+  switchUseNewStyleFilepaths: 0
   ps4NPAgeRating: 12
   ps4NPTitleSecret: 
   ps4NPTrophyPackPath: 
@@ -659,6 +652,7 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
   scriptingDefineSymbols: {}
+  additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
     Android: 1
@@ -668,6 +662,8 @@ PlayerSettings:
   suppressCommonWarnings: 1
   allowUnsafeCode: 0
   useDeterministicCompilation: 1
+  useReferenceAssemblies: 1
+  enableRoslynAnalyzers: 1
   additionalIl2CppArgs: 
   scriptingRuntimeVersion: 1
   gcIncremental: 0
@@ -729,10 +725,7 @@ PlayerSettings:
   XboxOneXTitleMemory: 8
   XboxOneOverrideIdentityName: 
   XboxOneOverrideIdentityPublisher: 
-  vrEditorSettings:
-    daydream:
-      daydreamIconForeground: {fileID: 0}
-      daydreamIconBackground: {fileID: 0}
+  vrEditorSettings: {}
   cloudServicesEnabled:
     UNet: 1
   luminIcon:
@@ -747,12 +740,12 @@ PlayerSettings:
     m_VersionCode: 1
     m_VersionName: 
   apiCompatibilityLevel: 6
+  activeInputHandler: 0
   cloudProjectId: 5cd81434-cd5a-4cac-84af-abca1e8e78a7
   framebufferDepthMemorylessMode: 0
+  qualitySettingsNames: []
   projectName: Adventures of Zombies
   organizationId: deniszh16
   cloudEnabled: 0
-  enableNativePlatformBackendsForNewInputSystem: 0
-  disableOldInputManagerSupport: 0
   legacyClampBlendShapeWeights: 1
   virtualTexturingSupportEnabled: 0

@@ -1,186 +1,175 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Bull : Boss
+namespace Cubra
 {
-    // Высота прыжка
-    private float jump = 3.5f;
-
-    // Перечисление анимаций быка
-    private enum BullAnimation { Idle, Run, Attack, Dead }
-
-    // Установка параметра в аниматоре
-    private BullAnimation State { set { animator.SetInteger("State", (int)value); } }
-
-    private void Start()
+    public class Bull : Boss
     {
-        // Добавляем в событие завершения отсчета метод пробуждения быка
-        //countdown.AfterCountdown.AddListener(AwakenBoss);
+        // Высота прыжка
+        private float _jump = 3.5f;
 
-        // Определяем количество атакующих забегов
-        SetQuantityRun();
-    }
+        // Перечисление анимаций быка
+        private enum BullAnimation { Idle, Run, Attack, Dead }
 
-    /// <summary>Пробуждение быка</summary>
-    private void AwakenBoss()
-    {
-        // Запускаем стартовое переключение режима
-        StartCoroutine(SwitchMode(0.2f, "run"));
-    }
+        // Установка параметра в аниматоре
+        private BullAnimation State { set { _animator.SetInteger("State", (int)value); } }
 
-    protected override void FixedUpdate()
-    {
-        base.FixedUpdate();
-
-        // Если персонаж умер
-        //if (!character.Life)
-        //    // Сбрасываем анимацию быка
-        //    State = BullAnimation.Idle;
-    }
-
-    /// <summary>Переключение режимов активности быка (время до переключения, режим активности босса)</summary>
-    protected override IEnumerator SwitchMode(float seconds, string mode)
-    {
-        yield return new WaitForSeconds(seconds);
-
-        // Устанавливаем режим быка
-        this.mode = mode;
-
-        // Если отображаются оглушающие звезды, скрываем их
-        if (effect.activeSelf) effect.SetActive(false);
-
-        switch (mode)
+        protected override void Start()
         {
-            case "run":
-                // Устанавливаем случайную скорость
-                speed = Random.Range(14, 18);
-                // Определяем направление
-                SetDirection();
+            base.Start();
 
-                // Уменьшаем количество забегов
-                quantityRun--;
+            if (Training.PlayerTraining)
+                // Добавляем в событие завершения отсчета метод пробуждения быка
+                GameManager.Instance.Countdown.AfterCountdown.AddListener(AwakenBoss);
+            else
+                // Добавляем в событие старта уровня метод пробуждения быка
+                GameManager.Instance.LevelLaunched += AwakenBoss;
 
-                // Устанавливаем анимацию бега
-                State = BullAnimation.Run;
-                break;
+            // Определяем количество забегов
+            SetQuantityRun();
+        }
 
-            case "hit":
-                // Устанавливаем анимацию атаки
-                State = BullAnimation.Attack;
-                break;
+        /// <summary>
+        /// Пробуждение быка
+        /// </summary>
+        private void AwakenBoss()
+        {
+            // Запускаем стартовое переключение режима
+            StartCoroutine(SwitchMode(0.3f, "run"));
+        }
 
-            case "stupor":
-                // Уменьшаем жизнь
-                healthBoss--;
+        protected override void FixedUpdate()
+        {
+            base.FixedUpdate();
 
-                // Создаем небольшой отскок быка от стены
-                rigbody.AddForce(direction * -3.5f, ForceMode2D.Impulse);
-
-                // Отображаем оглушающие звезды
-                effect.SetActive(true);
-                // Перемещаем оглушающие звезды к голове быка
-                effect.transform.localPosition = new Vector2(3.2f * direction.x, effect.transform.localPosition.y);
-
-                // Устанавливаем стандартную анимацию
+            if (_character.Life == false)
                 State = BullAnimation.Idle;
-
-                // Определяем следующий режим активности
-                DefineNextMode();
-                break;
-
-            case "attack":
-                // Определяем направление быка
-                SetDirection();
-
-                // Переключаемся на анимацию атаки
-                State = BullAnimation.Attack;
-
-                // Определяем количество забегов
-                SetQuantityRun();
-
-                // Определяем следующий режим
-                DefineNextMode();
-                break;
-
-            case "die":
-                // Переключаемся на анимацию смерти
-                State = BullAnimation.Dead;
-
-                // Отключаем коллайдер быка
-                capsule.enabled = false;
-
-                // Скрываем дополнительные препятствия
-                for (int i = 0; i < obstacles.Length; i++)
-                    obstacles[i].SetActive(false);
-
-                // Отображаем финишные объекты
-                ShowFinish();
-                break;
         }
-        
-        if (mode == "run")
-            // Отображаем дополнительные препятствия
-            ShowObstacles(healthBoss);
-    }
 
-    /// <summary>Определение следующего режима активности</summary>
-    protected override void DefineNextMode()
-    {
-        // Если здоровье быка больше нуля
-        if (healthBoss > 0)
+        /// <summary>
+        /// Переключение режимов босса
+        /// </summary>
+        /// <param name="seconds">время до переключения</param>
+        /// <param name="mode">режим активности</param>
+        protected override IEnumerator SwitchMode(float seconds, string mode)
         {
-            // Определяем паузу перед сменой режима
-            float pause = Random.Range(2.2f, 3.6f);
+            yield return new WaitForSeconds(seconds);
 
-            // Затем переключаемся на другой режим
-            StartCoroutine(SwitchMode(pause, (quantityRun > 0) ? "run" : "attack"));
+            // Устанавливаем режим быка
+            this._mode = mode;
+
+            // Если отображаются оглушающие звезды, скрываем их
+            if (_effectStars.activeSelf) _effectStars.SetActive(false);
+
+            switch (mode)
+            {
+                case "run":
+                    _speed = Random.Range(14, 18);
+                    SetDirection();
+
+                    _quantityRuns--;
+                    State = BullAnimation.Run;
+                    break;
+
+                case "hit":
+                    State = BullAnimation.Attack;
+                    break;
+
+                case "stupor":
+                    _health--;
+
+                    // Создаем небольшой отскок быка от стены
+                    _rigbody.AddForce(_direction * -3.5f, ForceMode2D.Impulse);
+
+                    _effectStars.SetActive(true);
+                    // Перемещаем оглушающие звезды к голове быка
+                    _effectStars.transform.localPosition = new Vector2(3.2f * _direction.x, _effectStars.transform.localPosition.y);
+
+                    State = BullAnimation.Idle;
+                    DefineNextMode();
+                    break;
+
+                case "attack":
+                    SetDirection();
+                    State = BullAnimation.Attack;
+
+                    SetQuantityRun();
+                    DefineNextMode();
+                    break;
+
+                case "die":
+                    State = BullAnimation.Dead;
+                    // Отключаем коллайдер быка
+                    _capsuleCollider.enabled = false;
+
+                    // Скрываем дополнительные препятствия
+                    for (int i = 0; i < _obstacles.Length; i++)
+                        _obstacles[i].SetActive(false);
+
+                    ShowFinish();
+                    break;
+            }
+
+            if (mode == "run")
+                // Отображаем дополнительные препятствия
+                ShowObstacles(_health);
         }
-        else
+
+        /// <summary>
+        /// Определение следующего режима активности
+        /// </summary>
+        protected override void DefineNextMode()
         {
-            // Иначе переключаемся на режим смерти
-            StartCoroutine(SwitchMode(0, "die"));
+            if (_health > 0)
+            {
+                // Определяем паузу перед сменой режима
+                float pause = Random.Range(2.2f, 3.6f);
+                // Затем переключаемся на другой режим
+                StartCoroutine(SwitchMode(pause, (_quantityRuns > 0) ? "run" : "attack"));
+            }
+            else
+            {
+                // Иначе переключаемся на режим смерти
+                StartCoroutine(SwitchMode(0, "die"));
+            }
         }
-    }
 
-    /// <summary>Отображение дополнительных препятствий (здоровье быка, при котором отображается препятствие)</summary>
-    protected override void ShowObstacles(int health)
-    {
-        switch (health)
+        /// <summary>
+        /// Отображение дополнительных препятствий
+        /// </summary>
+        /// <param name="health">здоровье быка, при котором отображается препятствие</param>
+        protected override void ShowObstacles(int health)
         {
-            case 10:
-                // Отображаем шипы
-                obstacles[0].SetActive(true);
-                break;
-            case 5:
-                // Отображаем стрелы
-                obstacles[1].SetActive(true);
-                // Активируем создание стрел
-                //obstacles[1].GetComponent<SpawnObject>().StartCoroutine("CreateObject");
-                break;
+            switch (health)
+            {
+                case 10:
+                    // Отображаем шипы
+                    _obstacles[0].SetActive(true);
+                    break;
+                case 5:
+                    // Отображаем стрелы
+                    _obstacles[1].SetActive(true);
+                    // Активируем создание стрел
+                    _obstacles[1].GetComponent<SpawnObject>().StartCoroutine("CreateObject");
+                    break;
+            }
         }
-    }
 
-    protected void OnCollisionEnter2D(Collision2D collision)
-    {
-        // Если бык коснулся персонажа
-        //if (collision.gameObject == character.gameObject)
-        //{
-        //    // Переключаем режим активности на удар
-        //    StartCoroutine(SwitchMode(0, "hit"));
-
-        //    // Отображаем эффект урона
-        //    character.ShowDamageEffect();
-        //    // Наносим урон персонажу
-        //    character.RecieveDamageCharacter(true, true, 1.6f);
-        //}
-        //// Если бык врезался в стену
-        //else if (collision.gameObject.CompareTag("Wall"))
-        //{
-        //    // Вызываем встряхивание камеры
-        //    cameraShaking.ShakeCamera();
-
-        //    // Переключаем режим на оглушение
-        //    StartCoroutine(SwitchMode(0, "stupor"));
-        //}
+        protected void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (collision.gameObject == _character.gameObject)
+            {
+                // Переключаем режим активности на удар
+                StartCoroutine(SwitchMode(0, "hit"));
+                // Наносим урон персонажу
+                GameManager.Instance.CharacterController.DamageToCharacter(true, true);
+            }
+            else if (collision.gameObject.CompareTag("Wall"))
+            {
+                // Вызываем встряхивание камеры
+                StartCoroutine(_cameraShaking.ShakeCamera(0.6f, 2.1f, 1.9f));
+                StartCoroutine(SwitchMode(0, "stupor"));
+            }
+        }
     }
 }

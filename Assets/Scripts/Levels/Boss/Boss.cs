@@ -1,130 +1,150 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public abstract class Boss : MonoBehaviour
+namespace Cubra
 {
-    // Режим активности
-    protected string mode;
-
-    // Количество атакующих забегов
-    protected int quantityRun;
-
-    [Header("Здоровье босса")]
-    [SerializeField] protected int healthBoss;
-
-    // Скорость бега
-    protected float speed;
-
-    // Направление движения
-    protected Vector3 direction = Vector3.left;
-
-    [Header("Эффект звезд")]
-    [SerializeField] protected GameObject effect;
-
-    [Header("Падающие камни")]
-    [SerializeField] protected GameObject[] stones;
-
-    [Header("Препятствия на уровне")]
-    [SerializeField] protected GameObject[] obstacles;
-
-    [Header("Финишные объекты")]
-    [SerializeField] protected GameObject[] objects;
-
-    // Ссылки на компоненты босса
-    protected Animator animator;
-    protected SpriteRenderer sprite;
-    protected CapsuleCollider2D capsule;
-    protected Rigidbody2D rigbody;
-
-    // Ссылки на дополнительные компоненты
-    //protected Character character;
-    //protected CameraShaking cameraShaking;
-   // protected CountdownToStart countdown;
-
-    protected void Awake()
+    public abstract class Boss : MonoBehaviour
     {
-        animator = GetComponent<Animator>();
-        sprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
-        capsule = GetComponent<CapsuleCollider2D>();
-        rigbody = GetComponent<Rigidbody2D>();
+        // Режим активности
+        protected string _mode;
 
-        //character = GameObject.FindGameObjectWithTag("Character").GetComponent<Character>();
-        //cameraShaking = Camera.main.GetComponent<CameraShaking>();
-        //countdown = FindObjectOfType<CountdownToStart>();
-    }
+        // Количество атакующих забегов
+        protected int _quantityRuns;
 
-    protected virtual void FixedUpdate()
-    {
-        // Если активен режим бега, вызываем движение
-        if (mode == "run") Run();
+        [Header("Здоровье босса")]
+        [SerializeField] protected int _health;
 
-        // Если персонаж умер
-        //if (!character.Life)
-        //{
-        //    // Сбрасываем режим
-        //    mode = "none";
-        //    // Останавливаем переключение режима
-        //    StopAllCoroutines();
-        //}
-    }
+        // Скорость бега
+        protected float _speed;
 
-    /// <summary>Определение случайного количества забегов</summary>
-    protected void SetQuantityRun()
-    {
-        quantityRun = Random.Range(2, 4);
-    }
+        // Направление движения
+        protected Vector3 _direction;
 
-    /// <summary>Переключение режимов босса (время до переключения, режим активности босса)</summary>
-    protected abstract IEnumerator SwitchMode(float seconds, string mode);
+        [Header("Эффект звезд")]
+        [SerializeField] protected GameObject _effectStars;
 
-    /// <summary>Определение следующего режима активности босса</summary>
-    protected abstract void DefineNextMode();
+        [Header("Падающие камни")]
+        [SerializeField] protected GameObject[] _stones;
 
-    /// <summary>Бег босса к персонажу</summary>
-    protected void Run()
-    {
-        // Перемещаем босса в указанном направлении с указанной скоростью
-        transform.Translate(direction * speed * Time.deltaTime);
-    }
+        [Header("Препятствия на уровне")]
+        [SerializeField] protected GameObject[] _obstacles;
 
-    /// <summary>Определение направления движения (горизонтальное отображение спрайта)</summary>
-    protected void SetDirection(bool invert = false)
-    {
-        // Сравниваем позиции босса с персонажем и устанавливаем направление движения
-        //direction = (transform.localPosition.x > character.transform.localPosition.x) ? Vector3.left : Vector3.right;
+        [Header("Финишные объекты")]
+        [SerializeField] protected GameObject[] _objectsFinish;
 
-        if (!invert)
-            // Отображаем спрайт в установленном направлении
-            sprite.flipX = (direction == Vector3.left) ? true : false;
-        else
-            // Если установлена инверсия, разворачиваем спрайт
-            sprite.flipX = (direction == Vector3.left) ? false : true;
-    }
+        protected Animator _animator;
+        protected SpriteRenderer _spriteRenderer;
+        protected CapsuleCollider2D _capsuleCollider;
+        protected Rigidbody2D _rigbody;
 
-    /// <summary>Падение множества камней</summary>
-    protected void Rockfall()
-    {
-        if (mode == "attack")
+        protected Character _character;
+        protected CameraShaking _cameraShaking;
+
+        protected void Awake()
         {
-            // Вызываем встряхивание камеры
-            //cameraShaking.ShakeCamera();
+            _animator = GetComponent<Animator>();
+            _spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
+            _capsuleCollider = GetComponent<CapsuleCollider2D>();
+            _rigbody = GetComponent<Rigidbody2D>();
 
-            // Активируем набор камней
-            for (int i = 0; i < stones.Length; i++) stones[i].SetActive(true);
+            _character = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>();
+            _cameraShaking = Camera.main.GetComponent<CameraShaking>();
         }
-    }
 
-    /// <summary>Отображение дополнительных препятствий</summary>
-    protected abstract void ShowObstacles(int health);
+        protected virtual void Start()
+        {
+            _direction = Vector3.left;
+        }
 
-    /// <summary>Отображение финишных объектов</summary>
-    protected void ShowFinish()
-    {
-        for (int i = 0; i < objects.Length; i++)
-            // Активируем объекты
-            objects[i].SetActive(true);
+        protected virtual void FixedUpdate()
+        {
+            if (_mode == "run") Run();
 
-        // Отключаем фиксацию камеры
-        //Camera.main.transform.GetComponentInParent<SmoothCamera>().Limit = false;
+            // Если персонаж умер
+            if (_character.Life == false)
+            {
+               _mode = "none";
+               // Останавливаем переключение режима
+               StopAllCoroutines();
+            }
+        }
+
+        /// <summary>
+        /// Определение случайного количества забегов
+        /// </summary>
+        protected void SetQuantityRun()
+        {
+            _quantityRuns = Random.Range(2, 4);
+        }
+
+        /// <summary>
+        /// Переключение режимов босса
+        /// </summary>
+        /// <param name="seconds">время до переключения</param>
+        /// <param name="mode">режим активности</param>
+        protected abstract IEnumerator SwitchMode(float seconds, string mode);
+
+        /// <summary>
+        /// Определение следующего режима активности босса
+        /// </summary>
+        protected abstract void DefineNextMode();
+
+        /// <summary>
+        /// Бег босса к персонажу
+        /// </summary>
+        protected void Run()
+        {
+            // Перемещаем босса в указанном направлении с указанной скоростью
+            transform.Translate(_direction * _speed * Time.deltaTime);
+        }
+
+        /// <summary>
+        /// Определение направления движения
+        /// </summary>
+        /// <param name="invert">горизонтальное отображение спрайта</param>
+        protected void SetDirection(bool invert = false)
+        {
+            // Сравниваем позиции босса с персонажем и устанавливаем направление движения
+            _direction = (transform.localPosition.x > _character.transform.localPosition.x) ? Vector3.left : Vector3.right;
+
+            if (!invert)
+                // Отображаем спрайт в установленном направлении
+                _spriteRenderer.flipX = (_direction == Vector3.left) ? true : false;
+            else
+                // Если установлена инверсия, разворачиваем спрайт
+                _spriteRenderer.flipX = (_direction == Vector3.left) ? false : true;
+        }
+
+        /// <summary>
+        /// Падение камней на уровне
+        /// </summary>
+        protected void Rockfall()
+        {
+            if (_mode == "attack")
+            {
+                // Вызываем встряхивание камеры
+                StartCoroutine(_cameraShaking.ShakeCamera(0.7f, 1.8f, 1.6f));
+                // Активируем камни для падения
+                for (int i = 0; i < _stones.Length; i++) _stones[i].SetActive(true);
+            }
+        }
+
+        /// <summary>
+        /// Отображение дополнительных препятствий
+        /// </summary>
+        /// <param name="health">здоровье босса</param>
+        protected abstract void ShowObstacles(int health);
+
+        /// <summary>
+        /// Отображение финишных объектов
+        /// </summary>
+        protected void ShowFinish()
+        {
+            for (int i = 0; i < _objectsFinish.Length; i++)
+                _objectsFinish[i].SetActive(true);
+
+            // Отключаем фиксацию камеры
+            GameManager.Instance.DisableCameraLock();
+        }
     }
 }

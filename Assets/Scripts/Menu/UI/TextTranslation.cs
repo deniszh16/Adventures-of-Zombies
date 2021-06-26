@@ -30,10 +30,7 @@ namespace Cubra
         /// </summary>
         public void TranslateText()
         {
-            // Получаем текущий язык игры
             var currentLanguage = LocalizationController.Language;
-
-            // Устанавливаем текст с указанным ключом из xml файла
             _textComponent.text = FileParseHelper.Languages.Element("languages").Element(currentLanguage).Element(_key).Value;
         }
 

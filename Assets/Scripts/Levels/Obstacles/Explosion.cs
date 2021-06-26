@@ -21,8 +21,6 @@ namespace Cubra
         public void RunEffects()
         {
             _playingSound.PlaySound();
-
-            // Запускаем дрожание камеры
             _ = StartCoroutine(_cameraShaking.ShakeCamera(1f, 2f, 1.7f));
         }
     }

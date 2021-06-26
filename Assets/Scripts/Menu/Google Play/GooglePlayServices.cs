@@ -4,12 +4,15 @@ namespace Cubra
 {
     public class GooglePlayServices : MonoBehaviour
     {
+        [Header("Автоматическое подключение")]
+        [SerializeField] private bool _autoConnect;
+
         // Аутентификация игрока
         public static bool Authenticated => Social.localUser.authenticated;
 
         private void Start()
         {
-            SignGooglePlay();
+            if (_autoConnect) SignGooglePlay();
         }
 
         /// <summary>
@@ -45,15 +48,6 @@ namespace Cubra
         public static void UnlockingAchievement(string identifier)
         {
             if (Authenticated) Social.ReportProgress(identifier, 100.0f, (bool success) => {});
-        }
-
-        /// <summary>
-        /// Отправка результата в таблицу лидеров
-        /// </summary>
-        /// <param name="score">игровой счет</param>
-        public static void PostingScoreLeaderboard(int score)
-        {
-            if (Authenticated) Social.ReportScore(score, GPGSIds.leaderboard, (bool success) => {});
         }
     }
 }

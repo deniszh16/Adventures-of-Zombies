@@ -31,9 +31,11 @@ namespace Cubra
         /// </summary>
         private IEnumerator SpeedUpRocking()
         {
+            var seconds = new WaitForSeconds(_secondsToRepeat);
+
             while (GameManager.Instance.CurrentMode == GameManager.GameModes.Play)
             {
-                yield return new WaitForSeconds(_secondsToRepeat);
+                yield return seconds;
                 _rigidbody.velocity *= 1.2f;
             }
         }

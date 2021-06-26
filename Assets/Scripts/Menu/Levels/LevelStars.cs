@@ -25,12 +25,9 @@ namespace Cubra
 
         private void Start()
         {
-            // Преобразуем сохраненную json строку в объект
             StarsHelper = JsonUtility.FromJson<StarsHelper>(PlayerPrefs.GetString("stars-level"));
 
-            // Если существуют звезды для текущего уровня
             if (_number <= StarsHelper.Stars.Count)
-                // Устанавливаем спрайт звезд из массива
                 _image.sprite = _sprites[StarsHelper.Stars[_number - 1] - 1];
         }
     }

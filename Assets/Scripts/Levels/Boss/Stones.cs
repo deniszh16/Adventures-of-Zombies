@@ -22,7 +22,6 @@ namespace Cubra
 
         private void OnEnable()
         {
-            // Запускаем сброс объекта при включении
             _ = StartCoroutine(RestoreObject());
         }
 
@@ -34,7 +33,6 @@ namespace Cubra
             yield return new WaitForSeconds(5f);
             _rigidbody.velocity *= 0;
 
-            // Перемещаем объект к начальной позиции с небольшим смещением
             transform.position = new Vector2(_position.x + Random.Range(-3, 3), _position.y + Random.Range(-2, 2));
             gameObject.SetActive(false);
         }

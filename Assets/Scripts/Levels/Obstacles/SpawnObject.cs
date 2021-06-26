@@ -36,11 +36,12 @@ namespace Cubra
         /// </summary>
         private IEnumerator CreateObject()
         {
+            var seconds = new WaitForSeconds(_pause);
+
             while (GameManager.Instance.CurrentMode == GameManager.GameModes.Play)
             {
-                yield return new WaitForSeconds(_pause);
+                yield return seconds;
 
-                // Если в пуле есть объекты
                 if (_pool.transform.childCount > 0)
                 {
                     var obj = _pool.transform.GetChild(_objectNumber);

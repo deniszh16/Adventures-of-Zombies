@@ -24,7 +24,6 @@ namespace Cubra
         /// <param name="frequency">частота</param>
         public IEnumerator ShakeCamera(float duration, float amplitude, float frequency)
         {
-            // Устанавливаем амплитуду и частоту дрожания
             _virtualCameraNoise.m_AmplitudeGain = amplitude;
             _virtualCameraNoise.m_FrequencyGain = frequency;
 

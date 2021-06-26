@@ -16,7 +16,6 @@ namespace Cubra.Helpers
         /// <param name="fileName">имя файла</param>
         public static void ParseXml(string fileName)
         {
-            // Получаем путь до xml файла
             string path = Path.Combine(Application.streamingAssetsPath, fileName + ".xml");
 
             // Получаем данные по указанному пути
@@ -24,7 +23,7 @@ namespace Cubra.Helpers
             // Выполняем обработку полученнных данных
             reader.SendWebRequest();
             // Ждем завершения обработки
-            while (!reader.isDone) { }
+            while (!reader.isDone) {}
 
             // Преобразуем полученную строку в объект
             Languages = XDocument.Parse(reader.downloadHandler.text);

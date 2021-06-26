@@ -30,8 +30,6 @@ namespace Cubra.Controllers
         private void Start()
         {
             _character = FindObjectOfType<Character>();
-
-            // Записываем стартовую позицию персонажа в респаун
             RespawnPosition = _character.Transform.position + Vector3.up;
 
             // Подписываем отвязку камеры от персонажа
@@ -93,7 +91,6 @@ namespace Cubra.Controllers
             if (Enabled)
             {
                 _direction = Vector2.right * direction;
-                // Устанавливаем направление спрайта (через transform для поворота коллайдера)
                 _character.Transform.localScale = new Vector3(direction, 1, 1);
             }
         }
@@ -113,8 +110,6 @@ namespace Cubra.Controllers
                 if ((_isGrounded && _character.Rigidbody.velocity.y < 0.5f) || IsHanging)
                 {
                     _character.Rigidbody.AddForce(transform.up * _character.Jump, ForceMode2D.Impulse);
-
-                    // Если персонаж висел, сбрасываем вис
                     if (IsHanging) IsHanging = false;
                 }
             }
@@ -132,7 +127,6 @@ namespace Cubra.Controllers
 
             if (colliders.Length > 0)
             {
-                // Если персонаж ускорен и не прыгает
                 if (IsAccelerated && _isJumping == false)
                 {
                     IsAccelerated = false;
@@ -182,7 +176,6 @@ namespace Cubra.Controllers
 
                 if (rebound)
                 {
-                    // Отбрасываем персонажа по случайному вектору
                     _character.Rigidbody.AddForce(new Vector2(UnityEngine.Random.Range(-135, -100) * _character.Transform.localScale.x, UnityEngine.Random.Range(160, 190)));
                     _character.BloodEffect.Play();
                 }

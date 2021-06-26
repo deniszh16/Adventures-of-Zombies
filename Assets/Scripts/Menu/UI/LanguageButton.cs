@@ -11,16 +11,12 @@ namespace Cubra
         {
             base.Awake();
             _localizationController = Camera.main.GetComponent<LocalizationController>();
-
-            // Подписываем изменение спрайта кнопки
             _localizationController.LanguageChanged += ChangeSprite;
         }
 
         private void Start()
         {
-            // Получаем номер спрайта в зависимости от сохраненного значения
             var sprite = LocalizationController.Language == "ru-RU" ? 0 : 1;
-            // Устанавливаем спрайт
             ChangeSprite(sprite);
         }
     }

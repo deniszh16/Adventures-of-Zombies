@@ -34,7 +34,6 @@ namespace Cubra
 
         private void FixedUpdate()
         {
-            // Если отсутствует цель
             if (_target == false)
             {
                 _animator.SetInteger("State", (int)RatAnimations.Idle);
@@ -45,23 +44,18 @@ namespace Cubra
 
                 RaycastHit2D hit = Physics2D.Raycast(transform.localPosition, _direction, _distance.x, LayerMask.GetMask("Character"));
 
-                // Если найден коллайдер
                 if (hit.collider == true)
                 {
                     if (hit.collider.gameObject.TryGetComponent(out Character character))
-                        // Записываем персонажа в цель
                         _target = character.gameObject;
                 }
             }
             else
             {
-                // Определяем дистанцию между крысой и целью
                 _distance = transform.localPosition - _target.transform.position;
 
-                // Если вертикальная дистанция в указанном диапазоне
                 if (Mathf.Abs(_distance.y) < 3.8f)
                 {
-                    // Отображаем спрайт в зависимости от дистанции
                     _sprite.flipX = (_distance.x > 0) ? false : true;
 
                     // Если крыса не заходит за ограничители, выполняем движение

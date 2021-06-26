@@ -25,14 +25,18 @@ namespace Cubra
         /// </summary>
         public IEnumerator StartCountdown()
         {
+            var second = new WaitForSeconds(1);
+
             while (_countdown > 0)
             {
                 _textComponent.text = _countdown.ToString();
-                yield return new WaitForSeconds(1.0f);
+                yield return second;
                 _countdown--;
             }
 
             AfterCountdown?.Invoke();
+
+            _countdown = 3;
             gameObject.SetActive(false);
         }
     }

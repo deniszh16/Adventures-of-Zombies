@@ -21,7 +21,6 @@ namespace Cubra
         {
             if (_busy)
             {
-                // Получаем компонент персонажа у касающегося объекта
                 var character = collision.GetComponent<Character>();
 
                 if (character.Life)

@@ -25,7 +25,6 @@ namespace Cubra
 
         private void Start()
         {
-            // Если номер уровня меньше прогресса
             if (_number <= PlayerPrefs.GetInt("progress"))
             {
                 _image.sprite = _openLevel;
@@ -38,14 +37,11 @@ namespace Cubra
         /// </summary>
         public void LoadLevel()
         {
-            // Отключаем фоновую музыку в меню
             FindObjectOfType<BackgroundMusic>().SwitchMusic((int)BackgroundMusic.State.Off);
 
-            // Активируем нахождение на уровне
-            ChoiceSets.AtLevel = true;
+            SetsHelper.AtLevel = true;
 
             var transition = Camera.main.GetComponent<TransitionsController>();
-            // Выполняем асинхронную загрузку уровня
             _ = StartCoroutine(transition.GoToLevel(this));
         }
     }

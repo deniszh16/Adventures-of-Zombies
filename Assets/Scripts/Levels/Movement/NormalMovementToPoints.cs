@@ -14,12 +14,8 @@ namespace Cubra
             else
             {
                 if (_turningSprite)
-                {
-                    // Горизонтально разворачиваем спрайт
                     SpriteRenderer.flipX = !SpriteRenderer.flipX;
-                }
 
-                // Переключаемся на следующую точку, либо сбрасываем ее на начальную
                 _currentPoint = (_currentPoint < _points.Length - 1) ? ++_currentPoint : 0;
             }
         }

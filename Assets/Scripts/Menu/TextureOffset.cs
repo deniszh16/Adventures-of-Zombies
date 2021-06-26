@@ -21,13 +21,10 @@ namespace Cubra
 
         private void Update()
         {
-            // Вычитаем из позиции скорость движения
             _position -= (_offsetSpeed * Time.deltaTime);
 
-            // Если позиция текстуры превышает единицу, сбрасываем значение
             if (_position > 1.0f) _position = -1.0f;
 
-            // Обновляем позицию текстуры
             _rawImage.uvRect = new Rect(_position, 0, 1, 1);
         }
     }

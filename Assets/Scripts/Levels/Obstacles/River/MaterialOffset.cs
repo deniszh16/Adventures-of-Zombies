@@ -19,9 +19,7 @@ namespace Cubra
 
         private void Update()
         {
-            // Обновляем вектор смещения
             _offset.x -= _offsetSpeed * Time.deltaTime;
-            // Смещаем текстуру по вектору
             _render.material.mainTextureOffset = _offset;
         }
     }

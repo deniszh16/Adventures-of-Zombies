@@ -19,7 +19,6 @@ namespace Cubra
         {
             base.OnTriggerEnter2D(collision);
 
-            // Получаем компонент объекта в воде
             var thing = collision.gameObject.GetComponent<ObjectInRiver>();
 
             if (thing)

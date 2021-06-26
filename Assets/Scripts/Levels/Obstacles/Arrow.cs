@@ -65,13 +65,11 @@ namespace Cubra
         {
             base.OnTriggerEnter2D(collision);
 
-            // Если стрела касается поверхности
             if (collision.gameObject.layer == (LayerMask.GetMask("Surface") >> 5))
             {
                 _boxcollider.enabled = false;
                 SpriteRenderer.sortingOrder--;
 
-                // Пробуем получить физический компонент у поверхности
                 var physics = collision.gameObject.GetComponent<Rigidbody2D>();
 
                 if (physics)
@@ -80,22 +78,18 @@ namespace Cubra
                     _joint.connectedBody = physics;
                 }
 
-                // Если стрела активна
                 if (InstanseObject.activeInHierarchy)
-                    // Запускаем ее остановку
                     _ = StartCoroutine(StopFlight(0.03f, physics));
                 
                 return;
             }
 
-            // Если стрела попадает в другое препятствие
             if (collision.gameObject.GetComponent<SharpObstacles>())
             {
                 InstanseObject.SetActive(false);
                 return;
             }
 
-            // Если стрела попала в реку
             if (collision.gameObject.GetComponent<River>())
             {
                 _speed /= 2;

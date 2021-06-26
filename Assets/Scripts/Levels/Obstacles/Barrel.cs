@@ -37,13 +37,10 @@ namespace Cubra
         {
             _destruction.transform.position = Transform.position;
 
-            // Перезапускаем анимацию взрыва
             if (_destruction.enabled == false) _destruction.enabled = true;
             _destruction.Rebind();
 
-            // Увеличиваем число уничтоженных бочек
             PlayerPrefs.SetInt("barrel", PlayerPrefs.GetInt("barrel") + 1);
-
             InstanseObject.SetActive(false);
         }
     }

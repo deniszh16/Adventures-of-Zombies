@@ -24,16 +24,15 @@ namespace Cubra
             base.Start();
 
             if (Training.PlayerTraining)
-                // Добавляем в событие завершения отсчета метод пробуждения йети
+            {
                 GameManager.Instance.Countdown.AfterCountdown.AddListener(AwakenBoss);
+            }
             else
-                // Добавляем в событие старта уровня метод пробуждения йети
+            {
                 GameManager.Instance.LevelLaunched += AwakenBoss;
+            }
 
-            // Получаем компонент дочернего коллайдера
             _triggerYeti = gameObject.transform.GetChild(0).GetComponent<CapsuleCollider2D>();
-
-            // Определяем количество атакующих забегов
             SetQuantityRun();
         }
 
@@ -42,7 +41,6 @@ namespace Cubra
         /// </summary>
         private void AwakenBoss()
         {
-            // Запускаем стартовое переключение режима
             StartCoroutine(SwitchMode(0.2f, "throw"));
         }
 
@@ -50,7 +48,6 @@ namespace Cubra
         {
             base.FixedUpdate();
 
-            // Если персонаж умер
             if (_character.Life == false)
                 State = YetiAnimation.Idle;
         }
@@ -63,11 +60,8 @@ namespace Cubra
         protected override IEnumerator SwitchMode(float seconds, string mode)
         {
             yield return new WaitForSeconds(seconds);
+            _mode = mode;
 
-            // Устанавливаем режим йети
-            this._mode = mode;
-
-            // Если отображаются оглушающие звезды, скрываем их
             if (_effectStars.activeSelf) _effectStars.SetActive(false);
 
             switch (mode)
@@ -92,11 +86,9 @@ namespace Cubra
                 case "stupor":
                     _health--;
 
-                    // Создаем небольшой отскок от стены
                     _rigbody.AddForce(_direction * -2.5f, ForceMode2D.Impulse);
 
                     _effectStars.SetActive(true);
-                    // Перемещаем звезды к голове йети
                     _effectStars.transform.localPosition = new Vector2(2.25f * _direction.x, _effectStars.transform.localPosition.y);
                     
                     State = YetiAnimation.Idle;
@@ -112,10 +104,9 @@ namespace Cubra
 
                 case "die":
                     State = YetiAnimation.Die;
-                    // Отключаем коллайдер йети
+
                     _capsuleCollider.enabled = false;
 
-                    // Скрываем дополнительные препятствия
                     for (int i = 0; i < _obstacles.Length; i++)
                         _obstacles[i].SetActive(false);
 
@@ -123,15 +114,12 @@ namespace Cubra
                     break;
 
                 default:
-                    // Определяем направление
                     SetDirection(true);
-                    // Смещаем коллайдер касания в направлении движения
                     ColliderOffset();
                     break;
             }
 
             if (mode == "run")
-                // Отображаем дополнительные препятствия
                 ShowObstacles(_health);
         }
 
@@ -142,19 +130,15 @@ namespace Cubra
         {
             if (_health > 0)
             {
-                // Определяем паузу перед сменой режима
                 float pause = Random.Range(2, 3.2f);
 
                 if (_mode == "attack")
-                    // Переключаемся на бросок камня
                     StartCoroutine(SwitchMode(pause, "throw"));
                 else
-                    // Определяем режим в зависимости от количества забегов
                     StartCoroutine(SwitchMode(pause, (_quantityRuns > 0) ? "run" : "attack"));
             }
             else
             {
-                // Иначе переключаемся на режим смерти
                 StartCoroutine(SwitchMode(0, "die"));
             }
         }
@@ -165,16 +149,13 @@ namespace Cubra
         public void ThrowStone()
         {
             _stone.SetActive(true);
-            // Перемещаем камень в стартовую позицию в зависимости от направления
             _stone.transform.localPosition = new Vector2(3.4f * _direction.x, 0.4f);
 
             if (_stonePhysics == false)
                 _stonePhysics = _stone.GetComponent<Rigidbody2D>();
 
-            // Создаем импульс для броска камня
             _stonePhysics.AddForce(new Vector2(Random.Range(13, 14) * _direction.x, 1.5f), ForceMode2D.Impulse);
-            // Через несколько секунд отключаем камень
-            Invoke("DisableStone", 3.5f);
+            Invoke(nameof(DisableStone), 3.5f);
         }
 
         /// <summary>
@@ -203,11 +184,9 @@ namespace Cubra
             switch (health)
             {
                 case 12:
-                    // Отображаем пилу
                     _obstacles[0].SetActive(true);
                     break;
                 case 6:
-                    // Отображаем капкан
                     _obstacles[1].SetActive(true);
                     break;
             }
@@ -217,9 +196,7 @@ namespace Cubra
         {
             if (collision.gameObject.CompareTag("Wall"))
             {
-                // Вызываем встряхивание камеры
                 StartCoroutine(_cameraShaking.ShakeCamera(0.6f, 2.1f, 1.9f));
-                // Переключаем режим на оглушения
                 StartCoroutine(SwitchMode(0, "stupor"));
             }
         }
@@ -228,9 +205,7 @@ namespace Cubra
         {
             if (collision.gameObject == _character.gameObject)
             {
-               // Если йети не оглушен
                if (_mode != "stupor")
-                   // Переключаем режим активности на удар
                    StartCoroutine(SwitchMode(0, "hit"));
             }
         }
@@ -244,7 +219,6 @@ namespace Cubra
             if (Mathf.Abs(transform.position.x - _character.transform.position.x) < 6
                && Mathf.Abs(transform.position.y - _character.transform.position.y) < 2.8f)
             {
-               // Наносим урон персонажу
                 GameManager.Instance.CharacterController.DamageToCharacter(true, true);
             } 
         }

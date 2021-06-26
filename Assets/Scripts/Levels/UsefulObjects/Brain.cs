@@ -13,7 +13,6 @@ namespace Cubra
             character.SetSound(Character.Sounds.Brain);
             character.PlayingSound.PlaySound();
 
-            // Уменьшаем количество мозгов
             GameManager.Instance.Brains--;
             UpdateQuantityBrains();
 

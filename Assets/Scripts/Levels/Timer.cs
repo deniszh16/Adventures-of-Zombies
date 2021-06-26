@@ -43,11 +43,13 @@ namespace Cubra
         /// </summary>
         public IEnumerator TimerCountdown()
         {
+            var second = new WaitForSeconds(1);
+
             while (GameManager.Instance.CurrentMode == GameManager.GameModes.Play)
             {
                 if (_seconds > 0)
                 {
-                    yield return new WaitForSeconds(1);
+                    yield return second;
 
                     _seconds--;
                     _textSeconds.text = _seconds.ToString();
@@ -55,15 +57,11 @@ namespace Cubra
                     // Если не хватает секунд для текущего количества звезд
                     if (_seconds < _totalSeconds[GameManager.Instance.Stars - 1])
                     {
-                        // Уменьшаем текущее количество звезд
                         _starsSeconds[GameManager.Instance.Stars - 1].enabled = false;
                         GameManager.Instance.Stars--;
 
                         if (GameManager.Instance.Stars == 1)
-                        {
-                            // Перекрашиваем обводку текста в красный цвет
                             _textOutline.effectColor = new Color32(255, 0, 0, 128);
-                        }
                     }
                 }
                 else

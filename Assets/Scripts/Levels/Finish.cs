@@ -11,7 +11,6 @@ namespace Cubra
         {
             if (character.Life)
             {
-                // Если собраны все мозги
                 if (GameManager.Instance.Brains == 0)
                 {
                     _finishButton.SetActive(true);

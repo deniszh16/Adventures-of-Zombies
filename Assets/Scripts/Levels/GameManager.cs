@@ -72,14 +72,11 @@ namespace Cubra
         {
             Instance = this;
 
-            // Номер активного персонажа
             var activeCharacter = PlayerPrefs.GetInt("character");
-            // Создаем активного персонажа в стартовой позиции и получаем его компонент
             _character = Instantiate(characters[activeCharacter - 1], position, Quaternion.identity).GetComponent<Character>();
 
             SnapCameraToTarget();
 
-            // Преобразовваем сохраненную json строку в объект
             ZombieHelper = JsonUtility.FromJson<ZombieHelper>(PlayerPrefs.GetString("character-" + PlayerPrefs.GetInt("character")));
 
             CharacterController = gameObject.GetComponent<Controllers.CharacterController>();
@@ -99,9 +96,13 @@ namespace Cubra
 
                 _ = StartCoroutine(_training.StartTraining());
             }
+            else if (_countdown != null)
+            {
+                _ = StartCoroutine(_countdown.StartCountdown());
+            }
             else
             {
-                Invoke("LaunchALevel", 0.2f);
+                Invoke(nameof(LaunchALevel), 0.2f);
             }
         }
         
@@ -110,10 +111,8 @@ namespace Cubra
             CurrentMode = GameModes.Play;
             LevelLaunched?.Invoke();
 
-            // Если звуки не отключены
             if (SoundController.PlayingSounds)
             {
-                // Устанавливаем фоновую музыку и запускаем
                 _backgroundMusic.SetBackgroundMusic();
                 _backgroundMusic.SwitchMusic((int)BackgroundMusic.State.On);
             }    

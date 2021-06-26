@@ -31,19 +31,16 @@ namespace Cubra
         {
             _played.gameObject.SetActive(true);
             _played.GetComponent<TextTranslation>().TranslateText();
-            // Выводим количество сыгранных игр
             _played.text += " " + ZombieHelper.Played;
 
             if (ZombieHelper.Played >= 15)
             {
                 if (Application.internetReachability != NetworkReachability.NotReachable)
-                    // Открываем достижение по количеству игр за персонажа
                     GooglePlayServices.UnlockingAchievement(_identifier);
             }
 
             _loss.gameObject.SetActive(true);
             _loss.GetComponent<TextTranslation>().TranslateText();
-            // Выводим количество смертей
             _loss.text += " " + ZombieHelper.Deaths;
         }
     }

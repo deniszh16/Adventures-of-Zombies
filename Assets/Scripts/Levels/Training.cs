@@ -39,7 +39,6 @@ namespace Cubra
         /// <param name="key">ключ подсказки</param>
         private void UpdateTrainingText(string key)
         {
-            // Обновляем текст подсказки
             GameManager.Instance.LevelResults.TextHint.ChangeKey(key);
             _stage++;
         }
@@ -53,7 +52,6 @@ namespace Cubra
             {
                 if (_stage < _tips.Length)
                 {
-                    // Выводим следующую подсказку
                     UpdateTrainingText(_tips[_stage]);
                 }
                 else
@@ -66,7 +64,6 @@ namespace Cubra
 
                     if (GameManager.Instance.Countdown != null)
                     {
-                        // Если присутствует отсчет, запускаем его
                         _ = StartCoroutine(GameManager.Instance.Countdown.StartCountdown());
                     }
                     else

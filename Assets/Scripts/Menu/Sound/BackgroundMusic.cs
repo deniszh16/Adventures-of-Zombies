@@ -11,6 +11,9 @@ namespace Cubra
         // Состояние звука
         public enum State { On, Off }
 
+        // Номер текущего объекта
+        public int _objectNumber;
+
         // Ссылка на контроллер звука
         private SoundController _soundController;
 
@@ -18,15 +21,20 @@ namespace Cubra
         {
             base.Awake();
 
-            _soundController = Camera.main.GetComponent<SoundController>();
-            _soundController.SoundChanged += SwitchMusic;
+            if (SoundController.BackgroundMusic == 0)
+            {
+                SoundController.BackgroundMusic = 1;
+                _objectNumber = SoundController.BackgroundMusic;
+                DontDestroyOnLoad(gameObject);
+            }
 
-            SetBackgroundMusic();
+            if (_objectNumber != 1) Destroy(gameObject);
         }
 
         private void Start()
         {
-            // Если звуки не отключены, но музыка не проигрывается
+            SetBackgroundMusic();
+
             if (SoundController.SoundActivity == (int)State.On && _audioSource.isPlaying == false)
             {
                 SwitchMusic((int)State.On);
@@ -38,17 +46,15 @@ namespace Cubra
         /// </summary>
         public void SetBackgroundMusic()
         {
-            // Получаем список фоновой музыки
+            // Список фоновой музыки
             var audioClips = Camera.main.GetComponent<MusicListHelper>().AudioClips;
 
             if (audioClips.Length > 1)
             {
-                // Определяем случайную фоновую музыку из доступных
                 _audioSource.clip = audioClips[UnityEngine.Random.Range(0, audioClips.Length)];
             }
             else
             {
-                // Иначе устанавливаем первую
                 _audioSource.clip = audioClips[0];
             }
         }
@@ -60,12 +66,10 @@ namespace Cubra
         {
             if (state == (int)State.On)
             {
-                // Увеличиваем громкость фоновой музыки
-                _ = StartCoroutine(ChangeVolume(() => _audioSource.volume < 0.6f, 0.02f, 0.01f));
+                _ = StartCoroutine(ChangeVolume(() => _audioSource.volume < 0.2f, 0.02f, 0.01f));
             }
             else
             {
-                // Уменьшаем громкость фоновой музыки
                 _ = StartCoroutine(ChangeVolume(() => _audioSource.volume > 0, 0.02f, -0.03f));
             }
         }

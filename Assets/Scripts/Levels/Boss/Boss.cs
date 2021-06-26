@@ -60,11 +60,9 @@ namespace Cubra
         {
             if (_mode == "run") Run();
 
-            // Если персонаж умер
             if (_character.Life == false)
             {
                _mode = "none";
-               // Останавливаем переключение режима
                StopAllCoroutines();
             }
         }
@@ -94,7 +92,6 @@ namespace Cubra
         /// </summary>
         protected void Run()
         {
-            // Перемещаем босса в указанном направлении с указанной скоростью
             transform.Translate(_direction * _speed * Time.deltaTime);
         }
 
@@ -104,14 +101,11 @@ namespace Cubra
         /// <param name="invert">горизонтальное отображение спрайта</param>
         protected void SetDirection(bool invert = false)
         {
-            // Сравниваем позиции босса с персонажем и устанавливаем направление движения
             _direction = (transform.localPosition.x > _character.transform.localPosition.x) ? Vector3.left : Vector3.right;
 
             if (!invert)
-                // Отображаем спрайт в установленном направлении
                 _spriteRenderer.flipX = (_direction == Vector3.left) ? true : false;
             else
-                // Если установлена инверсия, разворачиваем спрайт
                 _spriteRenderer.flipX = (_direction == Vector3.left) ? false : true;
         }
 
@@ -122,10 +116,10 @@ namespace Cubra
         {
             if (_mode == "attack")
             {
-                // Вызываем встряхивание камеры
                 StartCoroutine(_cameraShaking.ShakeCamera(0.7f, 1.8f, 1.6f));
-                // Активируем камни для падения
-                for (int i = 0; i < _stones.Length; i++) _stones[i].SetActive(true);
+
+                for (int i = 0; i < _stones.Length; i++)
+                    _stones[i].SetActive(true);
             }
         }
 
@@ -143,7 +137,6 @@ namespace Cubra
             for (int i = 0; i < _objectsFinish.Length; i++)
                 _objectsFinish[i].SetActive(true);
 
-            // Отключаем фиксацию камеры
             GameManager.Instance.DisableCameraLock();
         }
     }

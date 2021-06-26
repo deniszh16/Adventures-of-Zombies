@@ -43,7 +43,6 @@ namespace Cubra
         /// </summary>
         public void ChangeButton()
         {
-            // Если текущий персонаж выбран
             if (_number == PlayerPrefs.GetInt("character"))
             {
                 _selectButton.interactable = false;

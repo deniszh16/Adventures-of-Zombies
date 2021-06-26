@@ -9,7 +9,6 @@ namespace Cubra
         private void Awake()
         {
             #region Saved Data
-            // Если отсутствуют сохранения, устанавливаем значения по умолчанию
             if (PlayerPrefs.HasKey("saved-data") == false)
             {
                 // Язык интерфейса игры
@@ -17,8 +16,6 @@ namespace Cubra
                 // Настройка звука
                 PlayerPrefs.SetInt("sounds", 0);
 
-                // Активный набор уровней
-                PlayerPrefs.SetInt("sets", 1);
                 // Звезды за пройденные уровни
                 PlayerPrefs.SetString("stars-level", "{\"Stars\": []}");
                 // Активный игровой персонаж
@@ -44,24 +41,18 @@ namespace Cubra
                 // Общее количество уничтоженных бочек
                 PlayerPrefs.SetInt("barrel", 0);
 
-                // Позиция игрока в рейтинге
-                PlayerPrefs.SetInt("rank", 0);
-                // Таблица лучших игроков
-                PlayerPrefs.SetString("gp-leaderboard", "");
-
                 // Первоначальные сохранения
                 PlayerPrefs.SetString("saved-data", "yes");
             }
             #endregion
 
-            // Активация игровых сервисов Google Play
             PlayGamesPlatform.Activate();
         }
 
         private void Start()
         {
             var transitions = gameObject.GetComponent<TransitionsController>();
-            _ = transitions.StartCoroutine(transitions.GoToSceneWithPause(2f, (int)TransitionsController.Scenes.Menu));
+            _ = transitions.StartCoroutine(transitions.GoToSceneWithPause(1.2f, (int)TransitionsController.Scenes.Menu));
         }
     }
 }

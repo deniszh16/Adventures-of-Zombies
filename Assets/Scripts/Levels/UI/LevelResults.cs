@@ -45,10 +45,7 @@ namespace Cubra
 
         private void Start()
         {
-            // Преобразуем сохраненную json строку по звездам в объект
             _starsHelper = JsonUtility.FromJson<StarsHelper>(PlayerPrefs.GetString("stars-level"));
-
-            // Подписываем отображение проигрыша в событие смерти персонажа
             GameManager.Instance.CharacterController.IsDead += FailedLevel;
         }
 
@@ -57,9 +54,8 @@ namespace Cubra
         /// </summary>
         public void CompleteLevel()
         {
-            // Переключаем режим игры на успешное завершение
             GameManager.Instance.CurrentMode = GameManager.GameModes.Completed;
-            Invoke("WinningAtLevel", 0.7f);
+            Invoke(nameof(WinningAtLevel), 0.7f);
         }
 
         /// <summary>
@@ -67,9 +63,8 @@ namespace Cubra
         /// </summary>
         public void FailedLevel()
         {
-            // Переключаем режим игры на проигрыш
             GameManager.Instance.CurrentMode = GameManager.GameModes.Losing;
-            Invoke("LosingAtLevel", 1.5f);
+            Invoke(nameof(LosingAtLevel), 1.5f);
         }
 
         /// <summary>
@@ -82,9 +77,7 @@ namespace Cubra
             _victoryPanel.SetActive(true);
             _hintPanel.SetActive(true);
 
-            // Если сохраненный прогресс меньше номера текущего уровня
             if (PlayerPrefs.GetInt("progress") <= GameManager.Instance.LevelNumber)
-                // Увеличиваем прогресс
                 PlayerPrefs.SetInt("progress", GameManager.Instance.LevelNumber + 1);
 
             // Набранные на уровне очки
@@ -92,7 +85,6 @@ namespace Cubra
             _levelScore.text = points.ToString();
             PlayerPrefs.SetInt("score", PlayerPrefs.GetInt("score") + points);
 
-            // Выводим победный текст
             _textHint.ChangeKey(_winningTexts[GameManager.Instance.Stars - 1]);
 
             if (Application.internetReachability != NetworkReachability.NotReachable)
@@ -101,10 +93,8 @@ namespace Cubra
                     GooglePlayServices.UnlockingAchievement(GPGSIds.achievement_2);
             }
 
-            // Сохраняем обновленную статистику по персонажу
             PlayerPrefs.SetString("character-" + PlayerPrefs.GetInt("character"), JsonUtility.ToJson(GameManager.Instance.ZombieHelper));
 
-            // Выводим полученные звезды за уровень
             _levelStars.sprite = _spritesStars[GameManager.Instance.Stars - 1];
             SaveStars();
         }
@@ -114,16 +104,13 @@ namespace Cubra
         /// </summary>
         private void SaveStars()
         {
-            // Если в списке меньше значений, чем номер уровня
             if (_starsHelper.Stars.Count < GameManager.Instance.LevelNumber)
             {
-                // Создаем новый элемент с количеством полученных звезд
                 _starsHelper.Stars.Add(GameManager.Instance.Stars);
                 PlayerPrefs.SetString("stars-level", JsonUtility.ToJson(_starsHelper));
             }
             else if (_starsHelper.Stars[GameManager.Instance.LevelNumber - 1] < GameManager.Instance.Stars)
             {
-                // Записываем новое значение и сохраняем
                 _starsHelper.Stars[GameManager.Instance.LevelNumber - 1] = GameManager.Instance.Stars;
                 PlayerPrefs.SetString("stars-level", JsonUtility.ToJson(_starsHelper));
             }
@@ -141,21 +128,11 @@ namespace Cubra
 
             _quantityCoins.text = PlayerPrefs.GetInt("coins").ToString();
 
-            // Если недостаточно монет
-            if (PlayerPrefs.GetInt("coins") < 50)
-            {
-                // И недоступен интернет
-                if (Application.internetReachability == NetworkReachability.NotReachable)
-                {
-                    // Отключаем кнопку воскрешения
-                    _resurrect.interactable = false;
-                }    
-            }
+            if (PlayerPrefs.GetInt("coins") < 50 || GameManager.Instance.Timer.Seconds <= 0)
+                _resurrect.interactable = false;
 
-            // Выводим проигрышный текст
             _textHint.ChangeKey("result-lose");
 
-            // Увеличиваем количество смертей персонажа
             GameManager.Instance.ZombieHelper.Deaths++;
             PlayerPrefs.SetString("character-" + PlayerPrefs.GetInt("character"), JsonUtility.ToJson(GameManager.Instance.ZombieHelper));
         }
@@ -165,7 +142,6 @@ namespace Cubra
         /// </summary>
         private void UpdateSavedData()
         {
-            // Увеличиваем количество игр персонажа
             GameManager.Instance.ZombieHelper.Played++;
 
             PlayerPrefs.SetInt("coins", PlayerPrefs.GetInt("coins") + GameManager.Instance.Coins);
@@ -181,11 +157,8 @@ namespace Cubra
             _losePanel.SetActive(false);
             _hintPanel.SetActive(false);
 
-            // Запускаем уровень
             GameManager.Instance.LaunchALevel();
-            // Восстанавливаем персонажа к последнему респауну
             GameManager.Instance.CharacterController.RestoreCharacter();
-            // Возобновляем привязку камеры
             GameManager.Instance.SnapCameraToTarget();
         }
     }

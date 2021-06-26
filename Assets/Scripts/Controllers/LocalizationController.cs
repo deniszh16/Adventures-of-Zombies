@@ -30,7 +30,6 @@ namespace Cubra.Controllers
         {
             Language = (Language == "ru-RU") ? "en-US" : "ru-RU";
 
-            // Номер языка в перечислении
             var language = (Language == "ru-RU") ? (int)Languages.Russian : (int)Languages.English;
             LanguageChanged?.Invoke(language);
         }

@@ -8,6 +8,15 @@ namespace Cubra.Controllers
         // Событие по переключению звука
         public event Action<int> SoundChanged;
 
+        // Номер объекта фоновой музыки
+        public static int BackgroundMusic = 0;
+
+        private void Start()
+        {
+            var backgroundMusic = FindObjectOfType<BackgroundMusic>();
+            SoundChanged += backgroundMusic.SwitchMusic;
+        }
+
         // Текущее состояние звука
         public static int SoundActivity
         {

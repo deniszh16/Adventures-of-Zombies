@@ -14,10 +14,9 @@ namespace Cubra
 
         private void Start()
         {
-            if (SoundController.PlayingSounds && ChoiceSets.AtLevel)
+            if (SoundController.PlayingSounds && SetsHelper.AtLevel)
             {
-                ChoiceSets.AtLevel = false;
-                // Устанавливаем фоновую музыку и запускаем
+                SetsHelper.AtLevel = false;
                 _backgroundMusic.SetBackgroundMusic();
                 _backgroundMusic.SwitchMusic((int)BackgroundMusic.State.On);
             }

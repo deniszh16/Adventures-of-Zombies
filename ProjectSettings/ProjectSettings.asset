@@ -19,7 +19,7 @@ PlayerSettings:
   m_SplashScreenBackgroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_ShowUnitySplashScreen: 1
   m_ShowUnitySplashLogo: 1
-  m_SplashScreenOverlayOpacity: 1
+  m_SplashScreenOverlayOpacity: 0.5
   m_SplashScreenAnimation: 1
   m_SplashScreenLogoStyle: 1
   m_SplashScreenDrawMode: 0
@@ -127,7 +127,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 1.6.1
+  bundleVersion: 1.6.5
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -153,7 +153,7 @@ PlayerSettings:
     iPhone: 0
     tvOS: 0
   overrideDefaultApplicationIdentifier: 1
-  AndroidBundleVersionCode: 61
+  AndroidBundleVersionCode: 65
   AndroidMinSdkVersion: 21
   AndroidTargetSdkVersion: 30
   AndroidPreferredInstallLocation: 1
@@ -233,7 +233,7 @@ PlayerSettings:
   useCustomLauncherManifest: 0
   useCustomMainGradleTemplate: 1
   useCustomLauncherGradleManifest: 0
-  useCustomBaseGradleTemplate: 1
+  useCustomBaseGradleTemplate: 0
   useCustomGradlePropertiesTemplate: 1
   useCustomProguardFile: 0
   AndroidTargetArchitectures: 3
@@ -562,6 +562,8 @@ PlayerSettings:
   switchNetworkInterfaceManagerInitializeEnabled: 1
   switchPlayerConnectionEnabled: 1
   switchUseNewStyleFilepaths: 0
+  switchUseMicroSleepForYield: 1
+  switchMicroSleepForYieldTime: 25
   ps4NPAgeRating: 12
   ps4NPTitleSecret: 
   ps4NPTrophyPackPath: 

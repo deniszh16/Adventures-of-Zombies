@@ -32,7 +32,6 @@ namespace Cubra
 
         private void Start()
         {
-            // Если прогресс достаточный для открытия
             if (_progress <= PlayerPrefs.GetInt("progress"))
             {
                 _parts.SetActive(false);
@@ -41,7 +40,6 @@ namespace Cubra
                 _zombieStats.UpdateStatistics();
                 _zombieSelection.ChangeButton(true);
 
-                // Подписываем обновление кнопок в событие смены персонажа
                 _buttonUpdateHelper.ZombieSelected += _zombieSelection.ChangeButton;
             }
             else

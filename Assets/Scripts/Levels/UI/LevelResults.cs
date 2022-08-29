@@ -87,12 +87,6 @@ namespace Cubra
 
             _textHint.ChangeKey(_winningTexts[GameManager.Instance.Stars - 1]);
 
-            if (Application.internetReachability != NetworkReachability.NotReachable)
-            {
-                if (GameManager.Instance.LevelNumber > 1 && GameManager.Instance.Stars == 3)
-                    GooglePlayServices.UnlockingAchievement(GPGSIds.achievement_2);
-            }
-
             PlayerPrefs.SetString("character-" + PlayerPrefs.GetInt("character"), JsonUtility.ToJson(GameManager.Instance.ZombieHelper));
 
             _levelStars.sprite = _spritesStars[GameManager.Instance.Stars - 1];

@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using Cubra.Controllers;
-using GooglePlayGames;
 
 namespace Cubra
 {
@@ -45,8 +44,6 @@ namespace Cubra
                 PlayerPrefs.SetString("saved-data", "yes");
             }
             #endregion
-
-            PlayGamesPlatform.Activate();
         }
 
         private void Start()

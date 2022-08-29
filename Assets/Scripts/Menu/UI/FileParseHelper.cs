@@ -28,5 +28,17 @@ namespace Cubra.Helpers
             // Преобразуем полученную строку в объект
             Languages = XDocument.Parse(reader.downloadHandler.text);
         }
+
+        /// <summary>
+        /// Парсинг xml документа из папки ресурсов
+        /// </summary>
+        /// <param name="fileName">имя файла</param>
+        public static void ParseXmlFromResources(string fileName)
+        {
+            var textFile = Resources.Load<TextAsset>("Languages/" + fileName);
+
+            // Преобразуем полученную строку в объект
+            Languages = XDocument.Parse(textFile.text);
+        }
     }
 }

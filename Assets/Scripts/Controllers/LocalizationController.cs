@@ -20,7 +20,7 @@ namespace Cubra.Controllers
 
         private void Awake()
         {
-            FileParseHelper.ParseXml("languages");
+            FileParseHelper.ParseXmlFromResources("languages");
         }
 
         /// <summary>

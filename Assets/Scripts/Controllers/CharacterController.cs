@@ -8,7 +8,8 @@ namespace Cubra.Controllers
         // Событие смерти персонажа
         public event Action IsDead;
 
-        private Vector2 _direction;
+        private Vector2 _directionKeyboard;
+        private Vector2 _directionScreen;
 
         private bool _isGrounded;
         private bool _isJumping;
@@ -35,37 +36,35 @@ namespace Cubra.Controllers
             // Подписываем отвязку камеры от персонажа
             IsDead += GameManager.Instance.SnapCameraToTarget;
         }
-        
-        #if UNITY_EDITOR || UNITY_STANDALONE
+
         private void Update()
         {
             if (_keyboardControl)
             {
                 if (Input.GetKey("left"))
                 {
-                    _direction = Vector2.right * -1;
+                    _directionKeyboard = Vector2.right * -1;
                     _character.Transform.localScale = new Vector3(-1, 1, 1);
                 }
                 else if (Input.GetKey("right"))
                 {
-                    _direction = Vector2.right;
+                    _directionKeyboard = Vector2.right;
                     _character.Transform.localScale = new Vector3(1, 1, 1);
                 }
                 else
                 {
-                    _direction = Vector2.zero;
+                    _directionKeyboard = Vector2.zero;
                 }
 
                 if (Input.GetKeyDown("space")) ButtonJump();
             }
         }
-        #endif
 
         private void FixedUpdate()
         {
             if (_character.Life)
             {
-                if (_direction == Vector2.zero)
+                if (_directionKeyboard == Vector2.zero & _directionScreen == Vector2.zero)
                 {
                     _character.SetAnimation(Character.Animations.Idle);
                     if (_isJumping) _character.SetAnimation(Character.Animations.Jump);
@@ -73,7 +72,11 @@ namespace Cubra.Controllers
                 }
                 else
                 {
-                    _character.Rigidbody.position = _character.Rigidbody.position + _direction * _character.Speed * Time.fixedDeltaTime;
+                    var direction = _directionKeyboard + _directionScreen;
+                    if (direction.x > 1) direction.x = 1;
+                    if (direction.x < -1) direction.x = -1;
+
+                    _character.Rigidbody.position = _character.Rigidbody.position + direction * _character.Speed * Time.fixedDeltaTime;
                     if (_isGrounded) _character.SetAnimation(Character.Animations.Run);
                     if (_isJumping) _character.SetAnimation(Character.Animations.Jump);
                 }
@@ -90,14 +93,14 @@ namespace Cubra.Controllers
         {
             if (Enabled)
             {
-                _direction = Vector2.right * direction;
+                _directionScreen = Vector2.right * direction;
                 _character.Transform.localScale = new Vector3(direction, 1, 1);
             }
         }
         
         public void ButtonArrowUp()
         {
-            _direction = Vector2.zero;
+            _directionScreen = Vector2.zero;
         }
 
         /// <summary>
@@ -204,7 +207,7 @@ namespace Cubra.Controllers
         {
             if (_character.Life)
             {
-                if (_direction.x != 0) _character.Speed = speed;
+                if (_directionKeyboard.x != 0 || _directionScreen.x !=0) _character.Speed = speed;
             }
         }
     }

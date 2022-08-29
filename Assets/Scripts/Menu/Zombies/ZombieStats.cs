@@ -12,9 +12,6 @@ namespace Cubra
         [Header("Количество поражений")]
         [SerializeField] private Text _loss;
 
-        [Header("Идентификатор достижения")]
-        [SerializeField] private string _identifier;
-
         // Объект для работы со статистикой по персонажу
         public ZombieHelper ZombieHelper { get; private set; } = new ZombieHelper();
 
@@ -32,12 +29,6 @@ namespace Cubra
             _played.gameObject.SetActive(true);
             _played.GetComponent<TextTranslation>().TranslateText();
             _played.text += " " + ZombieHelper.Played;
-
-            if (ZombieHelper.Played >= 15)
-            {
-                if (Application.internetReachability != NetworkReachability.NotReachable)
-                    GooglePlayServices.UnlockingAchievement(_identifier);
-            }
 
             _loss.gameObject.SetActive(true);
             _loss.GetComponent<TextTranslation>().TranslateText();

@@ -1,25 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <languages>
-<ru-RU>
+<Russian>
 <!-- Название игры -->
 <title>Приключения зомби:
 Охота на мозги!</title>
-<!-- Заголовки макетов -->
+<!-- Заголовки сцен -->
 <settings>Настройки игры</settings>
 <heading-jungle>Приключения в джунглях</heading-jungle>
-<zombies>Список персонажей</zombies>
+<zombies>Зомби-семья</zombies>
+<achievements>Достижения</achievements>
 <!-- Кнопки -->
-<button-select>Выбрать</button-select>
-<button-selected>Выбран</button-selected>
 <button-continue>Продолжить</button-continue>
 <button-riseagain>Воскреснуть</button-riseagain>
-<button-description>50 золотых монет</button-description>
+<button-description>за просмотр рекламы</button-description>
 <button-restart>Рестарт уровня</button-restart>
 <button-returnmenu>Вернуться в меню</button-returnmenu>
 <button-achievements>Достижения</button-achievements>
-<!-- Текст на карточках -->
-<statistics-played>Игр:</statistics-played>
-<statistics-losses>Умер:</statistics-losses>
+<button-zombies>Зомби-семья</button-zombies>
 <!-- Обучение -->
 <training-greeting>Привет, Бро
 Вижу, что ты и твои зомбята проголодались</training-greeting>
@@ -28,7 +25,7 @@
 Злые людишки оставили много ловушек...</training-level>
 <training-finish>И помни,
 мозги нужно не только собрать, но и донести до дома!</training-finish>
-<training-coins>А монетки тебе пригодятся, если ты будешь допускать ошибки...</training-coins>
+<training-bones>А найденные кости помогут собрать своих зомби-друзей.</training-bones>
 <training-boss-levels>Бро, ты отлично справляешься с поиском мозгов.</training-boss-levels>
 <training-boss-warning>Но сейчас ты забрел к опасному рогатому быку.</training-boss-warning>
 <training-boss-target>Победи коварного быка, уворачиваясь от его атак.</training-boss-target>
@@ -54,37 +51,24 @@
 <!-- Разное  -->
 <complete-level>Завершить уровень</complete-level>
 <loading-text>Загрузка...</loading-text>
-<rank-user>...
-место</rank-user>
-<rank-description>место</rank-description>
-<unknown-results>Нет данных...</unknown-results>
-<loading-results>Загрузка результатов...</loading-results>
-<get-character-two>с 3 уровня</get-character-two>
-<get-character-three>с 6 уровня</get-character-three>
-<get-character-four>с 9 уровня</get-character-four>
-<get-character-five>с 12 уровня</get-character-five>
-</ru-RU>
-<en-US>
+</Russian>
+<English>
 <!-- Название игры -->
 <title>Adventures of Zombies:
 Brains Hunting!</title>
 <!-- Заголовки макетов -->
 <settings>Game settings</settings>
 <heading-jungle>Adventures in jungle</heading-jungle>
-<zombies>Character list</zombies>
-<heading-leaderboard>Best players</heading-leaderboard>
+<zombies>Zombie-Family</zombies>
+<achievements>Achievements</achievements>
 <!-- Кнопки -->
-<button-select>Select</button-select>
-<button-selected>Selected</button-selected>
 <button-continue>Continue</button-continue>
 <button-riseagain>Get resurrected</button-riseagain>
-<button-description>50 gold coins</button-description>
+<button-description>for viewing ads</button-description>
 <button-restart>Restart level</button-restart>
 <button-returnmenu>Back to menu</button-returnmenu>
 <button-achievements>Achievements</button-achievements>
-<!-- Текст на карточках -->
-<statistics-played>Played:</statistics-played>
-<statistics-losses>Died:</statistics-losses>
+<button-zombies>Zombie-Family</button-zombies>
 <!-- Обучение -->
 <training-greeting>Hey, Bro.
 I see you and your little zombies are hungry.</training-greeting>
@@ -93,7 +77,7 @@ I see you and your little zombies are hungry.</training-greeting>
 Cruel people have placed many traps...</training-level>
 <training-finish>And remember,
 you need not only to collect brains, but also bring them home!</training-finish>
-<training-coins>You will also need coins in case you make a mistake...</training-coins>
+<training-bones>And the bones found will help you collect your zombie friends.</training-bones>
 <training-boss-levels>Bro, you’re doing great at looking for brains.</training-boss-levels>
 <training-boss-warning>But now you’re about to face a dangerous horned bull.</training-boss-warning>
 <training-boss-target>Defeat the cunning beast by dodging his attack.</training-boss-target>
@@ -119,14 +103,5 @@ How did you manage so fast?</result-threestars>
 <!-- Разное  -->
 <complete-level>Finish level</complete-level>
 <loading-text>Loading...</loading-text>
-<rank-user>...
-rank</rank-user>
-<rank-description>rank</rank-description>
-<unknown-results>No data...</unknown-results>
-<loading-results>Loading results ...</loading-results>
-<get-character-two>from level 3</get-character-two>
-<get-character-three>from level 6</get-character-three>
-<get-character-four>from level 9</get-character-four>
-<get-character-five>from level 12</get-character-five>
-</en-US>
+</English>
 </languages>

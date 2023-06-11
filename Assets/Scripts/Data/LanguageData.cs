@@ -7,15 +7,12 @@ namespace Data
     [Serializable]
     public class LanguageData
     {
-        private Languages _language;
+        public Languages Language;
 
         public LanguageData() =>
-            _language = Application.systemLanguage == SystemLanguage.Russian ? Languages.Russian : Languages.English;
-
-        public Languages GetCurrentLanguage() =>
-            _language;
+            Language = Application.systemLanguage == SystemLanguage.Russian ? Languages.Russian : Languages.English;
 
         public void SetLanguage(Languages language) =>
-            _language = language;
+            Language = language;
     }
 }

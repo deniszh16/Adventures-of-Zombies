@@ -11,6 +11,7 @@ namespace Services.Localization
         public event Action LanguageChanged;
         
         public void LoadTranslations();
+        public void SetCurrentLanguage(Languages language);
         public void SwitchLanguage();
     }
 }

@@ -29,18 +29,24 @@ namespace Services.Localization
         public void LoadTranslations() =>
             Translations = XmlFileParse.ParseXmlFromResources(FileName);
 
+        public void SetCurrentLanguage(Languages language)
+        {
+            CurrentLanguage = language;
+            LanguageChanged?.Invoke();
+        }
+
         public void SwitchLanguage()
         {
-            Languages language = _progressService.UserProgress.languageData.GetCurrentLanguage();
+            Languages language = _progressService.UserProgress.LanguageData.Language;
             if (language == Languages.Russian)
             {
-                _progressService.UserProgress.languageData.SetLanguage(Languages.English);
+                _progressService.UserProgress.LanguageData.SetLanguage(Languages.English);
                 CurrentLanguage = Languages.English;
             }
             else
             {
-                _progressService.UserProgress.languageData.SetLanguage(Languages.English);
-                CurrentLanguage = Languages.English;
+                _progressService.UserProgress.LanguageData.SetLanguage(Languages.Russian);
+                CurrentLanguage = Languages.Russian;
             }
             
             LanguageChanged?.Invoke();

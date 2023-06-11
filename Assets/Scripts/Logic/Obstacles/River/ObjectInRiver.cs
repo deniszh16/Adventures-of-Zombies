@@ -23,7 +23,8 @@ namespace Logic.Obstacles.River
         public void PlaySplashEffect()
         {
             var position = transform.position;
-            _spray.transform.position = new Vector3(position.x, position.y - _offsetEffect, 0);
+            _spray.transform.position = new Vector3(position.x, position.y + _offsetEffect, 0);
+            _spray.gameObject.SetActive(true);
             _spray.Play();
         }
     }

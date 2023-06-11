@@ -85,7 +85,7 @@ namespace Logic.Characters
             _animator.SetBool(RunningAnimation, _direction != 0);
         }
 
-        private void Jump()
+        public void Jump()
         {
             if (_isGrounded && _rigidbody.velocity.y < 0.5f)
             {

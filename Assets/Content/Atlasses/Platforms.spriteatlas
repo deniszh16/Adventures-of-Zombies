@@ -59,6 +59,7 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: b9ff50724c9131842b41a9d3edd0b0f1, type: 3}
+    - {fileID: 102900000, guid: 82e269cfd1d03e842b4c447dedbcca45, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -115,6 +116,9 @@ SpriteAtlas:
     - 14d4be28fe5f4de44b38474a39269636: 1534563430
     - 14d4be28fe5f4de44b38474a39269636: 590737148
     - 14d4be28fe5f4de44b38474a39269636: 515625350
+    - e973cbe8e7598ef4d877f958d9641ce4: 21300000
+    - 623fbadcf184b824f8743fa891f8cb52: 21300000
+    - 76abeacd24f0ab24b8a3ded0a0f74500: 21300000
     - dcde961ef2155314b89b0ccfd36974f4: -458881789
     - dcde961ef2155314b89b0ccfd36974f4: -1474399453
     - dcde961ef2155314b89b0ccfd36974f4: 890133370
@@ -211,6 +215,9 @@ SpriteAtlas:
   - {fileID: 1534563430, guid: 14d4be28fe5f4de44b38474a39269636, type: 3}
   - {fileID: 590737148, guid: 14d4be28fe5f4de44b38474a39269636, type: 3}
   - {fileID: 515625350, guid: 14d4be28fe5f4de44b38474a39269636, type: 3}
+  - {fileID: 21300000, guid: e973cbe8e7598ef4d877f958d9641ce4, type: 3}
+  - {fileID: 21300000, guid: 623fbadcf184b824f8743fa891f8cb52, type: 3}
+  - {fileID: 21300000, guid: 76abeacd24f0ab24b8a3ded0a0f74500, type: 3}
   - {fileID: -458881789, guid: dcde961ef2155314b89b0ccfd36974f4, type: 3}
   - {fileID: -1474399453, guid: dcde961ef2155314b89b0ccfd36974f4, type: 3}
   - {fileID: 890133370, guid: dcde961ef2155314b89b0ccfd36974f4, type: 3}
@@ -306,6 +313,9 @@ SpriteAtlas:
   - Platforms_1_36
   - Platforms_1_40
   - Platforms_1_41
+  - Water_1
+  - Water_2
+  - Blob
   - Platforms_2_38
   - Platforms_2_41
   - Platforms_2_39

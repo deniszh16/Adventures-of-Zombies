@@ -17,13 +17,15 @@ namespace Data
 
         public int DestroyedBarrel;
 
-        public LanguageData languageData;
+        public LanguageData LanguageData;
+        public SoundData SoundData;
 
         public UserProgress()
         {
             Progress = 1;
             Stars = new int[11];
-            languageData = new LanguageData();
+            LanguageData = new LanguageData();
+            SoundData = new SoundData();
         }
     }
 }

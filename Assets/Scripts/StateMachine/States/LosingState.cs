@@ -4,6 +4,7 @@ using Logic.Characters;
 using Logic.UsefulObjects;
 using Services.PersistentProgress;
 using Services.SaveLoad;
+using Services.Sound;
 using UnityEngine;
 using Zenject;
 
@@ -25,12 +26,15 @@ namespace StateMachine.States
         
         private IPersistentProgressService _progressService;
         private ISaveLoadService _saveLoadService;
+        private ISoundService _soundService;
 
         [Inject]
-        private void Construct(IPersistentProgressService progressService, ISaveLoadService saveLoadService)
+        private void Construct(IPersistentProgressService progressService, ISaveLoadService saveLoadService,
+            ISoundService soundService)
         {
             _progressService = progressService;
             _saveLoadService = saveLoadService;
+            _soundService = soundService;
         }
         
         public override void Enter()
@@ -45,6 +49,7 @@ namespace StateMachine.States
         private IEnumerator ShowLosingPanel()
         {
             yield return new WaitForSeconds(1.5f);
+            _soundService.StopBackgroundMusic();
             _losePanel.SetActive(true);
             UpdateProgress();
         }

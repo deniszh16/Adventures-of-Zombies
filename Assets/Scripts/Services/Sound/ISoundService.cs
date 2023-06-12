@@ -10,8 +10,10 @@ namespace Services.Sound
 
         public void SwitchSound();
         public void StartBackgroundMusicInMenu();
+        public void PrepareBackgroundMusicOnLevel();
         public void StartBackgroundMusicOnLevels();
         public void ChangeVolume();
-        public void SetPause(bool pause);
+        public void PauseBackgroundMusic(bool pause);
+        public void StopBackgroundMusic();
     }
 }

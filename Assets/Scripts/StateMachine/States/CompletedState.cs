@@ -2,6 +2,7 @@
 using Logic.UsefulObjects;
 using Services.PersistentProgress;
 using Services.SaveLoad;
+using Services.Sound;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,17 +32,21 @@ namespace StateMachine.States
         
         private IPersistentProgressService _progressService;
         private ISaveLoadService _saveLoadService;
+        private ISoundService _soundService;
 
         [Inject]
-        private void Construct(IPersistentProgressService progressService, ISaveLoadService saveLoadService)
+        private void Construct(IPersistentProgressService progressService, ISaveLoadService saveLoadService,
+            ISoundService soundService)
         {
             _progressService = progressService;
             _saveLoadService = saveLoadService;
+            _soundService = soundService;
         }
         
         public override void Enter()
         {
             _victoryPanel.SetActive(true);
+            _soundService.StopBackgroundMusic();
             _levelStars.sprite = _spritesStars[_timer.Stars - 1];
             _textComponent.text = _winningTexts[_timer.Stars - 1];
             

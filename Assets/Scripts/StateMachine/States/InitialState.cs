@@ -1,6 +1,7 @@
 ﻿using Logic.Camera;
 using Logic.Characters;
 using Logic.UsefulObjects;
+using Services.Sound;
 using UnityEngine;
 using Zenject;
 
@@ -19,16 +20,21 @@ namespace StateMachine.States
         [SerializeField] private BrainsAtLevel _brainsAtLevel;
 
         private GameStateMachine _gameStateMachine;
+        private ISoundService _soundService;
 
         [Inject]
-        private void Construct(GameStateMachine gameStateMachine) =>
+        private void Construct(GameStateMachine gameStateMachine, ISoundService soundService)
+        {
             _gameStateMachine = gameStateMachine;
+            _soundService = soundService;
+        }
 
         public override void Enter()
         {
             _characterControl.Enabled = false;
             _gameCamera.SnapCameraToTarget(_character);
             _brainsAtLevel.ResetBrainValue();
+            _soundService.PrepareBackgroundMusicOnLevel();
             
             if (_gameStateMachine.CheckState(typeof(TrainingState)))
                 _gameStateMachine.Enter<TrainingState>();

@@ -1,5 +1,6 @@
 ﻿using Services.PersistentProgress;
 using Services.SceneLoader;
+using Services.Sound;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -27,12 +28,15 @@ namespace Logic.Levels
 
         private IPersistentProgressService _progressService;
         private ISceneLoaderService _sceneLoaderService;
+        private ISoundService _soundService;
 
         [Inject]
-        private void Construct(IPersistentProgressService progressService, ISceneLoaderService sceneLoaderService)
+        private void Construct(IPersistentProgressService progressService, ISceneLoaderService sceneLoaderService,
+            ISoundService soundService)
         {
             _progressService = progressService;
             _sceneLoaderService = sceneLoaderService;
+            _soundService = soundService;
         }
 
         private void Awake() =>
@@ -50,8 +54,11 @@ namespace Logic.Levels
             }
         }
 
-        private void LoadLevel() =>
+        private void LoadLevel()
+        {
+            _soundService.StopBackgroundMusic();
             _sceneLoaderService.LoadSceneAsync(_scene, screensaver: true, delay: 0f);
+        }
 
         private void OnDestroy() =>
             _button.onClick.RemoveListener(LoadLevel);

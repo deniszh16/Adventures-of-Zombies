@@ -100,6 +100,7 @@ GameObject:
   - component: {fileID: 282370144850255459}
   - component: {fileID: 8048861497293049662}
   - component: {fileID: 4827247871125071248}
+  - component: {fileID: 8946350946906576360}
   - component: {fileID: 7337188066871991192}
   m_Layer: 9
   m_Name: Zombie_1
@@ -367,11 +368,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0199bd2d6de410e9b36d7eba8245494, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playingSound: {fileID: 8946350946906576360}
   _audioSource: {fileID: 912109224846755703}
   _audioClips:
   - {fileID: 8300000, guid: 6de26fbb7d912bd46af9755aada2a7a4, type: 3}
   - {fileID: 8300000, guid: 2b8cdfd06f4fbf94289acd01b6a3f129, type: 3}
-  - {fileID: 8300000, guid: e92f10168eeb37f4a8481939beb03f69, type: 3}
+--- !u!114 &8946350946906576360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1044779799837290806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4e2a39ad93c4247a0c06496a8875130, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioSource: {fileID: 912109224846755703}
 --- !u!114 &7337188066871991192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -387,3 +401,4 @@ MonoBehaviour:
   _rigidbody: {fileID: 7324507875300064817}
   _massAfloat: 1
   _spray: {fileID: 0}
+  _offsetEffect: 0

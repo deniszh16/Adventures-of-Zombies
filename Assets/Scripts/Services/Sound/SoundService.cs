@@ -39,34 +39,36 @@ namespace Services.Sound
             SoundActivity = !activity;
             _progressService.UserProgress.SoundData.SetSoundActivity(SoundActivity);
             SoundChanged?.Invoke();
-            
+
+            ChangeVolume();
             _saveLoadService.SaveProgress();
         }
 
         public void StartBackgroundMusicInMenu()
         {
-            if (SoundActivity != true || _audioSource.isPlaying)
-                return;
-
             if (_musicOnMenu.Length > 0)
             {
                 int number = UnityEngine.Random.Range(0, _musicOnMenu.Length);
                 _audioSource.clip = _musicOnMenu[number];
-                _audioSource.Play();
+                
+                if (SoundActivity && _audioSource.isPlaying != true)
+                    _audioSource.Play();
+            }
+        }
+
+        public void PrepareBackgroundMusicOnLevel()
+        {
+            if (_musicOnLevels.Length > 0)
+            {
+                int number = UnityEngine.Random.Range(0, _musicOnLevels.Length);
+                _audioSource.clip = _musicOnLevels[number];
             }
         }
 
         public void StartBackgroundMusicOnLevels()
         {
-            if (SoundActivity != true || _audioSource.isPlaying != true)
-                return;
-
-            if (_musicOnLevels.Length > 0)
-            {
-                int number = UnityEngine.Random.Range(0, _musicOnLevels.Length);
-                _audioSource.clip = _musicOnLevels[number];
+            if (SoundActivity && _audioSource.isPlaying != true)
                 _audioSource.Play();
-            }
         }
 
         public void ChangeVolume()
@@ -92,12 +94,13 @@ namespace Services.Sound
             if (changeStep < 0) _audioSource.Stop();
         }
 
-        public void SetPause(bool pause)
+        public void PauseBackgroundMusic(bool pause)
         {
-            if (pause)
-                _audioSource.Pause();
-            else
-                _audioSource.Play();
+            if (pause) _audioSource.Pause();
+            else _audioSource.Play();
         }
+
+        public void StopBackgroundMusic() =>
+            _audioSource.Stop();
     }
 }

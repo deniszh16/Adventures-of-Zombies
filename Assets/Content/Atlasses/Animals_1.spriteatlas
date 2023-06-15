@@ -1,0 +1,126 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Animals_1
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: WebGL
+      m_MaxTextureSize: 512
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: 65
+      m_TextureCompression: 1
+      m_CompressionQuality: 100
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 1
+      m_IgnorePlatformSupport: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    - serializedVersion: 3
+      m_BuildTarget: Android
+      m_MaxTextureSize: 512
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: 65
+      m_TextureCompression: 1
+      m_CompressionQuality: 100
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 1
+      m_IgnorePlatformSupport: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 8
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 32e264fad66ed0b40a635d3171821c83, type: 3}
+    - {fileID: 102900000, guid: 39d489490f7b1c948a89e6db9a60a131, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+    packedSpriteRenderDataKeys:
+    - 8e240fdd6ea18c8468a4de66578f7829: 1440382216
+    - 8e240fdd6ea18c8468a4de66578f7829: 442156247
+    - 8e240fdd6ea18c8468a4de66578f7829: -1565728519
+    - 8e240fdd6ea18c8468a4de66578f7829: -1118941652
+    - 8e240fdd6ea18c8468a4de66578f7829: 1470086967
+    - 8e240fdd6ea18c8468a4de66578f7829: 573845263
+    - 7b53c21fe32259e469c90283a19e690e: 1911152874
+    - 7b53c21fe32259e469c90283a19e690e: 2138618138
+    - 7b53c21fe32259e469c90283a19e690e: 361641674
+    - 7b53c21fe32259e469c90283a19e690e: 242355740
+    - 7b53c21fe32259e469c90283a19e690e: 1254206983
+    - 7b53c21fe32259e469c90283a19e690e: 1410840674
+    - 7b53c21fe32259e469c90283a19e690e: 856084814
+    - 7b53c21fe32259e469c90283a19e690e: -1407390851
+    - 7b53c21fe32259e469c90283a19e690e: 1723655526
+    - 7b53c21fe32259e469c90283a19e690e: 1424775266
+    - 7b53c21fe32259e469c90283a19e690e: -1245470278
+    - 7b53c21fe32259e469c90283a19e690e: 1432307140
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 1440382216, guid: 8e240fdd6ea18c8468a4de66578f7829, type: 3}
+  - {fileID: 442156247, guid: 8e240fdd6ea18c8468a4de66578f7829, type: 3}
+  - {fileID: -1565728519, guid: 8e240fdd6ea18c8468a4de66578f7829, type: 3}
+  - {fileID: -1118941652, guid: 8e240fdd6ea18c8468a4de66578f7829, type: 3}
+  - {fileID: 1470086967, guid: 8e240fdd6ea18c8468a4de66578f7829, type: 3}
+  - {fileID: 573845263, guid: 8e240fdd6ea18c8468a4de66578f7829, type: 3}
+  - {fileID: 1911152874, guid: 7b53c21fe32259e469c90283a19e690e, type: 3}
+  - {fileID: 2138618138, guid: 7b53c21fe32259e469c90283a19e690e, type: 3}
+  - {fileID: 361641674, guid: 7b53c21fe32259e469c90283a19e690e, type: 3}
+  - {fileID: 242355740, guid: 7b53c21fe32259e469c90283a19e690e, type: 3}
+  - {fileID: 1254206983, guid: 7b53c21fe32259e469c90283a19e690e, type: 3}
+  - {fileID: 1410840674, guid: 7b53c21fe32259e469c90283a19e690e, type: 3}
+  - {fileID: 856084814, guid: 7b53c21fe32259e469c90283a19e690e, type: 3}
+  - {fileID: -1407390851, guid: 7b53c21fe32259e469c90283a19e690e, type: 3}
+  - {fileID: 1723655526, guid: 7b53c21fe32259e469c90283a19e690e, type: 3}
+  - {fileID: 1424775266, guid: 7b53c21fe32259e469c90283a19e690e, type: 3}
+  - {fileID: -1245470278, guid: 7b53c21fe32259e469c90283a19e690e, type: 3}
+  - {fileID: 1432307140, guid: 7b53c21fe32259e469c90283a19e690e, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Flight_4
+  - Flight_5
+  - Flight_0
+  - Flight_1
+  - Flight_2
+  - Flight_3
+  - Swimming_5
+  - Swimming_4
+  - Swimming_7
+  - Swimming_6
+  - Swimming_1
+  - Swimming_0
+  - Swimming_3
+  - Swimming_2
+  - Swimming_9
+  - Swimming_8
+  - Swimming_10
+  - Swimming_11
+  m_RenderDataMap: {}
+  m_Tag: Animals_1
+  m_IsVariant: 0

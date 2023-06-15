@@ -22,7 +22,7 @@ namespace Logic.Camera
             _cinemachineVirtual.AddCinemachineComponent<CinemachineFramingTransposer>();
 
         public void ShakeCamera(float duration, float amplitude, float frequency) =>
-            StartCoroutine(ShakeCameraCoroutine(duration, amplitude, frequency));
+            _ = StartCoroutine(ShakeCameraCoroutine(duration, amplitude, frequency));
 
         private IEnumerator ShakeCameraCoroutine(float duration, float amplitude, float frequency)
         {

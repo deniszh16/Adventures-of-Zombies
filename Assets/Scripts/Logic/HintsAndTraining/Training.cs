@@ -21,7 +21,7 @@ namespace Logic.HintsAndTraining
         private int _learningStage;
 
         public void StartTraining() =>
-            StartCoroutine(StartTrainingCoroutine());
+            _ = StartCoroutine(StartTrainingCoroutine());
 
         private IEnumerator StartTrainingCoroutine()
         {

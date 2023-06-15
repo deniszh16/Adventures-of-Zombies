@@ -51,6 +51,7 @@ namespace StateMachine.States
             yield return new WaitForSeconds(1.5f);
             _soundService.StopBackgroundMusic();
             _losePanel.SetActive(true);
+            
             UpdateProgress();
         }
 

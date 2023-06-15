@@ -123,7 +123,7 @@ Transform:
   m_Children:
   - {fileID: 1044779799195514956}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1044779799837290800
 Animator:
@@ -334,6 +334,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 1044779799837290800}
+  _spriteRenderer: {fileID: 1044779799195514959}
   _rigidbody: {fileID: 7324507875300064817}
   _collider: {fileID: 6503155212713187579}
   _characterSounds: {fileID: 4827247871125071248}
@@ -373,6 +374,8 @@ MonoBehaviour:
   _audioClips:
   - {fileID: 8300000, guid: 6de26fbb7d912bd46af9755aada2a7a4, type: 3}
   - {fileID: 8300000, guid: 2b8cdfd06f4fbf94289acd01b6a3f129, type: 3}
+  - {fileID: 8300000, guid: 2b8cdfd06f4fbf94289acd01b6a3f129, type: 3}
+  - {fileID: 8300000, guid: beb2b4ec65338db4dbecb44c445f7669, type: 3}
 --- !u!114 &8946350946906576360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -401,4 +404,5 @@ MonoBehaviour:
   _rigidbody: {fileID: 7324507875300064817}
   _massAfloat: 1
   _spray: {fileID: 0}
+  _playingSound: {fileID: 8946350946906576360}
   _offsetEffect: 0

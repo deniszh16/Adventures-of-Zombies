@@ -4,6 +4,7 @@
     {
         Dead,
         Brain,
-        Bones
+        Bones,
+        Splash
     }
 }

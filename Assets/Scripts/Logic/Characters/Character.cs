@@ -9,14 +9,20 @@ namespace Logic.Characters
     {
         [Header("Компоненты персонажа")]
         [SerializeField] private Animator _animator;
+        [SerializeField] private SpriteRenderer _spriteRenderer;
         [SerializeField] private Rigidbody2D _rigidbody;
         [SerializeField] private PolygonCollider2D _collider;
         [SerializeField] private CharacterSounds _characterSounds;
 
         public bool Life { get; private set; } = true;
+        
+        public Vector3 RespawnPosition { get; set; }
 
+        private static readonly int IdleAnimation = Animator.StringToHash("Idle");
         private static readonly int DeadAnimation = Animator.StringToHash("Dead");
         private static readonly int DrowningAnimation = Animator.StringToHash("Drowning");
+
+        private const int InitialLayer = 10;
 
         private GameStateMachine _gameStateMachine;
 
@@ -32,6 +38,15 @@ namespace Logic.Characters
             _gameStateMachine.Enter<LosingState>();
         }
 
+        public void CharacterRespawn()
+        {
+            Life = true;
+            _rigidbody.velocity = Vector2.zero;
+            transform.position = RespawnPosition;
+            _animator.Play(IdleAnimation);
+            _spriteRenderer.sortingOrder = InitialLayer;
+        }
+
         public void ShowDeathAnimation() =>
             _animator.SetTrigger(DeadAnimation);
 
@@ -41,10 +56,7 @@ namespace Logic.Characters
         public void DisableCollider() =>
             _collider.isTrigger = true;
 
-        public void CharacterRebound() =>
-            _rigidbody.AddForce(new Vector2(Random.Range(-135, -100) * transform.localScale.x, Random.Range(160, 190)));
-
-        public void PlayJumpSound()
+        public void PlayDeadSound()
         {
             _characterSounds.SetSound(Sounds.Dead);
             _characterSounds.PlaySound();

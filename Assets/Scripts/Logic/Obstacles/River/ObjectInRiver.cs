@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Services.Sound;
+using UnityEngine;
 
 namespace Logic.Obstacles.River
 {
@@ -12,6 +13,7 @@ namespace Logic.Obstacles.River
         
         [Header("Эффект брызг")]
         [SerializeField] private ParticleSystem _spray;
+        [SerializeField] private PlayingSound _playingSound;
         [SerializeField] private float _offsetEffect;
 
         public void ChangeMass()
@@ -25,6 +27,7 @@ namespace Logic.Obstacles.River
             var position = transform.position;
             _spray.transform.position = new Vector3(position.x, position.y + _offsetEffect, 0);
             _spray.gameObject.SetActive(true);
+            _playingSound.PlaySound();
             _spray.Play();
         }
     }

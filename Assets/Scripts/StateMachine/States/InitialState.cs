@@ -32,6 +32,7 @@ namespace StateMachine.States
         public override void Enter()
         {
             _characterControl.Enabled = false;
+            _character.RespawnPosition = _character.transform.position;
             _gameCamera.SnapCameraToTarget(_character);
             _brainsAtLevel.ResetBrainValue();
             _soundService.PrepareBackgroundMusicOnLevel();

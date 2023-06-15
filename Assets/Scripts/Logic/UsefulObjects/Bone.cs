@@ -7,15 +7,16 @@ namespace Logic.UsefulObjects
     {
         [Header("Компонент костей")]
         [SerializeField] private BonesAtLevel _bonesAtLevel;
-        
-        //[Header("Компонент звука")]
-        //[SerializeField] private BonesAtLevel _bonesAtLevel;
 
         private void OnTriggerEnter2D(Collider2D col)
         {
-            if (col.GetComponent<Character>())
+            if (col.TryGetComponent(out CharacterSounds characterSounds))
             {
+                characterSounds.SetSound(Sounds.Brain);
+                characterSounds.PlaySound();
                 
+                _bonesAtLevel.AddBones();
+                gameObject.SetActive(false);
             }
         }
     }

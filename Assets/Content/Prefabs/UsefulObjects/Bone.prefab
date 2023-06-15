@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 831137492217047117}
   - component: {fileID: 3594469384025803040}
   - component: {fileID: 6800169494655594309}
+  - component: {fileID: 3399423445443109318}
   m_Layer: 0
   m_Name: Bone
   m_TagString: Untagged
@@ -168,7 +169,7 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -188,3 +189,16 @@ PolygonCollider2D:
       - {x: -0.260844, y: -0.61902726}
       - {x: 0.60548496, y: 0.2751059}
   m_UseDelaunayMesh: 0
+--- !u!114 &3399423445443109318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3037512793324221177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ee3b8bc0d1a42f880c8da6b73d897e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bonesAtLevel: {fileID: 0}

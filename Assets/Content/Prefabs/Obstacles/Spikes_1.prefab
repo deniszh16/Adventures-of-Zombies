@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7409215297490702914}
   - component: {fileID: 4400986909471618851}
   - component: {fileID: 1287616906424548668}
+  - component: {fileID: -7216455313056729166}
   m_Layer: 0
   m_Name: Spikes_1
   m_TagString: Untagged
@@ -120,3 +121,15 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.5}
   m_Size: {x: 0.85, y: 1.4}
   m_Direction: 0
+--- !u!114 &-7216455313056729166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4936219566363177022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a004deb8ed5641cbbc4aefa50559a7f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

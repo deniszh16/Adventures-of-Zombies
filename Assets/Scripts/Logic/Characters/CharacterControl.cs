@@ -49,7 +49,10 @@ namespace Logic.Characters
         private void Update()
         {
             if (Enabled != true || _character.Life != true)
+            {
+                _direction = 0;
                 return;
+            }
 
             _direction = _inputService.HorizontalAxis;
             SetDirection();

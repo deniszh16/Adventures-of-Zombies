@@ -13,7 +13,6 @@ namespace Logic.Obstacles.River
                     spriteRenderer.sortingOrder = 0;
                 
                 objectInRiver.ChangeMass();
-                objectInRiver.PlaySplashEffect();
 
                 if (col.TryGetComponent(out Character character))
                 {
@@ -22,8 +21,11 @@ namespace Logic.Obstacles.River
                         character.DamageToCharacter();
                         character.ShowSinkingAnimation();
                         character.GetComponent<CharacterControl>().ChangeDirectionVector();
+                        character.GetComponent<CharacterSounds>().SetSound(Sounds.Splash);
                     }
                 }
+                
+                objectInRiver.PlaySplashEffect();
             }
         }
     }

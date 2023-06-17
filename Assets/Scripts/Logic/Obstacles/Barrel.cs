@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using Logic.Camera;
 using Logic.Characters;
+using Services.Sound;
 using UnityEngine;
 
 namespace Logic.Obstacles
@@ -13,6 +14,7 @@ namespace Logic.Obstacles
         
         [Header("Эффект взрыва")]
         [SerializeField] private GameObject _destruction;
+        [SerializeField] private PlayingSound _playingSound;
 
         [Header("Игровая камера")]
         [SerializeField] private GameCamera _gameCamera;
@@ -42,6 +44,7 @@ namespace Logic.Obstacles
             yield return new WaitForSeconds(1f);
             _boxCollider.enabled = false;
             _destruction.gameObject.SetActive(true);
+            _playingSound.PlaySound();
             _gameCamera.ShakeCamera(0.6f, 2.1f, 2f);
         }
     }

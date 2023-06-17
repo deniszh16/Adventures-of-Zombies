@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Logic.Levels;
 using StateMachine;
 using StateMachine.States;
 using UnityEngine;
@@ -17,6 +18,9 @@ namespace Logic.UI
 
         [Header("Компонент кнопки")]
         [SerializeField] private Button _button;
+        
+        [Header("Финиш уровня")]
+        [SerializeField] private LevelFinish _levelFinish;
 
         private void Awake() =>
             _button.onClick.AddListener(FinishForLevel);

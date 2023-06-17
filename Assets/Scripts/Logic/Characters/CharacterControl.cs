@@ -1,4 +1,6 @@
-﻿using Services.Input;
+﻿using System;
+using Services.Input;
+using UnityEditor;
 using UnityEngine;
 using Zenject;
 
@@ -90,7 +92,7 @@ namespace Logic.Characters
 
         public void Jump()
         {
-            if (_isGrounded && _rigidbody.velocity.y < 0.5f)
+            if (_isGrounded && _isJumping != true && _rigidbody.velocity.y < 0.5f)
             {
                 _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0f);
                 _rigidbody.AddForce(new Vector2(0f, _jumpHeight), ForceMode2D.Impulse);
@@ -115,9 +117,9 @@ namespace Logic.Characters
 
         private void FindSurface()
         {
-            Vector2 position = transform.position - new Vector3(0, 2f, 0);
+            Vector2 position = transform.position - new Vector3(0.2f, 1.8f, 0);
             Collider2D[] colliders = Physics2D.OverlapCircleAll(position, 0.5f, _layerMask);
-            
+
             if (colliders.Length > 0)
             {
                 _isGrounded = true;

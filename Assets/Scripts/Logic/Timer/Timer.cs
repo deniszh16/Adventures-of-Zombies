@@ -8,8 +8,12 @@ namespace Logic.Timer
     {
         [Header("Секунды на уровень")]
         [SerializeField] private int _seconds;
-        
-        public int Seconds => _seconds;
+
+        public int Seconds
+        {
+            get => _seconds;
+            set => _seconds = value;
+        }
 
         public int Stars { get; set; } = 3;
         

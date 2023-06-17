@@ -8,7 +8,7 @@ namespace Logic.Levels
     {
         [Header("Финишная кнопка")]
         [SerializeField] private GameObject _finishButton;
-        
+
         [Header("Компонент мозгов")]
         [SerializeField] private BrainsAtLevel _brainsAtLevel;
 

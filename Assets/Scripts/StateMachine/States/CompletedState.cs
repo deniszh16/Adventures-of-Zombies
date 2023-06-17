@@ -27,6 +27,9 @@ namespace StateMachine.States
         [Header("Победный текст")]
         [SerializeField] private TextMeshProUGUI _textComponent;
         [SerializeField] private string[] _winningTexts;
+        
+        [Header("Победный звук")]
+        [SerializeField] private PlayingSound _playingSound;
 
         private const int BonusCoefficient = 55;
         
@@ -47,6 +50,7 @@ namespace StateMachine.States
         {
             _victoryPanel.SetActive(true);
             _soundService.StopBackgroundMusic();
+            _playingSound.PlaySound();
             _levelStars.sprite = _spritesStars[_timer.Stars - 1];
             _textComponent.text = _winningTexts[_timer.Stars - 1];
             

@@ -14,6 +14,9 @@ namespace Logic.UI
 
         [Header("Персонаж")]
         [SerializeField] private Character _character;
+        
+        [Header("Компонент таймера")]
+        [SerializeField] private Timer.Timer _timer;
 
         private GameStateMachine _gameStateMachine;
 
@@ -27,6 +30,7 @@ namespace Logic.UI
         private void ResurrectACharacter()
         {
             _character.CharacterRespawn();
+            if (_timer.Seconds < 30) _timer.Seconds = 30;
             _gameStateMachine.Enter<PlayState>();
         }
 

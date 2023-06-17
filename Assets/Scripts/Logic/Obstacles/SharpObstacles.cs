@@ -5,7 +5,7 @@ namespace Logic.Obstacles
 {
     public class SharpObstacles : MonoBehaviour
     {
-        private void OnTriggerEnter2D(Collider2D col)
+        protected virtual void OnTriggerEnter2D(Collider2D col)
         {
             if (col.TryGetComponent(out Character character))
             {

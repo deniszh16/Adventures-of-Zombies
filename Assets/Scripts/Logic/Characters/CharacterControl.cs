@@ -22,12 +22,15 @@ namespace Logic.Characters
         [Header("Скорость падения")]
         [SerializeField] private float _fallMultiplier;
 
+        private const float StandardSpeed = 10f;
+
         public bool Enabled { get; set; }
 
         private bool _isGrounded;
         private bool _isJumping;
         private bool _isHanging;
-        private bool _isAccelerated;
+        
+        public bool IsAccelerated { get; set; }
 
         private float _direction;
         private Vector3 _vectorLeft;
@@ -117,17 +120,29 @@ namespace Logic.Characters
 
         private void FindSurface()
         {
-            Vector2 position = transform.position - new Vector3(0.2f, 1.8f, 0);
+            Vector2 position = transform.position - new Vector3(0.2f, 1.9f, 0);
             Collider2D[] colliders = Physics2D.OverlapCircleAll(position, 0.5f, _layerMask);
 
             if (colliders.Length > 0)
             {
                 _isGrounded = true;
                 _isJumping = false;
+                
+                if (IsAccelerated == false && _isGrounded && _isJumping == false)
+                    _speed = StandardSpeed;
             }
             else
             {
                 _isGrounded = false;
+            }
+        }
+
+        public void SpeedUpCharacter(float speed)
+        {
+            if (_character.Life)
+            {
+                IsAccelerated = true;
+                if (_direction != 0) _speed = speed;
             }
         }
     }

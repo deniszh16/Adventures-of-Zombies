@@ -27,11 +27,11 @@ namespace Logic.Obstacles
         private void OnEnable()
         {
             _direction = transform.TransformDirection(Vector3.down);
-            
-            _flight = true;
+
+            _speed = StandardSpeed;
             _boxCollider.enabled = true;
             _spriteRenderer.sortingOrder = _sortingOrder;
-            _speed = StandardSpeed;
+            _flight = true;
         }
 
         private void FixedUpdate()
@@ -54,7 +54,7 @@ namespace Logic.Obstacles
                 }
 
                 if (gameObject.activeInHierarchy)
-                    _ = StartCoroutine(StopFlight(0.03f, physics));
+                    _ = StartCoroutine(StopFlight(seconds: 0.03f, fixation: physics));
 
                 return;
             }
@@ -67,7 +67,11 @@ namespace Logic.Obstacles
 
             if (col.gameObject.GetComponent<River.River>())
             {
+                _spriteRenderer.sortingOrder--;
                 _speed /= 2;
+                
+                if (gameObject.activeInHierarchy)
+                    _ = StartCoroutine(TurnOffObject());
             }
         }
 

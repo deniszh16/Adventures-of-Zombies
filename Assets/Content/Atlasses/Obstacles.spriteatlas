@@ -83,6 +83,11 @@ SpriteAtlas:
     - 661cdc64c110a764e86f3ceb1665b469: -1243215754
     - 661cdc64c110a764e86f3ceb1665b469: -440406802
     - 661cdc64c110a764e86f3ceb1665b469: -946894311
+    - 9b0e7387647b1944d912b0224fe15151: 1067955280
+    - 9b0e7387647b1944d912b0224fe15151: -1468375159
+    - 9b0e7387647b1944d912b0224fe15151: 1028333726
+    - 9b0e7387647b1944d912b0224fe15151: -1626929993
+    - 65aa06e7beb3ba341a3894646859cc7a: 21300000
     - 169898188cfd5ec4aac5ad93a6f803ff: 21300000
     - ef785c59b3c830a42a75aea5d007cef5: 21300000
     - 3403f889b3928a34fbf158e846bc7780: 328068805
@@ -103,6 +108,7 @@ SpriteAtlas:
     - 4041b6ad4f525a944bf13c740ccabd41: 1370441261
     - 4041b6ad4f525a944bf13c740ccabd41: 1973176970
     - 4041b6ad4f525a944bf13c740ccabd41: 1387970733
+    - 2def2cfd3badf4d40b9bb279c4f9b32c: 21300000
     - ab8cf25f649276b48bb5a5e810e1f92b: 21300000
     - 20554c7fd702c7d49a87b1de724585a9: -2057490103
     - 20554c7fd702c7d49a87b1de724585a9: 1894159061
@@ -150,6 +156,11 @@ SpriteAtlas:
   - {fileID: -1243215754, guid: 661cdc64c110a764e86f3ceb1665b469, type: 3}
   - {fileID: -440406802, guid: 661cdc64c110a764e86f3ceb1665b469, type: 3}
   - {fileID: -946894311, guid: 661cdc64c110a764e86f3ceb1665b469, type: 3}
+  - {fileID: 1067955280, guid: 9b0e7387647b1944d912b0224fe15151, type: 3}
+  - {fileID: -1468375159, guid: 9b0e7387647b1944d912b0224fe15151, type: 3}
+  - {fileID: 1028333726, guid: 9b0e7387647b1944d912b0224fe15151, type: 3}
+  - {fileID: -1626929993, guid: 9b0e7387647b1944d912b0224fe15151, type: 3}
+  - {fileID: 21300000, guid: 65aa06e7beb3ba341a3894646859cc7a, type: 3}
   - {fileID: 21300000, guid: 169898188cfd5ec4aac5ad93a6f803ff, type: 3}
   - {fileID: 21300000, guid: ef785c59b3c830a42a75aea5d007cef5, type: 3}
   - {fileID: 328068805, guid: 3403f889b3928a34fbf158e846bc7780, type: 3}
@@ -170,6 +181,7 @@ SpriteAtlas:
   - {fileID: 1370441261, guid: 4041b6ad4f525a944bf13c740ccabd41, type: 3}
   - {fileID: 1973176970, guid: 4041b6ad4f525a944bf13c740ccabd41, type: 3}
   - {fileID: 1387970733, guid: 4041b6ad4f525a944bf13c740ccabd41, type: 3}
+  - {fileID: 21300000, guid: 2def2cfd3badf4d40b9bb279c4f9b32c, type: 3}
   - {fileID: 21300000, guid: ab8cf25f649276b48bb5a5e810e1f92b, type: 3}
   - {fileID: -2057490103, guid: 20554c7fd702c7d49a87b1de724585a9, type: 3}
   - {fileID: 1894159061, guid: 20554c7fd702c7d49a87b1de724585a9, type: 3}
@@ -216,6 +228,11 @@ SpriteAtlas:
   - Portal_0
   - Portal_1
   - Portal_2
+  - Bridge_1
+  - Bridge_0
+  - Bridge_3
+  - Bridge_2
+  - SlimePlatformer
   - Hut_2
   - Bone
   - Platforms_4
@@ -236,6 +253,7 @@ SpriteAtlas:
   - Miscellanea_7
   - Miscellanea_4
   - Miscellanea_5
+  - MudPlatformer
   - Brains
   - Obstacles_24
   - Obstacles_25

@@ -23,11 +23,5 @@ namespace Logic.Levels
                 }
             }
         }
-
-        private void OnTriggerExit2D(Collider2D other)
-        {
-            if (other.GetComponent<Character>())
-                _finishButton.SetActive(false);
-        }
     }
 }

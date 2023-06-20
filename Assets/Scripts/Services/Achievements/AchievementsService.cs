@@ -49,7 +49,7 @@ namespace Services.Achievements
             if (CheckAchievementCompletion(number: 5) != true && _persistentProgress.UserProgress.DestroyedBarrel >= 20)
                 UnlockAchievement(number: 5);
             
-            if (CheckAchievementCompletion(number: 6) != true && _persistentProgress.UserProgress.Progress >= 7)
+            if (CheckAchievementCompletion(number: 6) != true && _persistentProgress.UserProgress.Progress >= 6)
                 UnlockAchievement(number: 6);
             
             if (CheckAchievementCompletion(number: 7) != true && _persistentProgress.UserProgress.Brains >= 30)
@@ -58,7 +58,7 @@ namespace Services.Achievements
             if (CheckAchievementCompletion(number: 8) != true && _persistentProgress.UserProgress.CheckAllStars())
                 UnlockAchievement(number: 8);
             
-            if (CheckAchievementCompletion(number: 9) != true && _persistentProgress.UserProgress.Progress >= 12)
+            if (CheckAchievementCompletion(number: 9) != true && _persistentProgress.UserProgress.Progress >= 10)
                 UnlockAchievement(number: 9);
             
             if (CheckAchievementCompletion(number: 10) != true && _persistentProgress.UserProgress.Bones >= 350)
@@ -91,7 +91,7 @@ namespace Services.Achievements
 
         private IEnumerator HideAchievementBar()
         {
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(2f);
             _animator.Play(HideAnimation);
             yield return new WaitForSeconds(1f);
             _animator.gameObject.SetActive(false);

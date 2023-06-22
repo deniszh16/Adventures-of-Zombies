@@ -9,7 +9,7 @@ namespace Logic.Camera
     {
         [Header("Виртуальная камера")]
         [SerializeField] private CinemachineVirtualCamera _cinemachineVirtual;
-        
+
         private CinemachineBasicMultiChannelPerlin _virtualCameraNoise;
 
         private void Awake() =>

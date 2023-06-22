@@ -15,7 +15,10 @@ namespace StateMachine.States
         
         [Header("Игровая камера")]
         [SerializeField] private GameCamera _gameCamera;
-        
+        [SerializeField] private bool _cameraBinding;
+
+        public bool CameraBinding => _cameraBinding;
+
         [Header("Компонент мозгов")]
         [SerializeField] private BrainsAtLevel _brainsAtLevel;
 
@@ -32,15 +35,22 @@ namespace StateMachine.States
         public override void Enter()
         {
             _characterControl.Enabled = false;
-            _character.RespawnPosition = _character.transform.position;
-            _gameCamera.SnapCameraToTarget(_character);
+            _character.RespawnPosition = _character.transform.position; 
+            
+            if (_cameraBinding) 
+                _gameCamera.SnapCameraToTarget(_character);
+            
             _brainsAtLevel.ResetBrainValue();
             _soundService.PrepareBackgroundMusicOnLevel();
-            
+
             if (_gameStateMachine.CheckState(typeof(TrainingState)))
+            {
                 _gameStateMachine.Enter<TrainingState>();
+            }
             else
+            {
                 _gameStateMachine.Enter<PlayState>();
+            }
         }
 
         public override void Exit()

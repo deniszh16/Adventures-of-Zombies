@@ -11244,6 +11244,11 @@ PrefabInstance:
       objectReference: {fileID: 377891380}
     - target: {fileID: 3952756597116546954, guid: 15f4d21e7102241409a1a79e5332afbc,
         type: 3}
+      propertyPath: _cameraBinding
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3952756597116546954, guid: 15f4d21e7102241409a1a79e5332afbc,
+        type: 3}
       propertyPath: _characterControl
       value: 
       objectReference: {fileID: 1445502805}

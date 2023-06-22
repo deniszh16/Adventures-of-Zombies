@@ -8,17 +8,17 @@ namespace StateMachine
     public class GameStateMachine : MonoBehaviour
     {
         [Header("Стейты")]
-        [SerializeField] private List<BaseStates> _gameStates;
-        
-        private Dictionary<Type, IState> _states;
+        [SerializeField] protected List<BaseStates> _gameStates;
+
+        protected Dictionary<Type, IState> _states;
         private IState _activeState;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             _states = new Dictionary<Type, IState>();
             foreach (BaseStates state in _gameStates)
                 _states.Add(state.GetType(), state);
-            
+
             Enter<InitialState>();
         }
 
@@ -27,7 +27,7 @@ namespace StateMachine
             IState state = ChangeState<TState>();
             state.Enter();
         }
-        
+
         private TState ChangeState<TState>() where TState : class, IState
         {
             _activeState?.Exit();
@@ -40,7 +40,7 @@ namespace StateMachine
         public bool CheckState(Type type) =>
             _states.ContainsKey(type);
 
-        private TState GetState<TState>() where TState : class, IState =>
+        public TState GetState<TState>() where TState : class, IState =>
             _states[typeof(TState)] as TState;
     }
 }

@@ -1,4 +1,5 @@
-﻿using Logic.Camera;
+﻿using System;
+using Logic.Camera;
 using Logic.Characters;
 using Logic.Timer;
 using Services.Sound;
@@ -23,20 +24,35 @@ namespace StateMachine.States
         [SerializeField] private GameObject _buttonPause;
         [SerializeField] private GameObject _buttonsControls;
 
+        public event Action LevelLaunched;
+
+        private GameStateMachine _gameStateMachine;
+        private InitialState _initialState;
         private ISoundService _soundService;
 
         [Inject]
-        private void Construct(ISoundService soundService) =>
+        private void Construct(GameStateMachine gameStateMachine, ISoundService soundService)
+        {
+            _gameStateMachine = gameStateMachine;
             _soundService = soundService;
+        }
+
+        private void Start() =>
+            _initialState = _gameStateMachine.GetState<InitialState>();
 
         public override void Enter()
         {
             _timer.StartTimer();
             _characterControl.Enabled = true;
-            _gameCamera.SnapCameraToTarget(_character);
+            
+            if (_initialState.CameraBinding) 
+                _gameCamera.SnapCameraToTarget(_character);
+            
             _buttonPause.SetActive(true);
             _buttonsControls.SetActive(true);
             _soundService.StartBackgroundMusicOnLevels();
+            
+            LevelLaunched?.Invoke();
         }
 
         public override void Exit()

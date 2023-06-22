@@ -23948,7 +23948,7 @@ PrefabInstance:
     - target: {fileID: 3952756597077254952, guid: 15f4d21e7102241409a1a79e5332afbc,
         type: 3}
       propertyPath: _number
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3952756597077254952, guid: 15f4d21e7102241409a1a79e5332afbc,
         type: 3}
@@ -24033,6 +24033,11 @@ PrefabInstance:
       propertyPath: _brainsAtLevel
       value: 
       objectReference: {fileID: 1363913505}
+    - target: {fileID: 3952756597116546954, guid: 15f4d21e7102241409a1a79e5332afbc,
+        type: 3}
+      propertyPath: _cameraBinding
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3952756597116546954, guid: 15f4d21e7102241409a1a79e5332afbc,
         type: 3}
       propertyPath: _characterControl

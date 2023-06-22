@@ -24,7 +24,16 @@ namespace StateMachine.States
         public override void Exit() =>
             _training.TrainingCompleted -= GoToPlayState;
 
-        private void GoToPlayState() =>
-            _gameStateMachine.Enter<PlayState>();
+        private void GoToPlayState()
+        {
+            if (_gameStateMachine.CheckState(typeof(CountdownState)))
+            {
+                _gameStateMachine.Enter<CountdownState>();
+            }
+            else
+            {
+                _gameStateMachine.Enter<PlayState>();
+            }
+        }
     }
 }

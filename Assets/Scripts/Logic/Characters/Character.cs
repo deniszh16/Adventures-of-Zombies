@@ -1,4 +1,5 @@
-﻿using StateMachine;
+﻿using System;
+using StateMachine;
 using StateMachine.States;
 using UnityEngine;
 using Zenject;
@@ -15,6 +16,8 @@ namespace Logic.Characters
         [SerializeField] private CharacterSounds _characterSounds;
 
         public bool Life { get; private set; } = true;
+
+        public event Action CharacterDied;
         
         public Vector3 RespawnPosition { get; set; }
 
@@ -33,6 +36,7 @@ namespace Logic.Characters
         public void DamageToCharacter()
         {
             Life = false;
+            CharacterDied?.Invoke();
             
             _rigidbody.velocity = Vector2.zero;
             _gameStateMachine.Enter<LosingState>();

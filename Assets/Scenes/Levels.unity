@@ -1099,6 +1099,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 72477069, guid: 66e8110424a14324689b53986f7fadf4,
         type: 3}
+    - target: {fileID: 1546470505475051985, guid: c01038efd5b339845ab9ebfae0300ede,
+        type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1546470505475051990, guid: c01038efd5b339845ab9ebfae0300ede,
         type: 3}
       propertyPath: m_Name
@@ -4008,6 +4013,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -951062706, guid: 66e8110424a14324689b53986f7fadf4,
         type: 3}
+    - target: {fileID: 1546470505475051985, guid: c01038efd5b339845ab9ebfae0300ede,
+        type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1546470505475051990, guid: c01038efd5b339845ab9ebfae0300ede,
         type: 3}
       propertyPath: m_Name

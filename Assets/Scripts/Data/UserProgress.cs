@@ -25,7 +25,7 @@ namespace Data
 
         public UserProgress()
         {
-            Progress = 1;
+            Progress = 5;
             Stars = new int[11];
             LanguageData = new LanguageData();
             SoundData = new SoundData();

@@ -63,10 +63,12 @@ SpriteAtlas:
     - {fileID: 2800000, guid: a8c1f98dddb5d56498b8b9d014b23878, type: 3}
     - {fileID: 2800000, guid: 008e5ebf797b0c145aecfcc06ecc7834, type: 3}
     - {fileID: 2800000, guid: 66e8110424a14324689b53986f7fadf4, type: 3}
+    - {fileID: 2800000, guid: a949fd21a1fa4194da7c7c82e4753800, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
     packedSpriteRenderDataKeys:
+    - a949fd21a1fa4194da7c7c82e4753800: 21300000
     - 66e8110424a14324689b53986f7fadf4: 691824942
     - 66e8110424a14324689b53986f7fadf4: -367571299
     - 66e8110424a14324689b53986f7fadf4: 1564227049
@@ -103,6 +105,7 @@ SpriteAtlas:
     - 008e5ebf797b0c145aecfcc06ecc7834: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 21300000, guid: a949fd21a1fa4194da7c7c82e4753800, type: 3}
   - {fileID: 691824942, guid: 66e8110424a14324689b53986f7fadf4, type: 3}
   - {fileID: -367571299, guid: 66e8110424a14324689b53986f7fadf4, type: 3}
   - {fileID: 1564227049, guid: 66e8110424a14324689b53986f7fadf4, type: 3}
@@ -138,6 +141,7 @@ SpriteAtlas:
   - {fileID: 1913464834, guid: a8c1f98dddb5d56498b8b9d014b23878, type: 3}
   - {fileID: 21300000, guid: 008e5ebf797b0c145aecfcc06ecc7834, type: 3}
   m_PackedSpriteNamesToIndex:
+  - Button_Purchase
   - Levels_Numbers_19
   - Levels_Numbers_18
   - Levels_Numbers_13

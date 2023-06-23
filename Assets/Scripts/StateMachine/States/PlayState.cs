@@ -37,15 +37,13 @@ namespace StateMachine.States
             _soundService = soundService;
         }
 
-        private void Start() =>
-            _initialState = _gameStateMachine.GetState<InitialState>();
-
         public override void Enter()
         {
             _timer.StartTimer();
             _characterControl.Enabled = true;
             
-            if (_initialState.CameraBinding) 
+            _initialState = _gameStateMachine.GetState<InitialState>();
+            if (_initialState.CameraBinding)
                 _gameCamera.SnapCameraToTarget(_character);
             
             _buttonPause.SetActive(true);

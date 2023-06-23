@@ -1,0 +1,163 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Zombies
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: WebGL
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: 65
+      m_TextureCompression: 1
+      m_CompressionQuality: 100
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 1
+      m_IgnorePlatformSupport: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    - serializedVersion: 3
+      m_BuildTarget: Android
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: 65
+      m_TextureCompression: 1
+      m_CompressionQuality: 100
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 1
+      m_IgnorePlatformSupport: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 8
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 8ff75fcdc8f090f4fbe563bdbf23b590, type: 3}
+    - {fileID: 102900000, guid: 2ea9928fcc625b04ca70eca32f88874b, type: 3}
+    - {fileID: 102900000, guid: d5df42da5880536419817515563033c3, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+    packedSpriteRenderDataKeys:
+    - b4052e001bbceb543b706ac6be8ffad2: 21300000
+    - c5e35e01353a6cd4ea535f085749fc9f: 21300000
+    - 6bef7281d44ceda47b7a88d00f80a0f6: 21300000
+    - 087ce5a3918beb04ab3ca051916598c5: 21300000
+    - 0222ae644aa9492458c85ca2b9259cfa: 21300000
+    - 1f86d984b128ad84c8e42dfecedb323c: 21300000
+    - 62cd3905bd1cff84294519b60cd1667a: 21300000
+    - 26afe2353d664934585ef375cbde3ae6: 21300000
+    - 96d82f75a0aab0b43b745f6972c898a5: 21300000
+    - 89c8acd67348f284aaa784c6f32ca055: 21300000
+    - 4953a0e6fb8efcb48832bd968eac53de: 21300000
+    - 67619b6754cfcd9428fdb3724ba0ad3e: 21300000
+    - d2067ec7be66c7a45a0dcb29cbc29fbc: 21300000
+    - 5b5dfb18d4ec9e94a97f3243e0afeb31: 21300000
+    - e1586668482c0b748bf4e6a6a5b682f4: 21300000
+    - 14bfb67848dc07a478959dc646281c6e: 21300000
+    - 9f504498a015f9e41b736478db49dc7b: 21300000
+    - be1b0929f6fe68b4884ef42879696b2f: 21300000
+    - e40d545943d4d0d478bedf6697b32b2a: 21300000
+    - 7351fd1ae6f8cbf4d86d70ee44075256: 21300000
+    - 42f0903ab0937c24783ceebf90a00ddc: 21300000
+    - 613a7fea5c3c2fd4c98ee4524d023ae3: 21300000
+    - 6cc304cb2c6b91e4cb4e22441a5fa8d4: 21300000
+    - c379e8cb3ee067748babe2b73f11cf83: 21300000
+    - 68779c9cbf165264f8d8503d7f9c344b: 21300000
+    - 183cd92e90810c94186ccd6cdba413ca: 21300000
+    - de87144ea29f01041a35e43f24a3fd50: 21300000
+    - 8183242f791905c4c99ec395b8993f81: 21300000
+    - d7006b8f181081c469fcfe7834a567b9: 21300000
+    - b0e8b3bf34382f044a50cc5b11d6a5f0: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: b4052e001bbceb543b706ac6be8ffad2, type: 3}
+  - {fileID: 21300000, guid: c5e35e01353a6cd4ea535f085749fc9f, type: 3}
+  - {fileID: 21300000, guid: 6bef7281d44ceda47b7a88d00f80a0f6, type: 3}
+  - {fileID: 21300000, guid: 087ce5a3918beb04ab3ca051916598c5, type: 3}
+  - {fileID: 21300000, guid: 0222ae644aa9492458c85ca2b9259cfa, type: 3}
+  - {fileID: 21300000, guid: 1f86d984b128ad84c8e42dfecedb323c, type: 3}
+  - {fileID: 21300000, guid: 62cd3905bd1cff84294519b60cd1667a, type: 3}
+  - {fileID: 21300000, guid: 26afe2353d664934585ef375cbde3ae6, type: 3}
+  - {fileID: 21300000, guid: 96d82f75a0aab0b43b745f6972c898a5, type: 3}
+  - {fileID: 21300000, guid: 89c8acd67348f284aaa784c6f32ca055, type: 3}
+  - {fileID: 21300000, guid: 4953a0e6fb8efcb48832bd968eac53de, type: 3}
+  - {fileID: 21300000, guid: 67619b6754cfcd9428fdb3724ba0ad3e, type: 3}
+  - {fileID: 21300000, guid: d2067ec7be66c7a45a0dcb29cbc29fbc, type: 3}
+  - {fileID: 21300000, guid: 5b5dfb18d4ec9e94a97f3243e0afeb31, type: 3}
+  - {fileID: 21300000, guid: e1586668482c0b748bf4e6a6a5b682f4, type: 3}
+  - {fileID: 21300000, guid: 14bfb67848dc07a478959dc646281c6e, type: 3}
+  - {fileID: 21300000, guid: 9f504498a015f9e41b736478db49dc7b, type: 3}
+  - {fileID: 21300000, guid: be1b0929f6fe68b4884ef42879696b2f, type: 3}
+  - {fileID: 21300000, guid: e40d545943d4d0d478bedf6697b32b2a, type: 3}
+  - {fileID: 21300000, guid: 7351fd1ae6f8cbf4d86d70ee44075256, type: 3}
+  - {fileID: 21300000, guid: 42f0903ab0937c24783ceebf90a00ddc, type: 3}
+  - {fileID: 21300000, guid: 613a7fea5c3c2fd4c98ee4524d023ae3, type: 3}
+  - {fileID: 21300000, guid: 6cc304cb2c6b91e4cb4e22441a5fa8d4, type: 3}
+  - {fileID: 21300000, guid: c379e8cb3ee067748babe2b73f11cf83, type: 3}
+  - {fileID: 21300000, guid: 68779c9cbf165264f8d8503d7f9c344b, type: 3}
+  - {fileID: 21300000, guid: 183cd92e90810c94186ccd6cdba413ca, type: 3}
+  - {fileID: 21300000, guid: de87144ea29f01041a35e43f24a3fd50, type: 3}
+  - {fileID: 21300000, guid: 8183242f791905c4c99ec395b8993f81, type: 3}
+  - {fileID: 21300000, guid: d7006b8f181081c469fcfe7834a567b9, type: 3}
+  - {fileID: 21300000, guid: b0e8b3bf34382f044a50cc5b11d6a5f0, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Idle_04
+  - Idle_10
+  - Idle_08
+  - Idle_08
+  - Idle_06
+  - Idle_03
+  - Idle_01
+  - Idle_06
+  - Idle_09
+  - Idle_08
+  - Idle_04
+  - Idle_01
+  - Idle_09
+  - Idle_03
+  - Idle_05
+  - Idle_10
+  - Idle_02
+  - Idle_05
+  - Idle_10
+  - Idle_05
+  - Idle_07
+  - Idle_01
+  - Idle_02
+  - Idle_04
+  - Idle_09
+  - Idle_07
+  - Idle_06
+  - Idle_02
+  - Idle_07
+  - Idle_03
+  m_RenderDataMap: {}
+  m_Tag: Zombies
+  m_IsVariant: 0

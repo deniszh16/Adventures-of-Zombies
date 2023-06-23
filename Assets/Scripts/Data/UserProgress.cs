@@ -12,6 +12,8 @@ namespace Data
         public int Bones;
         public int Brains;
 
+        public event Action BonesChanged;
+
         public int Played;
         public int Deaths;
         public bool Resurrection;
@@ -25,7 +27,7 @@ namespace Data
 
         public UserProgress()
         {
-            Progress = 5;
+            Progress = 1;
             Stars = new int[11];
             LanguageData = new LanguageData();
             SoundData = new SoundData();
@@ -42,6 +44,12 @@ namespace Data
             }
 
             return true;
+        }
+
+        public void SubtractBones(int value)
+        {
+            Bones -= value;
+            BonesChanged?.Invoke();
         }
     }
 }

@@ -47,6 +47,7 @@ namespace Logic.Characters
             Life = true;
             _rigidbody.velocity = Vector2.zero;
             transform.position = RespawnPosition;
+            _animator.Rebind();
             _animator.Play(IdleAnimation);
             _spriteRenderer.sortingOrder = InitialLayer;
         }

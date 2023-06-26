@@ -23,13 +23,14 @@ namespace Logic.Characters
         [SerializeField] private float _fallMultiplier;
 
         private const float StandardSpeed = 10f;
+        private const float StandardGravity = 1f;
 
         public bool Enabled { get; set; }
 
         private bool _isGrounded;
         private bool _isJumping;
-        private bool _isHanging;
         
+        public bool IsHanging { get; set; }
         public bool IsAccelerated { get; set; }
 
         private float _direction;
@@ -38,6 +39,7 @@ namespace Logic.Characters
 
         private static readonly int RunningAnimation = Animator.StringToHash("Run");
         private static readonly int JumpAnimation = Animator.StringToHash("Jump");
+        private static readonly int HangingAnimation = Animator.StringToHash("Hanging");
 
         private IInputService _inputService;
 
@@ -95,11 +97,12 @@ namespace Logic.Characters
 
         public void Jump()
         {
-            if (_isGrounded && _isJumping != true && _rigidbody.velocity.y < 0.5f)
+            if (_isGrounded && _isJumping != true && _rigidbody.velocity.y < 5f || IsHanging)
             {
                 _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0f);
                 _rigidbody.AddForce(new Vector2(0f, _jumpHeight), ForceMode2D.Impulse);
                 _animator.SetTrigger(JumpAnimation);
+                if (IsHanging) IsHanging = false;
                 _isJumping = true;
             }
         }
@@ -129,7 +132,7 @@ namespace Logic.Characters
                 _isJumping = false;
                 
                 if (IsAccelerated == false && _isGrounded && _isJumping == false)
-                    _speed = StandardSpeed;
+                    RestoreSpeed();
             }
             else
             {
@@ -145,5 +148,21 @@ namespace Logic.Characters
                 if (_direction != 0) _speed = speed;
             }
         }
+        
+        public void HangOnHook() 
+        {
+            _rigidbody.gravityScale = 0; 
+            _rigidbody.velocity = Vector2.zero;
+            _speed = 0;
+        }
+
+        public void HangOnHookAnimation() =>
+            _animator.SetTrigger(HangingAnimation);
+
+        public void RestoreSpeed() =>
+            _speed = StandardSpeed;
+
+        public void RestoreGravity() =>
+            _rigidbody.gravityScale = StandardGravity;
     }
 }

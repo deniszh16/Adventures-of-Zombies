@@ -26,10 +26,19 @@ namespace Logic.Bosses.Bull
                 _bossStateMachine.Enter<StuporState>();
             }
         }
-        
+
+        protected override void GoToStartState() =>
+            _bossStateMachine.Enter<StartingState>();
+
         public override void DefineNextState() =>
             _ = StartCoroutine(DefineNextStateCoroutine());
-        
+
+        protected override void GoToIdleState()
+        {
+            StopAllCoroutines();
+            _bossStateMachine.Enter<IdleState>();
+        }
+
         private IEnumerator DefineNextStateCoroutine()
         {
             if (Health > 0)

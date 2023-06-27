@@ -8,7 +8,7 @@ namespace StateMachine.States
     {
         [Header("Панель паузы")]
         [SerializeField] private GameObject _pausePanel;
-        
+
         private ISoundService _soundService;
 
         [Inject]

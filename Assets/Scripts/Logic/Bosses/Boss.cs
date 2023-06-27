@@ -46,8 +46,7 @@ namespace Logic.Bosses
             _character.CharacterDied += GoToIdleState;
         }
 
-        private void GoToStartState() =>
-            _bossStateMachine.Enter<StartingState>();
+        protected abstract void GoToStartState();
 
         public void SetQuantityRun(int min, int max) =>
             QuantityRuns = Random.Range(min, max);
@@ -78,11 +77,7 @@ namespace Logic.Bosses
 
         public abstract void DefineNextState();
 
-        private void GoToIdleState()
-        {
-            StopAllCoroutines();
-            _bossStateMachine.Enter<IdleState>();
-        }
+        protected abstract void GoToIdleState();
 
         public void SnapCameraToCharacter() =>
             _gameCamera.SnapCameraToTarget(_character);

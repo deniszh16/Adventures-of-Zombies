@@ -11,7 +11,8 @@ namespace StateMachine
         [SerializeField] protected List<BaseStates> _gameStates;
 
         protected Dictionary<Type, IState> _states;
-        private IState _activeState;
+        
+        public IState ActiveState { get; private set; }
 
         protected virtual void Awake()
         {
@@ -30,10 +31,10 @@ namespace StateMachine
 
         private TState ChangeState<TState>() where TState : class, IState
         {
-            _activeState?.Exit();
+            ActiveState?.Exit();
 
             TState state = GetState<TState>();
-            _activeState = state;
+            ActiveState = state;
             return state;
         }
 

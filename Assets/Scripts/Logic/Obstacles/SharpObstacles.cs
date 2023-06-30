@@ -12,6 +12,7 @@ namespace Logic.Obstacles
                 if (character.Life)
                 {
                     character.DamageToCharacter();
+                    character.ShowBloodEffect();
                     character.ShowDeathAnimation();
                     character.PlayDeadSound();
                 }

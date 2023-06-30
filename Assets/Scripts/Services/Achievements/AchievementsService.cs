@@ -75,7 +75,7 @@ namespace Services.Achievements
                 _persistentProgress.UserProgress.AchievementsData.Statuses[number - 1] = true;
                 ShowAchievementBar(number);
                 
-                _persistentProgress.UserProgress.AchievementsData.Statuses[number] = true;
+                _persistentProgress.UserProgress.AchievementsData.Statuses[number - 1] = true;
                 _saveLoadService.SaveProgress();
             }
         }

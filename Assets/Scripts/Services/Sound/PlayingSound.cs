@@ -16,7 +16,7 @@ namespace Services.Sound
 
         public void PlaySound()
         {
-            if (_soundService.SoundActivity)
+            if (_soundService.SoundActivity && _audioSource.isPlaying == false)
                 _audioSource.Play();
         }
     }

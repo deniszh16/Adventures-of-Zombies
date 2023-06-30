@@ -6,7 +6,6 @@ namespace Data
     public class UserProgress
     {
         public int Progress;
-        public int TotalScore;
         public int[] Stars;
 
         public int Bones;
@@ -27,7 +26,7 @@ namespace Data
 
         public UserProgress()
         {
-            Progress = 9;
+            Progress = 1;
             Stars = new int[11];
             LanguageData = new LanguageData();
             SoundData = new SoundData();

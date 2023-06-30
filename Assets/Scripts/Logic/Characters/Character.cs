@@ -14,6 +14,7 @@ namespace Logic.Characters
         [SerializeField] private Rigidbody2D _rigidbody;
         [SerializeField] private PolygonCollider2D _collider;
         [SerializeField] private CharacterSounds _characterSounds;
+        [SerializeField] private ParticleSystem _blood;
 
         public bool Life { get; private set; } = true;
 
@@ -50,10 +51,17 @@ namespace Logic.Characters
             _animator.Rebind();
             _animator.Play(IdleAnimation);
             _spriteRenderer.sortingOrder = InitialLayer;
+            _blood.gameObject.SetActive(false);
         }
 
         public void ShowDeathAnimation() =>
             _animator.SetTrigger(DeadAnimation);
+        
+        public void ShowBloodEffect()
+        {
+            _blood.gameObject.SetActive(true);
+            _blood.Play();
+        }
 
         public void ShowSinkingAnimation() =>
             _animator.SetTrigger(DrowningAnimation);

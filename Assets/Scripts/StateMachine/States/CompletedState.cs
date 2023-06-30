@@ -67,7 +67,6 @@ namespace StateMachine.States
 
             UpdateStars();
             
-            _progressService.UserProgress.TotalScore += _timer.Seconds * BonusCoefficient;
             _progressService.UserProgress.Brains += BrainsAtLevel.InitialValue - _brainsAtLevel.Brains;
             _progressService.UserProgress.Played += 1;
             _saveLoadService.SaveProgress();

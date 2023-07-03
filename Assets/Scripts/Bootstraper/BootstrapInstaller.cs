@@ -1,4 +1,6 @@
 using Services.Achievements;
+using Services.Ads;
+using Services.GooglePlay;
 using Services.Localization;
 using Services.PersistentProgress;
 using Services.SaveLoad;
@@ -26,7 +28,9 @@ namespace Bootstraper
             BindLocalizationService();
             BindSceneLoader();
             BindSoundService();
+            BindGooglePlayService();
             BindAchievementsService();
+            BindAdsService();
         }
 
         private void BindPersistentProgress()
@@ -59,11 +63,23 @@ namespace Bootstraper
             SoundService soundService = Container.InstantiatePrefabForComponent<SoundService>(_soundService);
             Container.Bind<ISoundService>().To<SoundService>().FromInstance(soundService).AsSingle();
         }
+
+        private void BindGooglePlayService()
+        {
+            IGooglePlayService googlePlayService = new GooglePlayService();
+            Container.BindInstance(googlePlayService).AsSingle();
+        }
         
         private void BindAchievementsService()
         {
             AchievementsService achievementsService = Container.InstantiatePrefabForComponent<AchievementsService>(_achievementsService);
             Container.Bind<IAchievementsService>().To<AchievementsService>().FromInstance(achievementsService).AsSingle();
+        }
+
+        private void BindAdsService()
+        {
+            IAdService adService = new AdService();
+            Container.BindInstance(adService).AsSingle();
         }
     }
 }

@@ -8,6 +8,9 @@ namespace StateMachine.States
     {
         [Header("Панель паузы")]
         [SerializeField] private GameObject _pausePanel;
+        
+        [Header("Остановка времени")]
+        [SerializeField] private bool _stopTime;
 
         private ISoundService _soundService;
 
@@ -19,9 +22,13 @@ namespace StateMachine.States
         {
             _pausePanel.SetActive(true);
             _soundService.PauseBackgroundMusic(true);
+            if (_stopTime) Time.timeScale = 0;
         }
 
-        public override void Exit() =>
+        public override void Exit()
+        {
             _pausePanel.SetActive(false);
+            if (_stopTime) Time.timeScale = 1;
+        }
     }
 }

@@ -2,6 +2,7 @@
 using Logic.Camera;
 using Logic.Characters;
 using Logic.UsefulObjects;
+using Services.Ads;
 using Services.PersistentProgress;
 using Services.SaveLoad;
 using Services.Sound;
@@ -27,16 +28,21 @@ namespace StateMachine.States
         private IPersistentProgressService _progressService;
         private ISaveLoadService _saveLoadService;
         private ISoundService _soundService;
+        private IAdService _adService;
 
         [Inject]
         private void Construct(IPersistentProgressService progressService, ISaveLoadService saveLoadService,
-            ISoundService soundService)
+            ISoundService soundService, IAdService adService)
         {
             _progressService = progressService;
             _saveLoadService = saveLoadService;
             _soundService = soundService;
+            _adService = adService;
         }
-        
+
+        private void Start() =>
+            _adService.RewardedVideoFinished += _character.CharacterRespawn;
+
         public override void Enter()
         {
             _gameCamera.SnapCameraToTarget(_character);
@@ -62,5 +68,8 @@ namespace StateMachine.States
             _progressService.UserProgress.Deaths += 1;
             _saveLoadService.SaveProgress();
         }
+
+        private void OnDestroy() =>
+            _adService.RewardedVideoFinished -= _character.CharacterRespawn;
     }
 }

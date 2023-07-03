@@ -1,4 +1,5 @@
 ﻿using Logic.Characters;
+using Services.Ads;
 using StateMachine;
 using StateMachine.States;
 using UnityEngine;
@@ -19,13 +20,20 @@ namespace Logic.UI
         [SerializeField] private Timer.Timer _timer;
 
         private GameStateMachine _gameStateMachine;
+        private IAdService _adService;
 
         [Inject]
-        private void Construct(GameStateMachine gameStateMachine) =>
+        private void Construct(GameStateMachine gameStateMachine, IAdService adService)
+        {
             _gameStateMachine = gameStateMachine;
+            _adService = adService;
+        }
 
-        private void Awake() =>
-            _button.onClick.AddListener(ResurrectACharacter);
+        private void Awake()
+        {
+            _button.onClick.AddListener(_adService.ShowRewardedAd);
+            _adService.RewardedVideoFinished += ResurrectACharacter;
+        }
 
         private void ResurrectACharacter()
         {
@@ -34,7 +42,10 @@ namespace Logic.UI
             _gameStateMachine.Enter<PlayState>();
         }
 
-        private void OnDestroy() =>
-            _button.onClick.RemoveListener(ResurrectACharacter);
+        private void OnDestroy()
+        {
+            _button.onClick.RemoveListener(_adService.ShowRewardedAd);
+            _adService.RewardedVideoFinished -= ResurrectACharacter;
+        }
     }
 }

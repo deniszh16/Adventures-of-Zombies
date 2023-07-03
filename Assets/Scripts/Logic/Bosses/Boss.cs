@@ -1,5 +1,4 @@
-﻿using Logic.Bosses.Bull.States;
-using Logic.Camera;
+﻿using Logic.Camera;
 using Logic.Characters;
 using StateMachine;
 using StateMachine.States;
@@ -24,6 +23,8 @@ namespace Logic.Bosses
         [Header("Прочие компоненты")]
         [SerializeField] protected Character _character;
         [SerializeField] protected GameCamera _gameCamera;
+
+        protected bool _bossStarted;
         
         public int QuantityRuns { get; set; }
         public float Speed { get; private set; }
@@ -32,6 +33,8 @@ namespace Logic.Bosses
 
         private GameStateMachine _gameStateMachine;
         private PlayState _playState;
+        private BaseStates _lastState;
+
 
         [Inject]
         private void Construct(GameStateMachine gameStateMachine) =>

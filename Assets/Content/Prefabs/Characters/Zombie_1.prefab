@@ -124,7 +124,7 @@ Transform:
   - {fileID: 1044779799195514956}
   - {fileID: 4614398021017644330}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1044779799837290800
 Animator:
@@ -337,6 +337,7 @@ MonoBehaviour:
   _rigidbody: {fileID: 7324507875300064817}
   _collider: {fileID: 6503155212713187579}
   _characterSounds: {fileID: 4827247871125071248}
+  _blood: {fileID: 5229997269963822164}
 --- !u!114 &8048861497293049662
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Linq;
 using Logic.UI;
+using Services.GooglePlay;
 using Services.PersistentProgress;
 using Services.SaveLoad;
 using UnityEngine;
@@ -21,12 +22,15 @@ namespace Services.Achievements
         
         private IPersistentProgressService _persistentProgress;
         private ISaveLoadService _saveLoadService;
+        private IGooglePlayService _googlePlayService;
 
         [Inject]
-        private void Construct(IPersistentProgressService persistentProgress, ISaveLoadService saveLoadService)
+        private void Construct(IPersistentProgressService persistentProgress, ISaveLoadService saveLoadService,
+            IGooglePlayService googlePlayService)
         {
             _persistentProgress = persistentProgress;
             _saveLoadService = saveLoadService;
+            _googlePlayService = googlePlayService;
         }
 
         public bool CheckAchievementCompletion(int number) =>
@@ -35,37 +39,70 @@ namespace Services.Achievements
         public void RunAchievementCheck()
         {
             if (CheckAchievementCompletion(number: 1) != true && _persistentProgress.UserProgress.Progress > 1)
+            {
                 UnlockAchievement(number: 1);
-            
+                _googlePlayService.UnlockingAchievement(identifier: GPGSIds.achievement);
+            }
+
             if (CheckAchievementCompletion(number: 2) != true && _persistentProgress.UserProgress.Stars.Contains(3))
+            {
                 UnlockAchievement(number: 2);
-            
+                _googlePlayService.UnlockingAchievement(identifier: GPGSIds.achievement_2);
+            }
+
             if (CheckAchievementCompletion(number: 3) != true && _persistentProgress.UserProgress.Brains >= 15)
+            {
                 UnlockAchievement(number: 3);
-            
+                _googlePlayService.UnlockingAchievement(identifier: GPGSIds.achievement_3);
+            }
+
             if (CheckAchievementCompletion(number: 4) != true && _persistentProgress.UserProgress.Resurrection)
+            {
                 UnlockAchievement(number: 4);
-            
+                _googlePlayService.UnlockingAchievement(identifier: GPGSIds.achievement_10);
+            }
+
             if (CheckAchievementCompletion(number: 5) != true && _persistentProgress.UserProgress.DestroyedBarrel >= 20)
+            {
                 UnlockAchievement(number: 5);
-            
+                _googlePlayService.UnlockingAchievement(identifier: GPGSIds.achievement_11);
+            }
+
             if (CheckAchievementCompletion(number: 6) != true && _persistentProgress.UserProgress.Progress >= 6)
+            {
                 UnlockAchievement(number: 6);
-            
+                _googlePlayService.UnlockingAchievement(identifier: GPGSIds.achievement_9);
+            }
+
             if (CheckAchievementCompletion(number: 7) != true && _persistentProgress.UserProgress.Brains >= 30)
+            {
                 UnlockAchievement(number: 7);
-            
+                _googlePlayService.UnlockingAchievement(identifier: GPGSIds.achievement_12);
+            }
+
             if (CheckAchievementCompletion(number: 8) != true && _persistentProgress.UserProgress.CheckAllStars())
+            {
                 UnlockAchievement(number: 8);
-            
+                _googlePlayService.UnlockingAchievement(identifier: GPGSIds.achievement_12);
+            }
+
             if (CheckAchievementCompletion(number: 9) != true && _persistentProgress.UserProgress.Progress >= 10)
+            {
                 UnlockAchievement(number: 9);
-            
+                _googlePlayService.UnlockingAchievement(identifier: GPGSIds.achievement_14);
+            }
+
             if (CheckAchievementCompletion(number: 10) != true && _persistentProgress.UserProgress.Bones >= 350)
+            {
                 UnlockAchievement(number: 10);
-            
-            if (CheckAchievementCompletion(number: 11) != true && _persistentProgress.UserProgress.ZombiesData.CheckAllCharacters())
+            }
+
+            if (CheckAchievementCompletion(number: 11) != true &&
+                _persistentProgress.UserProgress.ZombiesData.CheckAllCharacters())
+            {
                 UnlockAchievement(number: 11);
+                _googlePlayService.UnlockingAchievement(identifier: GPGSIds.achievement_15);
+            }
         }
 
         private void UnlockAchievement(int number)

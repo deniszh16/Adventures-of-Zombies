@@ -53,7 +53,7 @@ namespace Logic.Zombies
         {
             if (_progressService.UserProgress.Bones >= _price)
             {
-                _progressService.UserProgress.SubtractBones(_price);
+                _progressService.UserProgress.ChangeBones(-_price);
                 _progressService.UserProgress.ZombiesData.Family[_number - 1] = true;
                 _saveLoadService.SaveProgress();
                 

@@ -45,9 +45,9 @@ namespace Data
             return true;
         }
 
-        public void SubtractBones(int value)
+        public void ChangeBones(int value)
         {
-            Bones -= value;
+            Bones += value;
             BonesChanged?.Invoke();
         }
     }

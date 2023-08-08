@@ -10,6 +10,7 @@ namespace Logic.Obstacles
         [SerializeField] private Rigidbody2D _rigidbody;
         [SerializeField] private FixedJoint2D _joint;
         [SerializeField] private SpriteRenderer _spriteRenderer;
+        private Transform _transform;
 
         private bool _flight;
         
@@ -21,8 +22,11 @@ namespace Logic.Obstacles
         
         private Vector3 _direction;
 
-        private void Awake() =>
+        private void Awake()
+        {
+            _transform = transform;
             _sortingOrder = _spriteRenderer.sortingOrder;
+        }
 
         private void OnEnable()
         {
@@ -37,7 +41,7 @@ namespace Logic.Obstacles
         private void FixedUpdate()
         {
             if (_flight)
-                _rigidbody.MovePosition(transform.position + _direction * (_speed * Time.fixedDeltaTime));
+                _rigidbody.MovePosition(_transform.position + _direction * (_speed * Time.fixedDeltaTime));
         }
 
         private void OnTriggerEnter2D(Collider2D col)
@@ -71,7 +75,18 @@ namespace Logic.Obstacles
                 _speed /= 2;
                 
                 if (gameObject.activeInHierarchy)
-                    _ = StartCoroutine(TurnOffObject());
+                    _ = StartCoroutine(TurnOffObject(pause: 1.5f));
+            }
+        }
+
+        private void OnTriggerExit2D(Collider2D other)
+        {
+            if (other.GetComponent<Platform>())
+            {
+                StopAllCoroutines();
+                
+                if (gameObject.activeInHierarchy)
+                    _ = StartCoroutine(TurnOffObject(pause: 0.05f));
             }
         }
 
@@ -83,13 +98,13 @@ namespace Logic.Obstacles
             if (fixation)
                 _joint.enabled = true;
             
-            _ = StartCoroutine(TurnOffObject());
+            _ = StartCoroutine(TurnOffObject(pause: 1.5f));
         }
 
-        private IEnumerator TurnOffObject()
+        private IEnumerator TurnOffObject(float pause)
         {
-            yield return new WaitForSeconds(1.5f);
-            transform.localEulerAngles = Vector3.zero;
+            yield return new WaitForSeconds(pause);
+            _transform.localEulerAngles = Vector3.zero;
             gameObject.SetActive(false);
         }
     }

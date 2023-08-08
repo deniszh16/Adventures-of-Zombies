@@ -10,8 +10,12 @@ namespace Logic.Obstacles
         
         [Header("Точки переходов")]
         [SerializeField] private Vector3[] _points;
-        
+
+        private Transform _transform;
         private int _point = 0;
+
+        private void Awake() =>
+            _transform = transform;
 
         private void Start() =>
             _ = StartCoroutine(TeleportPlatform());
@@ -26,7 +30,7 @@ namespace Logic.Obstacles
                 if (_point > _points.Length - 1)
                     _point = 0;
                 
-                transform.position = _points[_point];
+                _transform.position = _points[_point];
             }
         }
     }

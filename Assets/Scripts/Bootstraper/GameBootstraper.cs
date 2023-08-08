@@ -1,11 +1,11 @@
 ﻿using Services.PersistentProgress;
-using Services.SaveLoad;
+using Services.Localization;
 using Services.SceneLoader;
+using Services.SaveLoad;
 using Services.Sound;
 using UnityEngine;
 using Zenject;
 using Data;
-using Services.Localization;
 
 namespace Bootstraper
 {
@@ -27,7 +27,10 @@ namespace Bootstraper
             _saveLoadService = saveLoadService;
             _soundService = soundService;
         }
-        
+
+        private void Awake() =>
+            Application.targetFrameRate = 60;
+
         private void Start()
         {
             LoadProgressOrInitNew();

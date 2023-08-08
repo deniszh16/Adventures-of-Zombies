@@ -12,10 +12,13 @@ namespace Logic.Obstacles
         [Header("Компоненты объекта")]
         [SerializeField] private Rigidbody2D _rigidbody;
         [SerializeField] private SpriteRenderer _spriteRenderer;
+        private Transform _transform;
         
         private int _sortingOrder;
-        
         private Vector3 _position;
+
+        private void Awake() =>
+            _transform = transform;
 
         private void Start()
         {
@@ -65,7 +68,7 @@ namespace Logic.Obstacles
             _rigidbody.bodyType = RigidbodyType2D.Kinematic;
             _rigidbody.velocity = Vector2.zero;
             
-            transform.position = _position;
+            _transform.position = _position;
         }
     }
 }

@@ -7,12 +7,16 @@ namespace Logic.Bosses
     {
         [Header("Физический компонент")]
         [SerializeField] private Rigidbody2D _rigidbody;
-        
+
+        private Transform _transform;
         private Vector3 _position;
         
-        private void Start() =>
-            _position = transform.position;
-        
+        private void Start()
+        {
+            _transform = transform;
+            _position = _transform.position;
+        }
+
         private void OnEnable() =>
             _ = StartCoroutine(RestoreObject());
 
@@ -21,7 +25,7 @@ namespace Logic.Bosses
             yield return new WaitForSeconds(3f);
             _rigidbody.velocity = Vector2.zero;
 
-            transform.position = new Vector2(_position.x + Random.Range(-3, 3), _position.y + Random.Range(-2, 2));
+            _transform.position = new Vector2(_position.x + Random.Range(-3, 3), _position.y + Random.Range(-2, 2));
             gameObject.SetActive(false);
         }
     }

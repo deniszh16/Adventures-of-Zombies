@@ -8,6 +8,7 @@ namespace Logic.Obstacles
         [Header("Компоненты крысы")]
         [SerializeField] private SpriteRenderer _spriteRenderer;
         [SerializeField] private Animator _animator;
+        private Transform _transform;
         
         [Header("Ограничители бега")]
         [SerializeField] private Transform[] _limiters;
@@ -25,6 +26,7 @@ namespace Logic.Obstacles
 
         private void Awake()
         {
+            _transform = transform;
             _layerMask = 1 << LayerMask.NameToLayer("Character");
             _direction = Vector2.left;
         }
@@ -33,14 +35,14 @@ namespace Logic.Obstacles
         {
             if (_target)
             {
-                _distance = transform.localPosition - _target.transform.position;
+                _distance = _transform.localPosition - _target.transform.position;
                 
                 if (Mathf.Abs(_distance.y) < 3.8f)
                 {
                     _spriteRenderer.flipX = !(_distance.x > 0);
 
-                    if (_distance.x > 0 && transform.localPosition.x > _limiters[1].localPosition.x ||
-                        _distance.x < 0 && transform.localPosition.x < _limiters[0].localPosition.x)
+                    if (_distance.x > 0 && _transform.localPosition.x > _limiters[1].localPosition.x ||
+                        _distance.x < 0 && _transform.localPosition.x < _limiters[0].localPosition.x)
                     {
                         Run();
                     }
@@ -64,10 +66,10 @@ namespace Logic.Obstacles
                 
                 _direction *= -1;
                 _distance.x = _direction.x > 0 ?
-                    _limiters[1].localPosition.x - transform.localPosition.x
-                    : transform.localPosition.x - _limiters[0].localPosition.x;
+                    _limiters[1].localPosition.x - _transform.localPosition.x
+                    : _transform.localPosition.x - _limiters[0].localPosition.x;
                 
-                RaycastHit2D hit = Physics2D.Raycast(transform.localPosition, _direction, _distance.x, _layerMask);
+                RaycastHit2D hit = Physics2D.Raycast(_transform.localPosition, _direction, _distance.x, _layerMask);
                 
                 if (hit.collider)
                     _target = hit.collider.gameObject;
@@ -77,8 +79,8 @@ namespace Logic.Obstacles
         private void Run()
         {
             _animator.SetBool(RunAnimation, true);
-            transform.position = Vector2.MoveTowards(transform.position, 
-                new Vector2(_target.transform.position.x, transform.position.y), _speed * Time.deltaTime);
+            _transform.position = Vector2.MoveTowards(_transform.position, 
+                new Vector2(_target.transform.position.x, _transform.position.y), _speed * Time.deltaTime);
         }
         
         private void OnTriggerStay2D(Collider2D collision)

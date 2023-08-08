@@ -1,6 +1,4 @@
-﻿using System;
-using Services.Input;
-using UnityEditor;
+﻿using Services.Input;
 using UnityEngine;
 using Zenject;
 
@@ -12,6 +10,7 @@ namespace Logic.Characters
         [SerializeField] private Character _character;
         [SerializeField] private Rigidbody2D _rigidbody;
         [SerializeField] private Animator _animator;
+        private Transform _transform;
 
         [Header("Высота прыжка")]
         [SerializeField] private float _jumpHeight;
@@ -51,6 +50,7 @@ namespace Logic.Characters
         {
             _layerMask = 1 << LayerMask.NameToLayer("Surface");
             _vectorLeft = new Vector3(-1f, 1f, 1f);
+            _transform = transform;
         }
 
         private void Update()
@@ -80,7 +80,7 @@ namespace Logic.Characters
             if (_direction == 0)
                 return;
 
-            transform.localScale = _direction > 0 ? Vector3.one : _vectorLeft;
+            _transform.localScale = _direction > 0 ? Vector3.one : _vectorLeft;
         }
 
         public void ChangeDirectionVector()
@@ -123,7 +123,7 @@ namespace Logic.Characters
 
         private void FindSurface()
         {
-            Vector2 position = transform.position - new Vector3(0.2f, 1.9f, 0);
+            Vector2 position = _transform.position - new Vector3(0.2f, 1.9f, 0);
             Collider2D[] colliders = Physics2D.OverlapCircleAll(position, 0.5f, _layerMask);
 
             if (colliders.Length > 0)

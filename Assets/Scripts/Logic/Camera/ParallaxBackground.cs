@@ -9,12 +9,14 @@ namespace Logic.Camera
 
         [Header("Компонент камеры")]
         [SerializeField] private Transform _cameraTransform;
-        
+
+        private Transform _transform;
         private Vector3 _lastCameraPosition;
         private float _textureUnitSizeX;
 
         private void Start()
         {
+            _transform = transform;
             _lastCameraPosition = _cameraTransform.position;
             
             Sprite sprite = GetComponent<SpriteRenderer>().sprite;
@@ -26,13 +28,13 @@ namespace Logic.Camera
         {
             Vector3 deltaMovenent = _cameraTransform.position - _lastCameraPosition;
             
-            transform.position += new Vector3(deltaMovenent.x * _parallaxMultiplier, 0, 0);
+            _transform.position += new Vector3(deltaMovenent.x * _parallaxMultiplier, 0, 0);
             _lastCameraPosition = _cameraTransform.position;
             
-            if (Mathf.Abs(_cameraTransform.position.x - transform.position.x) >= _textureUnitSizeX)
+            if (Mathf.Abs(_cameraTransform.position.x - _transform.position.x) >= _textureUnitSizeX)
             {
-                float offsetPositionX = (_cameraTransform.position.x - transform.position.x) % _textureUnitSizeX;
-                transform.position = new Vector3(_cameraTransform.position.x + offsetPositionX, transform.position.y, transform.position.z);
+                float offsetPositionX = (_cameraTransform.position.x - _transform.position.x) % _textureUnitSizeX;
+                _transform.position = new Vector3(_cameraTransform.position.x + offsetPositionX, _transform.position.y, _transform.position.z);
             }
         }
     }

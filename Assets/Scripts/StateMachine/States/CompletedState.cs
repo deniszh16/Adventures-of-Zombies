@@ -3,10 +3,10 @@ using Logic.UsefulObjects;
 using Services.PersistentProgress;
 using Services.SaveLoad;
 using Services.Sound;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
+using TMPro;
 
 namespace StateMachine.States
 {

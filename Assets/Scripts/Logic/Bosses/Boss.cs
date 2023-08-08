@@ -23,18 +23,16 @@ namespace Logic.Bosses
         [Header("Прочие компоненты")]
         [SerializeField] protected Character _character;
         [SerializeField] protected GameCamera _gameCamera;
-
-        protected bool _bossStarted;
+        private Transform _transform;
         
         public int QuantityRuns { get; set; }
-        public float Speed { get; private set; }
         public Vector3 Direction { get; private set; }
         public bool RunningActivity { get; set; }
+        
+        private float _speed;
 
         private GameStateMachine _gameStateMachine;
         private PlayState _playState;
-        private BaseStates _lastState;
-
 
         [Inject]
         private void Construct(GameStateMachine gameStateMachine) =>
@@ -42,6 +40,7 @@ namespace Logic.Bosses
 
         private void Start()
         {
+            _transform = transform;
             Direction = Vector3.left;
             
             _playState = _gameStateMachine.GetState<PlayState>();
@@ -55,7 +54,7 @@ namespace Logic.Bosses
             QuantityRuns = Random.Range(min, max);
 
         public void SetBossSpeed(float min, float max) =>
-            Speed = Random.Range(min, max);
+            _speed = Random.Range(min, max);
         
         public void SetDirection(bool spriteReversal)
         {
@@ -68,14 +67,15 @@ namespace Logic.Bosses
         }
 
         private void Run() =>
-            transform.Translate(Direction * (Speed * Time.deltaTime));
+            _transform.Translate(Direction * (_speed * Time.deltaTime));
 
         public void DecreaseHealth(int value) =>
             _health -= value;
 
         private void Update()
         {
-            if (RunningActivity) Run();
+            if (RunningActivity)
+                Run();
         }
 
         public abstract void DefineNextState();

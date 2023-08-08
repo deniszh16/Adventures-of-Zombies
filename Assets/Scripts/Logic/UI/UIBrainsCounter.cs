@@ -12,12 +12,12 @@ namespace Logic.UI
         [Header("Текст количества")]
         [SerializeField] private TextMeshProUGUI _textBrains;
 
-        private Color32 _changedСolor;
+        private Color _changedСolor;
 
         private void Awake()
         {
             _brainsAtLevel.BrainsChanged += UpdateNumberOfBrains;
-            _changedСolor = new Color32(127, 255, 0, 255);
+            _changedСolor = new Color(0.06f, 1f, 0f, 1f);
         }
 
         private void UpdateNumberOfBrains()

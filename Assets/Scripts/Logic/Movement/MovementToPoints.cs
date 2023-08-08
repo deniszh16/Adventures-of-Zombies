@@ -16,14 +16,18 @@ namespace Logic.Movement
         [Header("Разворот спрайта")]
         [SerializeField] protected bool _turningSprite;
 
+        private Transform _transform;
         private int _currentPoint = 0;
+
+        private void Awake() =>
+            _transform = transform;
 
         private void Update()
         {
-            if (_points.Length > 0 && transform.position != _points[_currentPoint])
+            if (_points.Length > 0 && _transform.position != _points[_currentPoint])
             {
-                transform.position =
-                    Vector3.MoveTowards(transform.position, _points[_currentPoint], _speed * Time.deltaTime);
+                _transform.position =
+                    Vector3.MoveTowards(_transform.position, _points[_currentPoint], _speed * Time.deltaTime);
             }
             else
             {

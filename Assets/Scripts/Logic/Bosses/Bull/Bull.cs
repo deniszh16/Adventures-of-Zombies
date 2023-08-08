@@ -27,14 +27,8 @@ namespace Logic.Bosses.Bull
             }
         }
 
-        protected override void GoToStartState()
-        {
-            if (_bossStarted == false)
-            {
-                _bossStarted = true;
-                _bossStateMachine.Enter<StartingState>();
-            }
-        }
+        protected override void GoToStartState() =>
+            _bossStateMachine.Enter<StartingState>();
 
         public override void DefineNextState() =>
             _ = StartCoroutine(DefineNextStateCoroutine());

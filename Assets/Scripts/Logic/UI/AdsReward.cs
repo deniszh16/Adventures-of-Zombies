@@ -1,4 +1,6 @@
-﻿using Services.Ads;
+﻿using AppodealStack.Monetization.Common;
+using PimDeWitte.UnityMainThreadDispatcher;
+using Services.Ads;
 using Services.PersistentProgress;
 using Services.SaveLoad;
 using UnityEngine;
@@ -17,8 +19,7 @@ namespace Logic.UI
         private IAdService _adService;
 
         [Inject]
-        private void Construct(IPersistentProgressService progressService, ISaveLoadService saveLoadService,
-            IAdService adService)
+        private void Construct(IPersistentProgressService progressService, ISaveLoadService saveLoadService, IAdService adService)
         {
             _progressService = progressService;
             _saveLoadService = saveLoadService;
@@ -27,20 +28,22 @@ namespace Logic.UI
 
         private void Awake()
         {
-            _button.onClick.AddListener(_adService.ShowRewardedAd);
-            _adService.RewardedVideoFinished += AccrueBonus;
+            _button.onClick.AddListener(ShowAd);
+            AppodealCallbacks.RewardedVideo.OnClosed += OnRewardedVideoClosed;
         }
 
-        private void AccrueBonus()
+        private void ShowAd() =>
+            _adService.ShowRewardedAd();
+        
+        private void OnRewardedVideoClosed(object sender, RewardedVideoClosedEventArgs e)
         {
-            _progressService.UserProgress.ChangeBones(100);
-            _saveLoadService.SaveProgress();
+            UnityMainThreadDispatcher.Instance().Enqueue(()=> {
+                _progressService.UserProgress.ChangeBones(100);
+                _saveLoadService.SaveProgress();
+            });
         }
 
-        private void OnDestroy()
-        {
-            _button.onClick.RemoveListener(_adService.ShowRewardedAd);
-            _adService.RewardedVideoFinished -= AccrueBonus;
-        }
+        private void OnDestroy() =>
+            _button.onClick.RemoveListener(ShowAd);
     }
 }

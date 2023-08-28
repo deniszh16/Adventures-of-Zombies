@@ -1,5 +1,6 @@
 ﻿using Logic.Timer;
 using Logic.UsefulObjects;
+using Services.Ads;
 using Services.PersistentProgress;
 using Services.SaveLoad;
 using Services.Sound;
@@ -36,14 +37,16 @@ namespace StateMachine.States
         private IPersistentProgressService _progressService;
         private ISaveLoadService _saveLoadService;
         private ISoundService _soundService;
+        private IAdService _adService;
 
         [Inject]
         private void Construct(IPersistentProgressService progressService, ISaveLoadService saveLoadService,
-            ISoundService soundService)
+            ISoundService soundService, IAdService adService)
         {
             _progressService = progressService;
             _saveLoadService = saveLoadService;
             _soundService = soundService;
+            _adService = adService;
         }
         
         public override void Enter()
@@ -55,6 +58,9 @@ namespace StateMachine.States
             _textComponent.text = _winningTexts[_timer.Stars - 1];
             
             UpdateProgress();
+            
+            if (_number % 2 == 0)
+                _adService.ShowInterstitialAd();
         }
 
         public override void Exit() =>

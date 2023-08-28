@@ -1,0 +1,33 @@
+pluginManagement {
+    repositories {
+        **ARTIFACTORYREPOSITORY**
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+
+include ':launcher', ':unityLibrary'
+**INCLUDES**
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositories {
+        **ARTIFACTORYREPOSITORY**
+        google()
+        mavenCentral()
+// Android Resolver Repos Start
+        def unityProjectPath = $/file:///**DIR_UNITYPROJECT**/$.replace("\\", "/")
+        maven {
+            url "https://artifactory.appodeal.com/appodeal" // Assets/Appodeal/Editor/Dependencies/AdColonyDependencies.xml:18, Assets/Appodeal/Editor/Dependencies/AppLovinDependencies.xml:16, Assets/Appodeal/Editor/Dependencies/AppodealDependencies.xml:23, Assets/Appodeal/Editor/Dependencies/BidMachineDependencies.xml:24, Assets/Appodeal/Editor/Dependencies/GoogleAdMobDependencies.xml:17, Assets/Appodeal/Editor/Dependencies/IronSourceDependencies.xml:17, Assets/Appodeal/Editor/Dependencies/MetaAudienceNetworkDependencies.xml:18, Assets/Appodeal/Editor/Dependencies/MyTargetDependencies.xml:19, Assets/Appodeal/Editor/Dependencies/UnityDependencies.xml:15, Assets/Appodeal/Editor/Dependencies/VungleDependencies.xml:20, Assets/Appodeal/Editor/Dependencies/YandexDependencies.xml:16
+        }
+        maven {
+            url (unityProjectPath + "/Assets/GeneratedLocalRepo/GooglePlayGames/com.google.play.games/Editor/m2repository") // Assets/GooglePlayGames/com.google.play.games/Editor/GooglePlayGamesPluginDependencies.xml:11
+        }
+        mavenLocal()
+// Android Resolver Repos End
+        flatDir {
+            dirs "${project(':unityLibrary').projectDir}/libs"
+        }
+    }
+}

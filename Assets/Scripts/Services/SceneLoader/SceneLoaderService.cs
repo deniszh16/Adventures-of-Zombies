@@ -9,8 +9,8 @@ namespace Services.SceneLoader
         [Header("Экран затемнения")]
         [SerializeField] private CanvasGroup _blackout;
 
-        private const float DimmingSpeed = 0.02f;
-        private const float DimmingStep = 0.05f;
+        private const float DimmingSpeed = 0.01f;
+        private const float DimmingStep = 0.1f;
 
         public void LoadSceneAsync(Scenes scene, bool screensaver, float delay) =>
             StartCoroutine(LoadSceneAsyncCoroutine(scene, screensaver, delay));

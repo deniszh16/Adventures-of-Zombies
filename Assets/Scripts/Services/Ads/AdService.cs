@@ -1,80 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using AppodealAds.Unity.Api;
-using AppodealAds.Unity.Common;
-using UnityEngine;
+﻿using AppodealStack.Monetization.Api;
+using AppodealStack.Monetization.Common;
 
 namespace Services.Ads
 {
-    public class AdService : IAdService, IAppodealInitializationListener, IRewardedVideoAdListener
+    public class AdService : IAdService
     {
         private const string AppKey = "413a2fb3ba44d81e889d22e3f7fccbfbef2728e9ae2b50b7";
-        
-        public event Action RewardedVideoFinished;
 
-        public AdService()
+        public void Initialization()
         {
-            Appodeal.setRewardedVideoCallbacks(this);
-            Initialization();
+            Appodeal.MuteVideosIfCallsMuted(true);
+            int adTypes = AppodealAdType.Interstitial | AppodealAdType.RewardedVideo;
+            AppodealCallbacks.Sdk.OnInitialized += OnInitializationFinished;
+            Appodeal.Initialize(AppKey, adTypes);
         }
 
-        private void Initialization()
+        private void OnInitializationFinished(object sender, SdkInitializedEventArgs e)
         {
-            Appodeal.muteVideosIfCallsMuted(true);
-            int adTypes = Appodeal.INTERSTITIAL | Appodeal.REWARDED_VIDEO;
-            Appodeal.initialize(AppKey, adTypes, this);
         }
 
         public void ShowInterstitialAd()
         {
-            if (Application.internetReachability != NetworkReachability.NotReachable)
-            {
-                if (Appodeal.isLoaded(Appodeal.INTERSTITIAL))
-                    Appodeal.show(Appodeal.INTERSTITIAL);
-            }
+            if (Appodeal.IsLoaded(AppodealAdType.Interstitial))
+                Appodeal.Show(AppodealShowStyle.Interstitial);
         }
 
         public void ShowRewardedAd()
         {
-            if (Appodeal.isLoaded(Appodeal.REWARDED_VIDEO))
-                Appodeal.show(Appodeal.REWARDED_VIDEO);
+            if (Appodeal.IsLoaded(AppodealAdType.RewardedVideo))
+                Appodeal.Show(AppodealShowStyle.RewardedVideo);
         }
-        
-        public void onRewardedVideoFinished(double amount, string name) =>
-            RewardedVideoFinished?.Invoke();
-
-        #region Appodeal (other methods)
-        public void onInitializationFinished(List<string> errors)
-        {
-        }
-
-        public void onRewardedVideoLoaded(bool precache)
-        {
-        }
-
-        public void onRewardedVideoFailedToLoad()
-        {
-        }
-
-        public void onRewardedVideoShowFailed()
-        {
-        }
-
-        public void onRewardedVideoShown()
-        {
-        }
-
-        public void onRewardedVideoClosed(bool finished)
-        {
-        }
-
-        public void onRewardedVideoExpired()
-        {
-        }
-
-        public void onRewardedVideoClicked()
-        {
-        }
-        #endregion
     }
 }

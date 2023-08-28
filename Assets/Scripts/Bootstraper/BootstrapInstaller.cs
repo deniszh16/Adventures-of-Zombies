@@ -1,3 +1,4 @@
+using PimDeWitte.UnityMainThreadDispatcher;
 using Services.PersistentProgress;
 using Services.Achievements;
 using Services.Localization;
@@ -17,6 +18,7 @@ namespace Bootstraper
         [SerializeField] private LocalizationService _localizationService;
         [SerializeField] private SoundService _soundService;
         [SerializeField] private AchievementsService _achievementsService;
+        [SerializeField] private UnityMainThreadDispatcher _mainThreadDispatcher;
         
         private IPersistentProgressService _progressService;
         private ISaveLoadService _saveLoadService;
@@ -31,6 +33,7 @@ namespace Bootstraper
             BindGooglePlayService();
             BindAchievementsService();
             BindAdsService();
+            BindMainThreadDispatcher();
         }
 
         private void BindPersistentProgress()
@@ -76,10 +79,18 @@ namespace Bootstraper
             Container.Bind<IAchievementsService>().To<AchievementsService>().FromInstance(achievementsService).AsSingle();
         }
 
+        private void BindMainThreadDispatcher()
+        {
+            UnityMainThreadDispatcher mainThreadDispatcher =
+                Container.InstantiatePrefabForComponent<UnityMainThreadDispatcher>(_mainThreadDispatcher);
+            Container.BindInstance(mainThreadDispatcher).AsSingle();
+        }
+
         private void BindAdsService()
         {
             IAdService adService = new AdService();
             Container.BindInstance(adService).AsSingle();
+            adService.Initialization();
         }
     }
 }

@@ -37,7 +37,7 @@ namespace Logic.Zombies
 
         private void Start()
         {
-            if (_progressService.UserProgress.ZombiesData.Family[_number - 1])
+            if (_progressService.GetUserProgress.ZombiesData.Family[_number - 1])
                 ShowZombie();
             else
                 _button.onClick.AddListener(BuyZombie);
@@ -51,10 +51,10 @@ namespace Logic.Zombies
 
         private void BuyZombie()
         {
-            if (_progressService.UserProgress.Bones >= _price)
+            if (_progressService.GetUserProgress.Bones >= _price)
             {
-                _progressService.UserProgress.ChangeBones(-_price);
-                _progressService.UserProgress.ZombiesData.Family[_number - 1] = true;
+                _progressService.GetUserProgress.ChangeBones(-_price);
+                _progressService.GetUserProgress.ZombiesData.Family[_number - 1] = true;
                 _saveLoadService.SaveProgress();
                 
                 ShowZombie();

@@ -68,20 +68,20 @@ namespace StateMachine.States
 
         private void UpdateProgress()
         {
-            if (_progressService.UserProgress.Progress <= _number)
-                _progressService.UserProgress.Progress += 1;
+            if (_progressService.GetUserProgress.Progress <= _number)
+                _progressService.GetUserProgress.Progress += 1;
 
             UpdateStars();
             
-            _progressService.UserProgress.Brains += BrainsAtLevel.InitialValue - _brainsAtLevel.Brains;
-            _progressService.UserProgress.Played += 1;
+            _progressService.GetUserProgress.Brains += BrainsAtLevel.InitialValue - _brainsAtLevel.Brains;
+            _progressService.GetUserProgress.Played += 1;
             _saveLoadService.SaveProgress();
         }
 
         private void UpdateStars()
         {
-            if (_progressService.UserProgress.Stars[_number - 1] < _timer.Stars)
-                _progressService.UserProgress.Stars[_number - 1] = _timer.Stars;
+            if (_progressService.GetUserProgress.Stars[_number - 1] < _timer.Stars)
+                _progressService.GetUserProgress.Stars[_number - 1] = _timer.Stars;
         }
     }
 }

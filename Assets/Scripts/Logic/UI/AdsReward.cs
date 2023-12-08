@@ -38,7 +38,7 @@ namespace Logic.UI
         private void OnRewardedVideoClosed(object sender, RewardedVideoClosedEventArgs e)
         {
             UnityMainThreadDispatcher.Instance().Enqueue(()=> {
-                _progressService.UserProgress.ChangeBones(100);
+                _progressService.GetUserProgress.ChangeBones(100);
                 _saveLoadService.SaveProgress();
             });
         }

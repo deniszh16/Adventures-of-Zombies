@@ -20,18 +20,18 @@ namespace Logic.UI
             _progressService = progressService;
 
         private void Awake() =>
-            _progressService.UserProgress.BonesChanged += GetNumberOfBones;
+            _progressService.GetUserProgress.BonesChanged += GetNumberOfBones;
 
         private void Start() =>
             GetNumberOfBones();
 
         private void GetNumberOfBones() =>
-            _textComponent.text = _progressService.UserProgress.Bones.ToString();
+            _textComponent.text = _progressService.GetUserProgress.Bones.ToString();
 
         public void StartFlashingAnimation() =>
             _animator.SetTrigger(FlashingAnimation);
 
         private void OnDestroy() =>
-            _progressService.UserProgress.BonesChanged -= GetNumberOfBones;
+            _progressService.GetUserProgress.BonesChanged -= GetNumberOfBones;
     }
 }

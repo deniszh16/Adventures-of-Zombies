@@ -57,9 +57,9 @@ namespace StateMachine.States
 
         private void UpdateProgress()
         {
-            _progressService.UserProgress.Brains += BrainsAtLevel.InitialValue - _brainsAtLevel.Brains;
-            _progressService.UserProgress.Played += 1;
-            _progressService.UserProgress.Deaths += 1;
+            _progressService.GetUserProgress.Brains += BrainsAtLevel.InitialValue - _brainsAtLevel.Brains;
+            _progressService.GetUserProgress.Played += 1;
+            _progressService.GetUserProgress.Deaths += 1;
             _saveLoadService.SaveProgress();
         }
     }

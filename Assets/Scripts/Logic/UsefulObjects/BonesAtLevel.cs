@@ -13,6 +13,6 @@ namespace Logic.UsefulObjects
             _progressService = progressService;
 
         public void AddBones() =>
-            _progressService.UserProgress.Bones += 1;
+            _progressService.GetUserProgress.Bones += 1;
     }
 }

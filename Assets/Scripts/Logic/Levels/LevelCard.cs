@@ -44,12 +44,12 @@ namespace Logic.Levels
 
         private void Start()
         {
-            if (_number <= _progressService.UserProgress.Progress)
+            if (_number <= _progressService.GetUserProgress.Progress)
             {
                 _imageButton.sprite = _openLevel;
                 _button.interactable = true;
 
-                int numberOfStars = _progressService.UserProgress.Stars[_number - 1];
+                int numberOfStars = _progressService.GetUserProgress.Stars[_number - 1];
                 _stars.sprite = _starSprites[numberOfStars];
             }
         }

@@ -34,71 +34,71 @@ namespace Services.Achievements
         }
 
         public bool CheckAchievementCompletion(int number) =>
-            _persistentProgress.UserProgress.AchievementsData.Statuses[number - 1];
+            _persistentProgress.GetUserProgress.AchievementsData.Statuses[number - 1];
 
         public void RunAchievementCheck()
         {
-            if (CheckAchievementCompletion(number: 1) != true && _persistentProgress.UserProgress.Progress > 1)
+            if (CheckAchievementCompletion(number: 1) != true && _persistentProgress.GetUserProgress.Progress > 1)
             {
                 UnlockAchievement(number: 1);
                 _googlePlayService.UnlockingAchievement(identifier: GPGSIds.achievement);
             }
 
-            if (CheckAchievementCompletion(number: 2) != true && _persistentProgress.UserProgress.Stars.Contains(3))
+            if (CheckAchievementCompletion(number: 2) != true && _persistentProgress.GetUserProgress.Stars.Contains(3))
             {
                 UnlockAchievement(number: 2);
                 _googlePlayService.UnlockingAchievement(identifier: GPGSIds.achievement_2);
             }
 
-            if (CheckAchievementCompletion(number: 3) != true && _persistentProgress.UserProgress.Brains >= 15)
+            if (CheckAchievementCompletion(number: 3) != true && _persistentProgress.GetUserProgress.Brains >= 15)
             {
                 UnlockAchievement(number: 3);
                 _googlePlayService.UnlockingAchievement(identifier: GPGSIds.achievement_3);
             }
 
-            if (CheckAchievementCompletion(number: 4) != true && _persistentProgress.UserProgress.Resurrection)
+            if (CheckAchievementCompletion(number: 4) != true && _persistentProgress.GetUserProgress.Resurrection)
             {
                 UnlockAchievement(number: 4);
                 _googlePlayService.UnlockingAchievement(identifier: GPGSIds.achievement_10);
             }
 
-            if (CheckAchievementCompletion(number: 5) != true && _persistentProgress.UserProgress.DestroyedBarrel >= 20)
+            if (CheckAchievementCompletion(number: 5) != true && _persistentProgress.GetUserProgress.DestroyedBarrel >= 20)
             {
                 UnlockAchievement(number: 5);
                 _googlePlayService.UnlockingAchievement(identifier: GPGSIds.achievement_11);
             }
 
-            if (CheckAchievementCompletion(number: 6) != true && _persistentProgress.UserProgress.Progress >= 6)
+            if (CheckAchievementCompletion(number: 6) != true && _persistentProgress.GetUserProgress.Progress >= 6)
             {
                 UnlockAchievement(number: 6);
                 _googlePlayService.UnlockingAchievement(identifier: GPGSIds.achievement_9);
             }
 
-            if (CheckAchievementCompletion(number: 7) != true && _persistentProgress.UserProgress.Brains >= 30)
+            if (CheckAchievementCompletion(number: 7) != true && _persistentProgress.GetUserProgress.Brains >= 30)
             {
                 UnlockAchievement(number: 7);
                 _googlePlayService.UnlockingAchievement(identifier: GPGSIds.achievement_12);
             }
 
-            if (CheckAchievementCompletion(number: 8) != true && _persistentProgress.UserProgress.CheckAllStars())
+            if (CheckAchievementCompletion(number: 8) != true && _persistentProgress.GetUserProgress.CheckAllStars())
             {
                 UnlockAchievement(number: 8);
                 _googlePlayService.UnlockingAchievement(identifier: GPGSIds.achievement_12);
             }
 
-            if (CheckAchievementCompletion(number: 9) != true && _persistentProgress.UserProgress.Progress >= 10)
+            if (CheckAchievementCompletion(number: 9) != true && _persistentProgress.GetUserProgress.Progress >= 10)
             {
                 UnlockAchievement(number: 9);
                 _googlePlayService.UnlockingAchievement(identifier: GPGSIds.achievement_14);
             }
 
-            if (CheckAchievementCompletion(number: 10) != true && _persistentProgress.UserProgress.Bones >= 350)
+            if (CheckAchievementCompletion(number: 10) != true && _persistentProgress.GetUserProgress.Bones >= 350)
             {
                 UnlockAchievement(number: 10);
             }
 
             if (CheckAchievementCompletion(number: 11) != true &&
-                _persistentProgress.UserProgress.ZombiesData.CheckAllCharacters())
+                _persistentProgress.GetUserProgress.ZombiesData.CheckAllCharacters())
             {
                 UnlockAchievement(number: 11);
                 _googlePlayService.UnlockingAchievement(identifier: GPGSIds.achievement_15);
@@ -107,12 +107,12 @@ namespace Services.Achievements
 
         private void UnlockAchievement(int number)
         {
-            if (_persistentProgress.UserProgress.AchievementsData.Statuses[number - 1] != true)
+            if (_persistentProgress.GetUserProgress.AchievementsData.Statuses[number - 1] != true)
             {
-                _persistentProgress.UserProgress.AchievementsData.Statuses[number - 1] = true;
+                _persistentProgress.GetUserProgress.AchievementsData.Statuses[number - 1] = true;
                 ShowAchievementBar(number);
                 
-                _persistentProgress.UserProgress.AchievementsData.Statuses[number - 1] = true;
+                _persistentProgress.GetUserProgress.AchievementsData.Statuses[number - 1] = true;
                 _saveLoadService.SaveProgress();
             }
         }

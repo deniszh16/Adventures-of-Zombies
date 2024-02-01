@@ -3,8 +3,8 @@
 </p>
 
 <p align="center">
-   <img src="https://img.shields.io/badge/Engine-Unity%202023.2.1f1-brightgreen" alt="Unity Version">
-   <img src="https://img.shields.io/badge/Version-2.0.9%20(Stable)-blue" alt="Game Version">
+   <img src="https://img.shields.io/badge/Engine-Unity%202023.2.7f1-brightgreen" alt="Unity Version">
+   <img src="https://img.shields.io/badge/Version-2.1.1%20(Stable)-blue" alt="Game Version">
 </p>
 
 ## Описание игры
@@ -16,7 +16,6 @@
 ## Публикация
 
 - [Google Play](https://play.google.com/store/apps/details?id=ru.cubra.zombie)
-- [Яндекс Игры](https://yandex.ru/games/app/232257)
 
 ## Технические подробности
 

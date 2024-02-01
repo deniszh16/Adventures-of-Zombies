@@ -1,8 +1,8 @@
-﻿using AppodealStack.Monetization.Common;
-using PimDeWitte.UnityMainThreadDispatcher;
-using Services.Ads;
+﻿using PimDeWitte.UnityMainThreadDispatcher;
+using AppodealStack.Monetization.Common;
 using Services.PersistentProgress;
 using Services.SaveLoad;
+using Services.Ads;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -19,7 +19,8 @@ namespace Logic.UI
         private IAdService _adService;
 
         [Inject]
-        private void Construct(IPersistentProgressService progressService, ISaveLoadService saveLoadService, IAdService adService)
+        private void Construct(IPersistentProgressService progressService, ISaveLoadService saveLoadService,
+            IAdService adService)
         {
             _progressService = progressService;
             _saveLoadService = saveLoadService;
@@ -29,13 +30,13 @@ namespace Logic.UI
         private void Awake()
         {
             _button.onClick.AddListener(ShowAd);
-            AppodealCallbacks.RewardedVideo.OnClosed += OnRewardedVideoClosed;
+            AppodealCallbacks.RewardedVideo.OnFinished += OnRewardedVideoFinished;
         }
 
         private void ShowAd() =>
             _adService.ShowRewardedAd();
         
-        private void OnRewardedVideoClosed(object sender, RewardedVideoClosedEventArgs e)
+        private void OnRewardedVideoFinished(object sender, RewardedVideoFinishedEventArgs e)
         {
             UnityMainThreadDispatcher.Instance().Enqueue(()=> {
                 _progressService.GetUserProgress.ChangeBones(100);
@@ -43,7 +44,10 @@ namespace Logic.UI
             });
         }
 
-        private void OnDestroy() =>
+        private void OnDestroy()
+        {
             _button.onClick.RemoveListener(ShowAd);
+            AppodealCallbacks.RewardedVideo.OnFinished -= OnRewardedVideoFinished;
+        }
     }
 }

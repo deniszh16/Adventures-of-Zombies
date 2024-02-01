@@ -1,29 +1,28 @@
 {
   "dependencies": {
     "com.appodeal.mediation": {
-      "version": "https://github.com/appodeal/appodeal-unity-plugin-upm.git#v3.2.0-beta.1",
+      "version": "https://github.com/appodeal/appodeal-unity-plugin-upm.git#v3.2.1",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.google.external-dependency-manager": "1.2.175"
       },
-      "hash": "6996dc390d5f6c900516441e0889ab31d4803ec4"
+      "hash": "b86d86381f4d3ec418e51e140187eb1e70b0d24d"
     },
     "com.google.external-dependency-manager": {
-      "version": "file:C:/Users/zhurs/Desktop/com.google.external-dependency-manager-1.2.176.tgz",
+      "version": "file:C:/Users/zhurs/Desktop/Разработка/Плагины/com.google.external-dependency-manager-1.2.176.tgz",
       "depth": 0,
       "source": "local-tarball",
       "dependencies": {}
     },
     "com.pimdewitte.unitymainthreaddispatcher": {
-      "version": "https://github.com/PimDeWitte/UnityMainThreadDispatcher.git",
+      "version": "file:C:/Users/zhurs/Desktop/Разработка/Плагины/UnityMainThreadDispatcher",
       "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "1ad4ddc45079ab5a2c32ecb586e4903903546d8f"
+      "source": "local",
+      "dependencies": {}
     },
     "com.unity.2d.common": {
-      "version": "9.0.2",
+      "version": "9.0.3",
       "depth": 1,
       "source": "registry",
       "dependencies": {
@@ -62,11 +61,12 @@
       }
     },
     "com.unity.burst": {
-      "version": "1.8.10",
+      "version": "1.8.12",
       "depth": 2,
       "source": "registry",
       "dependencies": {
-        "com.unity.mathematics": "1.2.1"
+        "com.unity.mathematics": "1.2.1",
+        "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },

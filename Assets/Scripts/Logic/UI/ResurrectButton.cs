@@ -1,9 +1,9 @@
-﻿using AppodealStack.Monetization.Common;
-using PimDeWitte.UnityMainThreadDispatcher;
+﻿using PimDeWitte.UnityMainThreadDispatcher;
+using AppodealStack.Monetization.Common;
+using StateMachine.States;
 using Logic.Characters;
 using Services.Ads;
 using StateMachine;
-using StateMachine.States;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -34,13 +34,13 @@ namespace Logic.UI
         private void Awake()
         {
             _button.onClick.AddListener(ShowAd);
-            AppodealCallbacks.RewardedVideo.OnClosed += OnRewardedVideoClosed;
+            AppodealCallbacks.RewardedVideo.OnFinished += OnRewardedVideoFinished;
         }
         
         private void ShowAd() =>
             _adService.ShowRewardedAd();
         
-        private void OnRewardedVideoClosed(object sender, RewardedVideoClosedEventArgs e) =>
+        private void OnRewardedVideoFinished(object sender, RewardedVideoFinishedEventArgs e) =>
             UnityMainThreadDispatcher.Instance().Enqueue(ResurrectACharacter);
 
         private void ResurrectACharacter()
@@ -53,7 +53,7 @@ namespace Logic.UI
         private void OnDestroy()
         {
             _button.onClick.RemoveListener(ShowAd);
-            AppodealCallbacks.RewardedVideo.OnClosed -= OnRewardedVideoClosed;
+            AppodealCallbacks.RewardedVideo.OnFinished -= OnRewardedVideoFinished;
         }
     }
 }

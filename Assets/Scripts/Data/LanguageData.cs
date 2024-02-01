@@ -1,6 +1,6 @@
-﻿using System;
-using Services.Localization;
+﻿using Services.Localization;
 using UnityEngine;
+using System;
 
 namespace Data
 {

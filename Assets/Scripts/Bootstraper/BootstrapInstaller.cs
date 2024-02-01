@@ -70,6 +70,7 @@ namespace Bootstraper
         private void BindGooglePlayService()
         {
             IGooglePlayService googlePlayService = new GooglePlayService();
+            googlePlayService.ActivateService();
             Container.BindInstance(googlePlayService).AsSingle();
         }
         
